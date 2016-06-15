@@ -11,7 +11,7 @@ group :development do
 	gem 'sqlite3'
 end
 
-group :development, :test do 
+group :test, :development do 
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
   gem 'ffaker'
