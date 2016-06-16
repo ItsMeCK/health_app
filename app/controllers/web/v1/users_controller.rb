@@ -15,7 +15,7 @@ class Web::V1::UsersController < ApplicationController
 	end
 
 	def update
-	  @user = User.find(params[:id])
+		@user = User.find(params[:id])
 	  if @user.update(user_params)
 	    render json: @user, status: 200, location: [:web, @user]
 	  else
@@ -24,8 +24,7 @@ class Web::V1::UsersController < ApplicationController
 	end
 
 	def destroy
-	  @user = User.find(params[:id])
-	  @user.destroy
+	  @user = User.find(params[:id]).destroy
 	  message = "Your account has been successfully deleted"
 	  render json: { message: message}, status: 204
 	end

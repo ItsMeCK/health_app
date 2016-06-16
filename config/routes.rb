@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy]
       resources :sessions, :only => [:create, :destroy]
+      resource :api_token
     end
   end
 
