@@ -97,6 +97,7 @@ GEM
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     orm_adapter (0.5.0)
+    pg (0.18.4)
     pkg-config (1.1.7)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -171,6 +172,7 @@ DEPENDENCIES
   capistrano3-puma
   devise
   ffaker
+  pg
   pry-rails
   puma
   rails (= 4.2.6)
