@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+	
   devise_for :users
   # API Definition
   namespace :web, defaults: { format: :json }, path: '/web/' do
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   end
 
 ## ================= Below is Mobile API Routes ================= ##
+
   namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     scope module: :v1 do
     # We are going to list our resources here
