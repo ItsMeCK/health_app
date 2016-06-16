@@ -16,7 +16,7 @@ class Mobile::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_auth_token(:params[:auth_token])
+    user = User.find_by_auth_token(params[:auth_token])
     user.generate_authentication_token!
     user.save
     message = "You have been successfully signed out"

@@ -16,11 +16,11 @@ class Web::V1::SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by_auth_token(:params[:auth_token])
+    user = User.find_by_auth_token(params[:auth_token])
     user.generate_authentication_token!
     user.save
     message = "You have been successfully signed out"
-    render json: { message: message }, status: 204
+    render json: message, status: 204, location: [:web, user]
   end
 
 end
