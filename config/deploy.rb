@@ -2,7 +2,7 @@
 lock '3.5.0'
 
 set :repo_url,        'git@bitbucket.org:myridz/coromandel-harley-davidson.git'
-set :application,     'coromandel-harley-davidson'
+set :application,     'chd'
 set :user,            'deploy'
 
 # ps aux | grep puma    # Get puma pid
