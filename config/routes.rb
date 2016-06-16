@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     scope module: :v1 do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy]
+      resources :sessions, :only => [:create, :destroy]
     end
   end
 
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
     scope module: :v1 do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy]
+      resources :sessions, :only => [:create, :destroy]
     end
   end
 
