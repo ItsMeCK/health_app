@@ -1,10 +1,10 @@
-class Web::V1::UsersController < ApplicationController
+class Mobile::V1::UsersController < ApplicationController
 	respond_to :json
 
 	def create
 		@user = User.new(user_params)
 		if @user.save
-			render json: @user, status: 201, location: [:web, @user]
+			render json: @user, status: 201, location: [:mobile, @user]
 		else
 			render json: { errors: @user.errors}, status: 422
 		end
@@ -17,7 +17,7 @@ class Web::V1::UsersController < ApplicationController
 	def update
 	  @user = User.find(params[:id])
 	  if @user.update(user_params)
-	    render json: @user, status: 200, location: [:web, @user]
+	    render json: @user, status: 200, location: [:mobile, @user]
 	  else
 	    render json: { errors: @user.errors }, status: 422
 	  end

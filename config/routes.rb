@@ -4,7 +4,16 @@ Rails.application.routes.draw do
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here
-    	resources :users, :only => [:create, :show]
+    	resources :users, :only => [:create, :show, :update, :destroy]
     end
   end
+
+## ================= Below is Mobile API Routes ================= ##
+  namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
+    scope module: :v1 do
+    # We are going to list our resources here
+    	resources :users, :only => [:create, :show, :update, :destroy]
+    end
+  end
+
 end
