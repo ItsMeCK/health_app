@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here
-    	resources :users, :only => [:create, :show, :update, :destroy]
+    	resources :users, :only => [:create, :show, :update, :destroy, :index]
       resources :sessions, :only => [:create, :destroy]
       resource :api_token
       resources :profiles, :except => [:edit, :new]
