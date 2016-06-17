@@ -3,6 +3,7 @@ class CreateProfiles < ActiveRecord::Migration
     create_table :profiles do |t|
       t.string :full_name
       t.string :mobile
+      t.string :email
       t.date :dob
       t.string :gender
       t.string :bike_owned
@@ -13,6 +14,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.text :bio
       t.boolean :hog_privacy
       t.string :profile_image
+      t.integer :user_id
 
       t.timestamps null: false
     end
@@ -31,6 +33,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.text :bio
       t.boolean :hog_privacy
       t.string :profile_image
+      t.integer :user_id
 
       t.timestamps null: false
     end

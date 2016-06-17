@@ -55,6 +55,6 @@ class Web::V1::ProfilesController < ApplicationController
     end
 
     def profile_params
-      params.require(:profile).permit(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params.require(:profile).permit(:full_name, :mobile, :dob, :email, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
     end
 end

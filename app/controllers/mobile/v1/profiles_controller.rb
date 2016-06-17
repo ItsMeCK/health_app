@@ -54,6 +54,6 @@ class Mobile::V1::ProfilesController < ApplicationController
     end
 
     def profile_params
-      params(:profile).require(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params(:profile).require(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
     end
 end

@@ -54,6 +54,6 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
     end
 
     def hog_registration_params
-      params(:hog_registration).require(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params(:hog_registration).require(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
     end
 end

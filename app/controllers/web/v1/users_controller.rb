@@ -1,6 +1,10 @@
 class Web::V1::UsersController < ApplicationController
 	respond_to :json
 
+	def index
+		@users = User.all
+	end
+
 	def create
 		@user = User.new(user_params)
 		if @user.save

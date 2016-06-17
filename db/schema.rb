@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160616105023) do
     t.text     "bio"
     t.boolean  "hog_privacy"
     t.string   "profile_image"
+    t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 20160616105023) do
   create_table "profiles", force: :cascade do |t|
     t.string   "full_name"
     t.string   "mobile"
+    t.string   "email"
     t.date     "dob"
     t.string   "gender"
     t.string   "bike_owned"
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 20160616105023) do
     t.text     "bio"
     t.boolean  "hog_privacy"
     t.string   "profile_image"
+    t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
