@@ -7,20 +7,20 @@ class Mobile::V1::SessionsController < ApplicationController
 
     if user.valid_password? user_password
       sign_in user, store: false
-      user.generate_authentication_token!
+      user.reset_authentication_token!
       user.save
-      render json: user, status: 200, location: [:mobile, user]
+      render json: user, status: 200, location: [:web, user]
     else
       render json: { errors: "Invalid email or password" }, status: 422
     end
   end
 
   def destroy
-    user = User.find_by_auth_token(params[:auth_token])
-    user.generate_authentication_token!
+    user = User.find_by(authentication_token: params[:auth_token])
+    user.reset_authentication_token!
     user.save
     message = "You have been successfully signed out"
-    render json: { message: message }, status: 204
+    render json: user, status: 204, location: [:web, user]
   end
 
 end
