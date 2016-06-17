@@ -9,7 +9,7 @@ class Mobile::V1::SessionsController < ApplicationController
       sign_in user, store: false
       user.reset_authentication_token!
       user.save
-      render json: user, status: 200, location: [:web, user]
+      render json: user, status: 200, location: [:mobile, user]
     else
       render json: { errors: "Invalid email or password" }, status: 422
     end
@@ -20,7 +20,7 @@ class Mobile::V1::SessionsController < ApplicationController
     user.reset_authentication_token!
     user.save
     message = "You have been successfully signed out"
-    render json: user, status: 204, location: [:web, user]
+    render json: user, status: 204, location: [:mobile, user]
   end
 
 end
