@@ -33,7 +33,7 @@ class Mobile::V1::ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
-      head :no_content
+      render json: @profile, status: :ok
     else
       render json: @profile.errors, status: :unprocessable_entity
     end
@@ -54,6 +54,6 @@ class Mobile::V1::ProfilesController < ApplicationController
     end
 
     def profile_params
-      params(:profile).require(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
+      params.require(:profile).permit(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
     end
 end
