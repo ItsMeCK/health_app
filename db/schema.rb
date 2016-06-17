@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20160616105023) do
     t.boolean  "hog_privacy"
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.boolean  "show_hog",      default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -47,11 +48,11 @@ ActiveRecord::Schema.define(version: 20160616105023) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy"
+    t.boolean  "hog_privacy",   default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "users", force: :cascade do |t|

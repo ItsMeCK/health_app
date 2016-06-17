@@ -34,6 +34,7 @@ class Web::V1::HogRegistrationsController < ApplicationController
     @hog_registration = HogRegistration.find(params[:id])
 
     if @hog_registration.update(hog_registration_params)
+      Profile.find_by(:user_id => params[:hog_registration][:user_id]).update(hog_registration_params)
       render json: @hog_registration, status: :ok, location: [:web, @hog_registration]
     else
       render json: @hog_registration.errors, status: :unprocessable_entity
@@ -55,6 +56,6 @@ class Web::V1::HogRegistrationsController < ApplicationController
     end
 
     def hog_registration_params
-      params.require(:hog_registration).permit(:full_name, :mobile, :email, :dob, :show_hog, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params.require(:hog_registration).permit(:full_name, :mobile, :email, :dob, :show_hog, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
     end
 end
