@@ -12,7 +12,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.string :location
       t.string :profession
       t.text :bio
-      t.boolean :hog_privacy
+      t.boolean :hog_privacy, default: false
       t.string :profile_image
       t.integer :user_id
 
@@ -34,6 +34,7 @@ class CreateProfiles < ActiveRecord::Migration
       t.boolean :hog_privacy
       t.string :profile_image
       t.integer :user_id
+      t.boolean :show_hog, default: false
 
       t.timestamps null: false
     end
