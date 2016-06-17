@@ -1,4 +1,5 @@
 class Web::V1::ProfilesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_profile, only: [:show, :update, :destroy]
 
   # GET /profiles
@@ -21,7 +22,7 @@ class Web::V1::ProfilesController < ApplicationController
     @profile = Profile.new(profile_params)
 
     if @profile.save
-      render json: @profile, status: :created, location: @profile
+      render json: @profile, status: :created, location: [:web, @profile]
     else
       render json: @profile.errors, status: :unprocessable_entity
     end
@@ -33,7 +34,7 @@ class Web::V1::ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
-      head :no_content
+      render json: @profile, status: :ok, location: [:web, @profile]
     else
       render json: @profile.errors, status: :unprocessable_entity
     end
@@ -54,6 +55,6 @@ class Web::V1::ProfilesController < ApplicationController
     end
 
     def profile_params
-      params(:profile).require(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params.require(:profile).permit(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
     end
 end

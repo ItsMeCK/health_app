@@ -1,4 +1,5 @@
 class Web::V1::HogRegistrationsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_hog_registration, only: [:show, :update, :destroy]
 
   # GET /hog_registrations
@@ -21,7 +22,7 @@ class Web::V1::HogRegistrationsController < ApplicationController
     @hog_registration = HogRegistration.new(hog_registration_params)
 
     if @hog_registration.save
-      render json: @hog_registration, status: :created, location: @hog_registration
+      render json: @hog_registration, status: :created, location: [:web, @hog_registration]
     else
       render json: @hog_registration.errors, status: :unprocessable_entity
     end
@@ -33,7 +34,7 @@ class Web::V1::HogRegistrationsController < ApplicationController
     @hog_registration = HogRegistration.find(params[:id])
 
     if @hog_registration.update(hog_registration_params)
-      head :no_content
+      render json: @hog_registration, status: :ok, location: [:web, @hog_registration]
     else
       render json: @hog_registration.errors, status: :unprocessable_entity
     end
@@ -54,6 +55,6 @@ class Web::V1::HogRegistrationsController < ApplicationController
     end
 
     def hog_registration_params
-      params(:hog_registration).require(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
+      params.require(:hog_registration).permit(:full_name, :mobile, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image)
     end
 end
