@@ -9,7 +9,7 @@ class Web::V1::SessionsController < ApplicationController
       sign_in user, store: false
       user.reset_authentication_token!
       user.save
-      render json: user, status: 200, location: [:web, user]
+      render json: user, serializer: SessionSerializer, status: 200, location: [:web, user] 
     else
       render json: { errors: "Invalid email or password" }, status: 422
     end

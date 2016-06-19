@@ -30,7 +30,6 @@ class Web::V1::SpecificationsController < ApplicationController
   # PATCH/PUT /web/v1/specifications/1
   # PATCH/PUT /web/v1/specifications/1.json
   def update
-    binding.pry
     if @specification.update(specification_params)
       head :no_content
     else
