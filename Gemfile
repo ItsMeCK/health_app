@@ -8,14 +8,10 @@ gem 'devise-token_authenticatable'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'ffaker'
 gem 'puma'
-
-group :production do
-	gem 'pg'
-end
+gem 'pg'
 
 group :development do
 	gem 'spring'
-	gem 'sqlite3'
 	gem 'pry-rails'
 	gem 'capistrano', '~> 3.4'
 	gem 'capistrano-bundler', '~> 1.1', '>= 1.1.4'
