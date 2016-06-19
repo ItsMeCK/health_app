@@ -4,7 +4,8 @@ class CreateBikes < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.text :tagline
-      t.boolean :available
+      t.boolean :available, default: true
+      t.integer :bike_type_id
 
       t.timestamps null: false
     end

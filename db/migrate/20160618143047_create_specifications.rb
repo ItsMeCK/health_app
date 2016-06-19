@@ -7,7 +7,7 @@ class CreateSpecifications < ActiveRecord::Migration
       t.jsonb :engine, null: false, default: '{}'
       t.jsonb :drivetrain, null: false, default: '{}'
       t.jsonb :chassis, null: false, default: '{}'
-      t.jsonb :peformance, null: false, default: '{}'
+      t.jsonb :performance, null: false, default: '{}'
       t.jsonb :electric, null: false, default: '{}'
 
       t.timestamps null: false
@@ -18,7 +18,7 @@ class CreateSpecifications < ActiveRecord::Migration
     add_index :specifications, :engine, using: :gin
     add_index :specifications, :drivetrain, using: :gin
     add_index :specifications, :chassis, using: :gin
-    add_index :specifications, :peformance, using: :gin
+    add_index :specifications, :performance, using: :gin
     add_index :specifications, :electric, using: :gin
 
   end

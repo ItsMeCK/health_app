@@ -3,7 +3,7 @@ class CreateBikeTypes < ActiveRecord::Migration
     create_table :bike_types do |t|
       t.string :name
       t.text :tagline
-      t.boolean :available
+      t.boolean :available, default: false
 
       t.timestamps null: false
     end

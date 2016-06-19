@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       resource :api_token
       resources :profiles, :except => [:edit, :new]
       resources :hog_registrations, :except => [:edit, :new]
+      resources :bike_types
+      resources :bikes
+      resources :specifications
     end
   end
 
@@ -22,6 +25,9 @@ Rails.application.routes.draw do
       resources :sessions, :only => [:create, :destroy]
       resources :profiles, :except => [:edit, :new, :index]
       resources :hog_registrations, :except => [:edit, :new, :index]
+      resources :bike_types
+      resources :bikes
+      resources :specifications
     end
   end
 
