@@ -25,9 +25,9 @@ Rails.application.routes.draw do
       resources :sessions, :only => [:create, :destroy]
       resources :profiles, :except => [:edit, :new, :index]
       resources :hog_registrations, :except => [:edit, :new, :index]
-      resources :bike_types
-      resources :bikes
-      resources :specifications
+      resources :bike_types, :only => [:show, :index]
+      resources :bikes, :only => [:show, :index]
+      resources :specifications, :only => [:show, :index]
     end
   end
 
