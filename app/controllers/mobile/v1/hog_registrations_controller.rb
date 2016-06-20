@@ -1,13 +1,6 @@
 class Mobile::V1::HogRegistrationsController < ApplicationController
   before_action :set_hog_registration, only: [:show, :update, :destroy]
 
-  # GET /hog_registrations
-  # GET /hog_registrations.json
-  def index
-    @hog_registrations = HogRegistration.all
-
-    render json: @hog_registrations
-  end
 
   # GET /hog_registrations/1
   # GET /hog_registrations/1.json
@@ -17,15 +10,15 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
 
   # POST /hog_registrations
   # POST /hog_registrations.json
-  def create
-    @hog_registration = HogRegistration.new(hog_registration_params)
+  # def create
+  #   @hog_registration = HogRegistration.new(hog_registration_params)
 
-    if @hog_registration.save
-      render json: @hog_registration, status: :created, location: @hog_registration
-    else
-      render json: @hog_registration.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @hog_registration.save
+  #     render json: @hog_registration, status: :created, location: @hog_registration
+  #   else
+  #     render json: @hog_registration.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /hog_registrations/1
   # PATCH/PUT /hog_registrations/1.json

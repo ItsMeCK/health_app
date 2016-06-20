@@ -1,13 +1,6 @@
 class Mobile::V1::ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :update, :destroy]
 
-  # GET /profiles
-  # GET /profiles.json
-  def index
-    @profiles = Profile.all
-
-    render json: @profiles
-  end
 
   # GET /profiles/1
   # GET /profiles/1.json
@@ -17,15 +10,15 @@ class Mobile::V1::ProfilesController < ApplicationController
 
   # POST /profiles
   # POST /profiles.json
-  def create
-    @profile = Profile.new(profile_params)
+  # def create
+  #   @profile = Profile.new(profile_params)
 
-    if @profile.save
-      render json: @profile, status: :created, location: @profile
-    else
-      render json: @profile.errors, status: :unprocessable_entity
-    end
-  end
+  #   if @profile.save
+  #     render json: @profile, status: :created, location: @profile
+  #   else
+  #     render json: @profile.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json

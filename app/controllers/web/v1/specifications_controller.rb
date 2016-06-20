@@ -6,13 +6,13 @@ class Web::V1::SpecificationsController < ApplicationController
   def index
     @specifications = Specification.all
 
-    render json: @specifications, serializer: SpecificationSerializer
+    render json: @specifications, each_serializer: Web::V1::SpecificationSerializer
   end
 
   # GET /web/v1/specifications/1
   # GET /web/v1/specifications/1.json
   def show
-    render json: @specification, serializer: SpecificationSerializer
+    render json: @specification, serializer: Web::V1::SpecificationSerializer
   end
 
   # POST /web/v1/specifications
@@ -21,7 +21,7 @@ class Web::V1::SpecificationsController < ApplicationController
     @specification = Specification.new(specification_params)
 
     if @specification.save
-      render json: @specification, status: :created, location: @specification, serializer: SpecificationSerializer
+      render json: @specification, status: :created, location: @specification, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class Web::V1::SpecificationsController < ApplicationController
   # PATCH/PUT /web/v1/specifications/1.json
   def update
     if @specification.update(specification_params)
-      render json: @specification, status: :ok, location: @specification, serializer: SpecificationSerializer
+      render json: @specification, status: :ok, location: @specification, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
     end

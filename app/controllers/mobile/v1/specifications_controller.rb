@@ -6,13 +6,13 @@ class Mobile::V1::SpecificationsController < ApplicationController
   def index
     @specifications = Specification.all
 
-    render json: @specifications, serializer: SpecificationSerializer
+    render json: @specifications, each_serializer: Mobile::V1::SpecificationSerializer
   end
 
   # GET /mobile/v1/specifications/1
   # GET /mobile/v1/specifications/1.json
   def show
-    render json: @specification, serializer: SpecificationSerializer
+    render json: @specification, serializer: Mobile::V1::SpecificationSerializer
   end
 
   private

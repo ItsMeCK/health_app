@@ -6,13 +6,13 @@ class Web::V1::BikeTypesController < ApplicationController
   def index
     @bike_types = BikeType.all
 
-    render json: @bike_types
+    render json: @bike_types, each_serializer: Web::V1::BikeTypeSerializer
   end
 
   # GET /web/v1/bike_types/1
   # GET /web/v1/bike_types/1.json
   def show
-    render json: @bike_type
+    render json: @bike_type, serializer: Web::V1::BikeTypeSerializer
   end
 
   # POST /web/v1/bike_types
@@ -21,7 +21,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.new(bike_type_params)
 
     if @bike_type.save
-      render json: @bike_type, status: :created, location: @bike_type
+      render json: @bike_type, status: :created, location: @bike_type, serializer: Web::V1::BikeTypeSerializer
     else
       render json: @bike_type.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.find(params[:id])
 
     if @bike_type.update(bike_type_params)
-      head :no_content
+      render json: @bike_type, status: :ok, location: @bike_type, serializer: Web::V1::BikeTypeSerializer
     else
       render json: @bike_type.errors, status: :unprocessable_entity
     end
