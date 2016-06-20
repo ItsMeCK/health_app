@@ -7,7 +7,7 @@ class Web::V1::BikesController < ApplicationController
   def index
     @bikes = Bike.all
 
-    render json: @bikes, each_serializer: Web::V1::BikeSerializer
+    render json: @bikes.includes(:specification), each_serializer: Web::V1::BikeSerializer
   end
 
   # GET /web/v1/bikes/1
