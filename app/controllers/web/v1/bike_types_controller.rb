@@ -1,4 +1,5 @@
 class Web::V1::BikeTypesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_bike_type, only: [:show, :update, :destroy]
 
   # GET /web/v1/bike_types

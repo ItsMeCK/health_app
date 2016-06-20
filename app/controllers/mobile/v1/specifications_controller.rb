@@ -1,4 +1,5 @@
 class Mobile::V1::SpecificationsController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_specification, only: [:show]
 
   # GET /mobile/v1/specifications
