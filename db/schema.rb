@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618153002) do
+ActiveRecord::Schema.define(version: 20160627061830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,13 +54,6 @@ ActiveRecord::Schema.define(version: 20160618153002) do
     t.datetime "updated_at",                    null: false
   end
 
-  create_table "key_features", force: :cascade do |t|
-    t.integer  "bike_id"
-    t.jsonb    "features"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "profiles", force: :cascade do |t|
     t.string   "full_name"
     t.string   "mobile"
@@ -80,42 +73,40 @@ ActiveRecord::Schema.define(version: 20160618153002) do
     t.datetime "updated_at",                    null: false
   end
 
-  create_table "specifications", force: :cascade do |t|
-    t.integer  "bike_id"
-    t.jsonb    "pricing",     default: {}, null: false
-    t.jsonb    "dimensions",  default: {}, null: false
-    t.jsonb    "engine",      default: {}, null: false
-    t.jsonb    "drivetrain",  default: {}, null: false
-    t.jsonb    "chassis",     default: {}, null: false
-    t.jsonb    "performance", default: {}, null: false
-    t.jsonb    "electric",    default: {}, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+  create_table "specification_types", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "display_order"
+    t.boolean  "active"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "specifications", ["chassis"], name: "index_specifications_on_chassis", using: :gin
-  add_index "specifications", ["dimensions"], name: "index_specifications_on_dimensions", using: :gin
-  add_index "specifications", ["drivetrain"], name: "index_specifications_on_drivetrain", using: :gin
-  add_index "specifications", ["electric"], name: "index_specifications_on_electric", using: :gin
-  add_index "specifications", ["engine"], name: "index_specifications_on_engine", using: :gin
-  add_index "specifications", ["performance"], name: "index_specifications_on_performance", using: :gin
-  add_index "specifications", ["pricing"], name: "index_specifications_on_pricing", using: :gin
+  create_table "specifications", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "specification_type_id"
+    t.integer  "bike_id"
+    t.string   "value"
+    t.boolean  "active"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                           default: "", null: false
-    t.string   "encrypted_password",              default: "", null: false
+    t.string   "email",                           default: "",      null: false
+    t.string   "encrypted_password",              default: "",      null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                   default: 0,  null: false
+    t.integer  "sign_in_count",                   default: 0,       null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
     t.datetime "authentication_token_created_at"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "role",                            default: "guest"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

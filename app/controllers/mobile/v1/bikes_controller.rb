@@ -6,7 +6,7 @@ class Mobile::V1::BikesController < ApplicationController
   # GET /mobile/v1/bikes.json
   def index
     @bikes = Bike.all
-    render json: @bikes.includes(:specification), each_serializer: Mobile::V1::BikeSerializer
+    render json: @bikes.includes(:specifications), each_serializer: Mobile::V1::BikeSerializer
   end
 
   # GET /mobile/v1/bikes/1

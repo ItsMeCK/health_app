@@ -30,8 +30,9 @@ class Web::V1::SpecificationsController < ApplicationController
   # PATCH/PUT /web/v1/specifications/1
   # PATCH/PUT /web/v1/specifications/1.json
   def update
-    if @specification.update(specification_params)
-      render json: @specification, status: :ok, location: @specification, serializer: Web::V1::SpecificationSerializer
+    update_params = specification_params(specification_params)
+    if @specification.update(update_params)
+      render json: @specification, status: :ok, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
     end
@@ -52,6 +53,6 @@ class Web::V1::SpecificationsController < ApplicationController
     end
 
     def specification_params
-      params.require(:specification).permit(:bike_id, :pricing, :dimensions, :engine, :drivetrain, :chassis, :performance, :electric)
+      params.require(:specification).permit(:name, :specification_type_id, :bike_id, :value, :active)
     end
 end

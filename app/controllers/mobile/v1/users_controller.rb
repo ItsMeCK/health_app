@@ -1,7 +1,7 @@
 class Mobile::V1::UsersController < ApplicationController
 	before_filter :authenticate_user!, only: [:update, :show, :destroy]
 	respond_to :json
-	before_action :set_user only: [:create, :show, :update, :destroy]
+	# before_action :set_user, only: [:show, :update, :destroy]
 
 	def create
 		@user = User.new(user_params)

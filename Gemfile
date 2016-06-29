@@ -9,6 +9,7 @@ gem 'active_model_serializers', '~> 0.8.0'
 gem 'ffaker'
 gem 'puma'
 gem 'pg'
+gem 'rabl'
 
 group :development do
 	gem 'spring'

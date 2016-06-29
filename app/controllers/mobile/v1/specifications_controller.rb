@@ -22,7 +22,4 @@ class Mobile::V1::SpecificationsController < ApplicationController
       @specification = Specification.find(params[:id])
     end
 
-    def specification_params
-      params[:specification]
-    end
 end

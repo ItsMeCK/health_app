@@ -1,3 +1,4 @@
 class Specification < ActiveRecord::Base
-  belongs_to :bike
+	belongs_to :specification_type
+	belongs_to :bike
 end

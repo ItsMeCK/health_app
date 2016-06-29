@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :bike_types
       resources :bikes
       resources :specifications
+      resources :specification_types
     end
   end
 
@@ -28,6 +29,7 @@ Rails.application.routes.draw do
       resources :bike_types, :only => [:show, :index]
       resources :bikes, :only => [:show, :index]
       resources :specifications, :only => [:show, :index]
+      resources :specification_types, :only => [:show, :index]
     end
   end
 

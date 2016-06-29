@@ -36,6 +36,9 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
 
       t.timestamps null: false
+
+      # CanCanCan
+      t.string :role, default: "guest"
     end
 
     add_index :users, :email,                unique: true
