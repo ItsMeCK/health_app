@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :bikes
       resources :specifications
       resources :specification_types
+      resources :test_rides
     end
   end
 
@@ -30,6 +31,7 @@ Rails.application.routes.draw do
       resources :bikes, :only => [:show, :index]
       resources :specifications, :only => [:show, :index]
       resources :specification_types, :only => [:show, :index]
+      resources :test_rides, :except => [:index]
     end
   end
 
