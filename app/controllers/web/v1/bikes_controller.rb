@@ -21,7 +21,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.new(bike_params)
 
     if @bike.save
-      render json: @bike, status: :created, location: @bike, serializer: Web::V1::BikeSerializer
+      render json: @bike, status: :created, serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.find(params[:id])
 
     if @bike.update(bike_params)
-      render json: @bike, status: :ok, location: @bike, serializer: Web::V1::BikeSerializer
+      render json: @bike, status: :ok, serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
     end
@@ -54,6 +54,6 @@ class Web::V1::BikesController < ApplicationController
     end
 
     def bike_params
-      params[:bike]
+      params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline)
     end
 end

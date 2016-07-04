@@ -1,4 +1,5 @@
 class Mobile::V1::SessionsController < ApplicationController
+  before_filter :authenticate_user!, only: [:destroy]
 
 	def create
     user_password = params[:session][:password]
@@ -20,6 +21,7 @@ class Mobile::V1::SessionsController < ApplicationController
   end
 
   def destroy
+    binding.pry
     user = User.find_by(authentication_token: params[:auth_token])
     user.reset_authentication_token!
     user.save
