@@ -9,6 +9,7 @@ class CreateServiceBookings < ActiveRecord::Migration
       t.timestamp :service_time
       t.string :service_station
       t.text :comments
+      t.string :service_type
       t.boolean :request_pick_up, default: false
       t.string :service_status, default: "Requested"
 

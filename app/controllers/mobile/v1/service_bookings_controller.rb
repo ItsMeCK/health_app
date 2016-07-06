@@ -47,6 +47,14 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     head :no_content
   end
 
+  def my_bookings
+    @old_bookings = ServiceBooking.where('user_id = ? AND service_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order
+    @new_bookings = ServiceBooking.where('user_id = ? AND service_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order
+    @bookings_all = Hash.new
+    @bookings_all = {:old_bookings => @old_bookings, :new_bookings =>  @new_bookings}
+    render json: @bookings_all
+  end
+
   private
 
     def set_service_booking
