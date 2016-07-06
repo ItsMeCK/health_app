@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :profile
   has_one :hog_registration
   has_many :test_rides
+  has_many :my_bikes
 
   # Validations
   validates :authentication_token, :uniqueness => true

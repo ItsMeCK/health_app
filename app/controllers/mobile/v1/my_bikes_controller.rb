@@ -1,10 +1,11 @@
 class Mobile::V1::MyBikesController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_my_bike, only: [:show, :update, :destroy]
 
   # GET /web/v1/my_bikes
   # GET /web/v1/my_bikes.json
   def index
-    @my_bikes = MyBike.all
+    @my_bikes = current_user.my_bikes
 
     render json: @my_bikes
   end

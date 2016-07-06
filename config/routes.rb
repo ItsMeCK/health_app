@@ -36,7 +36,7 @@ Rails.application.routes.draw do
       resources :test_rides, :except => [:index]
       resources :service_bookings, :except => [:index]
       post '/my_bookings' => 'service_bookings#my_bookings'
-      resources :my_bikes, :except => [:index]
+      resources :my_bikes
     end
   end
 
