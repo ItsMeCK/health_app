@@ -21,7 +21,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.new(service_booking_params)
 
     if @service_booking.save
-      render json: @service_booking, status: :created
+      render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.find(params[:id])
 
     if @service_booking.update(service_booking_params)
-      head :no_content
+      render json: @service_booking, status: :success, serializer: Mobile::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
