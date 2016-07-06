@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705085447) do
+ActiveRecord::Schema.define(version: 20160706130304) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,23 @@ ActiveRecord::Schema.define(version: 20160705085447) do
     t.boolean  "show_hog",      default: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "insurance_renewals", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "mobile"
+    t.string   "address"
+    t.string   "bike"
+    t.date     "purchase_date"
+    t.integer  "kms"
+    t.string   "registration_number"
+    t.string   "insurance_company"
+    t.string   "policy_number"
+    t.string   "expiry_date"
+    t.string   "status",              default: "Not Followed-Up"
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "my_bikes", force: :cascade do |t|

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :test_rides
       resources :service_bookings
       resources :my_bikes
+      resources :insurance_renewals, except: [:delete]
     end
   end
 
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
       resources :service_bookings, :except => [:index]
       post '/my_bookings' => 'service_bookings#my_bookings'
       resources :my_bikes
+      resources :insurance_renewals, only: [:create, :show]
     end
   end
 
