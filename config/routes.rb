@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :service_bookings
       resources :my_bikes
       resources :feedbacks, only: [:index, :show, :create]
+      resources :insurance_renewals, except: [:delete]
     end
   end
 
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
       post '/my_bookings' => 'service_bookings#my_bookings'
       resources :my_bikes
       resources :feedbacks, only: [:create]
+      resources :insurance_renewals, only: [:create, :show]
     end
   end
 
