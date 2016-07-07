@@ -18,7 +18,6 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
   # POST /web/v1/insurance_renewals
   # POST /web/v1/insurance_renewals.json
   def create
-    binding.pry
     @insurance_renewal = InsuranceRenewal.new(insurance_renewal_params)
 
     if @insurance_renewal.save

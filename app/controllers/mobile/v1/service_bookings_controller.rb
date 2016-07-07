@@ -33,7 +33,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.find(params[:id])
 
     if @service_booking.update(service_booking_params)
-      render json: @service_booking, status: :success, serializer: Mobile::V1::ServiceBookingSerializer
+      render json: @service_booking, status: :ok, serializer: Mobile::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
@@ -52,7 +52,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @new_bookings = ServiceBooking.where('user_id = ? AND service_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order
     @bookings_all = Hash.new
     @bookings_all = {:old_bookings => @old_bookings, :new_bookings =>  @new_bookings}
-    render json: @bookings_all
+    render json: @bookings_all, each_serializer: Mobile::V1::ServiceBookingSerializer
   end
 
   private
