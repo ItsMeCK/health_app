@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :my_bikes
       resources :feedbacks, only: [:index, :show, :create]
       resources :insurance_renewals, except: [:delete]
+      resources :enquiries, except: [:delete]
     end
   end
 
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
       resources :my_bikes
       resources :feedbacks, only: [:create]
       resources :insurance_renewals, only: [:create, :show]
+      resources :enquiries, only: [:create]
     end
   end
 
