@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :feedbacks, only: [:index, :show, :create]
       resources :insurance_renewals, except: [:delete]
       resources :enquiries, except: [:delete]
+      resources :booking_time_controls
     end
   end
 
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
       resources :feedbacks, only: [:create]
       resources :insurance_renewals, only: [:create, :show]
       resources :enquiries, only: [:create]
+      post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
     end
   end
 
