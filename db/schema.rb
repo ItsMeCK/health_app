@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707051724) do
+ActiveRecord::Schema.define(version: 20160707111504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(version: 20160707051724) do
     t.integer  "bike_type_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+  end
+
+  create_table "booking_time_controls", force: :cascade do |t|
+    t.time     "open_time"
+    t.time     "end_time"
+    t.integer  "days_prior"
+    t.string   "weekday"
+    t.string   "category"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "enquiries", force: :cascade do |t|
