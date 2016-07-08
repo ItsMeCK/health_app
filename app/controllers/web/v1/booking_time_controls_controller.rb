@@ -6,13 +6,13 @@ class Web::V1::BookingTimeControlsController < ApplicationController
   def index
     @booking_time_controls = BookingTimeControl.all
 
-    render json: @booking_time_controls
+    render json: @booking_time_controls, each_serializer: Web::V1::BookingTimeControlSerializer
   end
 
   # GET /web/v1/booking_time_controls/1
   # GET /web/v1/booking_time_controls/1.json
   def show
-    render json: @booking_time_control
+    render json: @booking_time_control, serializer: Web::V1::BookingTimeControlSerializer
   end
 
   # POST /web/v1/booking_time_controls
@@ -21,7 +21,7 @@ class Web::V1::BookingTimeControlsController < ApplicationController
     @booking_time_control = BookingTimeControl.new(booking_time_control_params)
 
     if @booking_time_control.save
-      render json: @booking_time_control, status: :created
+      render json: @booking_time_control, status: :created, serializer: Web::V1::BookingTimeControlSerializer
     else
       render json: @booking_time_control.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Web::V1::BookingTimeControlsController < ApplicationController
     @booking_time_control = BookingTimeControl.find(params[:id])
 
     if @booking_time_control.update(booking_time_control_params)
-      render json: @booking_time_control, status: :ok
+      render json: @booking_time_control, status: :ok, serializer: Web::V1::BookingTimeControlSerializer
     else
       render json: @booking_time_control.errors, status: :unprocessable_entity
     end

@@ -48,8 +48,8 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
   end
 
   def my_bookings
-    @old_bookings = ServiceBooking.where('user_id = ? AND service_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order
-    @new_bookings = ServiceBooking.where('user_id = ? AND service_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order
+    @old_bookings = (ServiceBooking.where('user_id = ? AND service_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ?', params[:user_id], Date.today).order(:updated_at).reverse_order)
+    @new_bookings = (ServiceBooking.where('user_id = ? AND service_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ?', params[:user_id], Date.today).order(:updated_at).reverse_order)
     @bookings_all = Hash.new
     @bookings_all = {:old_bookings => @old_bookings, :new_bookings =>  @new_bookings}
     render json: @bookings_all
@@ -62,6 +62,6 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     end
 
     def service_booking_params
-      params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status)
+      params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status, :my_bike_name)
     end
 end

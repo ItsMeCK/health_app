@@ -34,6 +34,6 @@ class Web::V1::FeedbacksController < ApplicationController
     end
 
     def feedback_params
-      params.require(:feedback).permit(:name, :mobile, :feedback_type, :comment, :rating)
+      params.require(:feedback).permit(:name, :mobile, :feedback_type, :email, :comment, :rating)
     end
 end
