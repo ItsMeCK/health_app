@@ -62,6 +62,6 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     end
 
     def service_booking_params
-      params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status, :my_bike_name)
+      params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status)
     end
 end
