@@ -4,8 +4,8 @@ class Web::V1::BookingTimeControlSerializer < ActiveModel::Serializer
 
   def attributes
   	data = super
-  	data[:open_time] = (data[:open_time]).strftime("\%I:%M:%S %p")
-  	data[:end_time] = (data[:end_time]).strftime("\%I:%M:%S %p")
+  	data[:open_time] = (data[:open_time]).strftime("%H:%M:%S %p")
+  	data[:end_time] = (data[:end_time]).strftime("%H:%M:%S %p")
   	data
   end
 

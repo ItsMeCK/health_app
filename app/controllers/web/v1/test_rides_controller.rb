@@ -6,13 +6,13 @@ class Web::V1::TestRidesController < ApplicationController
   def index
     @test_rides = TestRide.all
 
-    render json: @test_rides
+    render json: @test_rides, each_serializer: Web::V1::TestRideSerializer
   end
 
   # GET /web/v1/test_rides/1
   # GET /web/v1/test_rides/1.json
   def show
-    render json: @test_ride
+    render json: @test_ride, serializer: Web::V1::TestRideSerializer
   end
 
   # POST /web/v1/test_rides
@@ -21,7 +21,7 @@ class Web::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.new(test_ride_params)
 
     if @test_ride.save
-      render json: @test_ride, status: :created
+      render json: @test_ride, status: :created, serializer: Web::V1::TestRideSerializer
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Web::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.find(params[:id])
 
     if @test_ride.update(test_ride_params)
-      head :no_content
+      render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end

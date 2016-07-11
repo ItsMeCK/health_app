@@ -6,13 +6,13 @@ class Web::V1::ServiceBookingsController < ApplicationController
   def index
     @service_bookings = ServiceBooking.all
 
-    render json: @service_bookings
+    render json: @service_bookings, each_serializer: Web::V1::ServiceBookingSerializer
   end
 
   # GET /web/v1/service_bookings/1
   # GET /web/v1/service_bookings/1.json
   def show
-    render json: @service_booking
+    render json: @service_booking, serializer: Web::V1::ServiceBookingSerializer
   end
 
   # POST /web/v1/service_bookings
@@ -21,7 +21,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.new(service_booking_params)
 
     if @service_booking.save
-      render json: @service_booking, status: :created
+      render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.find(params[:id])
 
     if @service_booking.update(service_booking_params)
-      head :no_content
+      render json: @service_booking, status: :ok, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end

@@ -4,7 +4,7 @@ class Mobile::V1::TestRidesController < ApplicationController
   # GET /web/v1/test_rides/1
   # GET /web/v1/test_rides/1.json
   def show
-    render json: @test_ride
+    render json: @test_rides
   end
 
   # POST /web/v1/test_rides
