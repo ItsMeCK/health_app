@@ -1,4 +1,5 @@
 class Mobile::V1::TestRidesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_test_ride, only: [:show, :update, :destroy]
 
   # GET /web/v1/test_rides/1
@@ -14,6 +15,8 @@ class Mobile::V1::TestRidesController < ApplicationController
 
     if @test_ride.save
       render json: @test_ride, status: :created
+      # Create Notifications
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: "Test Ride Notification", notifiable: @test_ride)
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end

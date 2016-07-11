@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_one :hog_registration
   has_many :test_rides
   has_many :my_bikes
+  has_many :notifications, foreign_key: :recipient_id
 
   # Validations
   validates :authentication_token, :uniqueness => true
