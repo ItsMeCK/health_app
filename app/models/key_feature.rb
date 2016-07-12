@@ -1,3 +1,3 @@
 class KeyFeature < ActiveRecord::Base
-  belong_to :bike
+  belongs_to :bike
 end
