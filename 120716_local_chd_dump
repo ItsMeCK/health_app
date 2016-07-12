@@ -1,0 +1,1861 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: bike_types; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE bike_types (
+    id integer NOT NULL,
+    name character varying,
+    tagline text,
+    available boolean DEFAULT false,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE bike_types OWNER TO "user";
+
+--
+-- Name: bike_types_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE bike_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bike_types_id_seq OWNER TO "user";
+
+--
+-- Name: bike_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE bike_types_id_seq OWNED BY bike_types.id;
+
+
+--
+-- Name: bikes; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE bikes (
+    id integer NOT NULL,
+    name character varying,
+    description text,
+    tagline text,
+    available boolean DEFAULT true,
+    bike_type_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE bikes OWNER TO "user";
+
+--
+-- Name: bikes_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE bikes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bikes_id_seq OWNER TO "user";
+
+--
+-- Name: bikes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE bikes_id_seq OWNED BY bikes.id;
+
+
+--
+-- Name: booking_time_controls; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE booking_time_controls (
+    id integer NOT NULL,
+    open_time time without time zone,
+    end_time time without time zone,
+    days_prior integer,
+    weekday character varying,
+    category character varying,
+    active boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE booking_time_controls OWNER TO "user";
+
+--
+-- Name: booking_time_controls_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE booking_time_controls_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE booking_time_controls_id_seq OWNER TO "user";
+
+--
+-- Name: booking_time_controls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE booking_time_controls_id_seq OWNED BY booking_time_controls.id;
+
+
+--
+-- Name: enquiries; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE enquiries (
+    id integer NOT NULL,
+    name character varying,
+    phone character varying,
+    email character varying,
+    category character varying,
+    message text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE enquiries OWNER TO "user";
+
+--
+-- Name: enquiries_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE enquiries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE enquiries_id_seq OWNER TO "user";
+
+--
+-- Name: enquiries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE enquiries_id_seq OWNED BY enquiries.id;
+
+
+--
+-- Name: feedbacks; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE feedbacks (
+    id integer NOT NULL,
+    name character varying,
+    mobile character varying,
+    email character varying,
+    feedback_type character varying,
+    comment text,
+    rating integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE feedbacks OWNER TO "user";
+
+--
+-- Name: feedbacks_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE feedbacks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE feedbacks_id_seq OWNER TO "user";
+
+--
+-- Name: feedbacks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE feedbacks_id_seq OWNED BY feedbacks.id;
+
+
+--
+-- Name: hog_registrations; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE hog_registrations (
+    id integer NOT NULL,
+    full_name character varying,
+    email character varying,
+    mobile character varying,
+    dob date,
+    gender character varying,
+    bike_owned character varying,
+    riding_since character varying,
+    address character varying,
+    location character varying,
+    profession character varying,
+    bio text,
+    hog_privacy boolean,
+    profile_image character varying,
+    user_id integer,
+    show_hog boolean DEFAULT false,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE hog_registrations OWNER TO "user";
+
+--
+-- Name: hog_registrations_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE hog_registrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hog_registrations_id_seq OWNER TO "user";
+
+--
+-- Name: hog_registrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE hog_registrations_id_seq OWNED BY hog_registrations.id;
+
+
+--
+-- Name: insurance_renewals; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE insurance_renewals (
+    id integer NOT NULL,
+    name character varying,
+    email character varying,
+    mobile character varying,
+    address character varying,
+    bike character varying,
+    purchase_date date,
+    kms integer,
+    registration_number character varying,
+    insurance_company character varying,
+    policy_number character varying,
+    expiry_date character varying,
+    status character varying DEFAULT 'Not Followed-Up'::character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE insurance_renewals OWNER TO "user";
+
+--
+-- Name: insurance_renewals_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE insurance_renewals_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE insurance_renewals_id_seq OWNER TO "user";
+
+--
+-- Name: insurance_renewals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE insurance_renewals_id_seq OWNED BY insurance_renewals.id;
+
+
+--
+-- Name: my_bikes; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE my_bikes (
+    id integer NOT NULL,
+    bike character varying,
+    purchase_date date,
+    registration_number character varying,
+    insurance_provider character varying,
+    insurance_number character varying,
+    insurance_expiry_date date,
+    engine_number character varying,
+    last_service_date date,
+    user_id integer,
+    bike_image character varying,
+    kms integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE my_bikes OWNER TO "user";
+
+--
+-- Name: my_bikes_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE my_bikes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE my_bikes_id_seq OWNER TO "user";
+
+--
+-- Name: my_bikes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE my_bikes_id_seq OWNED BY my_bikes.id;
+
+
+--
+-- Name: notifications; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE notifications (
+    id integer NOT NULL,
+    recipient_id integer,
+    actor_id integer,
+    read_at timestamp without time zone,
+    action character varying,
+    notifiable_id integer,
+    notifiable_type character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE notifications OWNER TO "user";
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE notifications_id_seq OWNER TO "user";
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE notifications_id_seq OWNED BY notifications.id;
+
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE profiles (
+    id integer NOT NULL,
+    full_name character varying,
+    mobile character varying,
+    email character varying,
+    dob date,
+    gender character varying,
+    bike_owned character varying,
+    riding_since character varying,
+    address character varying,
+    location character varying,
+    profession character varying,
+    bio text,
+    hog_privacy boolean DEFAULT false,
+    profile_image character varying,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE profiles OWNER TO "user";
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE profiles_id_seq OWNER TO "user";
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
+
+
+--
+-- Name: rpush_apps; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE rpush_apps (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    environment character varying,
+    certificate text,
+    password character varying,
+    connections integer DEFAULT 1 NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    type character varying NOT NULL,
+    auth_key character varying,
+    client_id character varying,
+    client_secret character varying,
+    access_token character varying,
+    access_token_expiration timestamp without time zone
+);
+
+
+ALTER TABLE rpush_apps OWNER TO "user";
+
+--
+-- Name: rpush_apps_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE rpush_apps_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE rpush_apps_id_seq OWNER TO "user";
+
+--
+-- Name: rpush_apps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE rpush_apps_id_seq OWNED BY rpush_apps.id;
+
+
+--
+-- Name: rpush_feedback; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE rpush_feedback (
+    id integer NOT NULL,
+    device_token character varying(64) NOT NULL,
+    failed_at timestamp without time zone NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    app_id integer
+);
+
+
+ALTER TABLE rpush_feedback OWNER TO "user";
+
+--
+-- Name: rpush_feedback_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE rpush_feedback_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE rpush_feedback_id_seq OWNER TO "user";
+
+--
+-- Name: rpush_feedback_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE rpush_feedback_id_seq OWNED BY rpush_feedback.id;
+
+
+--
+-- Name: rpush_notifications; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE rpush_notifications (
+    id integer NOT NULL,
+    badge integer,
+    device_token character varying(64),
+    sound character varying DEFAULT 'default'::character varying,
+    alert text,
+    data text,
+    expiry integer DEFAULT 86400,
+    delivered boolean DEFAULT false NOT NULL,
+    delivered_at timestamp without time zone,
+    failed boolean DEFAULT false NOT NULL,
+    failed_at timestamp without time zone,
+    error_code integer,
+    error_description text,
+    deliver_after timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    alert_is_json boolean DEFAULT false,
+    type character varying NOT NULL,
+    collapse_key character varying,
+    delay_while_idle boolean DEFAULT false NOT NULL,
+    registration_ids text,
+    app_id integer NOT NULL,
+    retries integer DEFAULT 0,
+    uri character varying,
+    fail_after timestamp without time zone,
+    processing boolean DEFAULT false NOT NULL,
+    priority integer,
+    url_args text,
+    category character varying,
+    content_available boolean DEFAULT false,
+    notification text
+);
+
+
+ALTER TABLE rpush_notifications OWNER TO "user";
+
+--
+-- Name: rpush_notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE rpush_notifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE rpush_notifications_id_seq OWNER TO "user";
+
+--
+-- Name: rpush_notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE rpush_notifications_id_seq OWNED BY rpush_notifications.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE schema_migrations OWNER TO "user";
+
+--
+-- Name: service_bookings; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE service_bookings (
+    id integer NOT NULL,
+    user_id integer,
+    my_bike_id integer,
+    registration_number character varying,
+    kms integer,
+    service_date date,
+    service_time timestamp without time zone,
+    service_station character varying,
+    comments text,
+    service_type character varying,
+    request_pick_up boolean DEFAULT false,
+    service_status character varying DEFAULT 'Requested'::character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE service_bookings OWNER TO "user";
+
+--
+-- Name: service_bookings_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE service_bookings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE service_bookings_id_seq OWNER TO "user";
+
+--
+-- Name: service_bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE service_bookings_id_seq OWNED BY service_bookings.id;
+
+
+--
+-- Name: specification_types; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE specification_types (
+    id integer NOT NULL,
+    name character varying,
+    display_order integer,
+    active boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE specification_types OWNER TO "user";
+
+--
+-- Name: specification_types_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE specification_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE specification_types_id_seq OWNER TO "user";
+
+--
+-- Name: specification_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE specification_types_id_seq OWNED BY specification_types.id;
+
+
+--
+-- Name: specifications; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE specifications (
+    id integer NOT NULL,
+    name character varying,
+    specification_type_id integer,
+    bike_id integer,
+    value character varying,
+    active boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE specifications OWNER TO "user";
+
+--
+-- Name: specifications_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE specifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE specifications_id_seq OWNER TO "user";
+
+--
+-- Name: specifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE specifications_id_seq OWNED BY specifications.id;
+
+
+--
+-- Name: test_rides; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE test_rides (
+    id integer NOT NULL,
+    user_id integer,
+    name character varying,
+    mobile character varying,
+    email character varying,
+    address text,
+    request_pick_up boolean DEFAULT false,
+    test_ride_done boolean DEFAULT false,
+    test_ride_confirmed boolean DEFAULT false,
+    bike character varying,
+    ride_date date NOT NULL,
+    ride_time timestamp without time zone NOT NULL,
+    location character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE test_rides OWNER TO "user";
+
+--
+-- Name: test_rides_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE test_rides_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE test_rides_id_seq OWNER TO "user";
+
+--
+-- Name: test_rides_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE test_rides_id_seq OWNED BY test_rides.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: user
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip character varying,
+    last_sign_in_ip character varying,
+    authentication_token character varying,
+    authentication_token_created_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    role character varying DEFAULT 'guest'::character varying
+);
+
+
+ALTER TABLE users OWNER TO "user";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: user
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO "user";
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: user
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY bike_types ALTER COLUMN id SET DEFAULT nextval('bike_types_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY bikes ALTER COLUMN id SET DEFAULT nextval('bikes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY booking_time_controls ALTER COLUMN id SET DEFAULT nextval('booking_time_controls_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY enquiries ALTER COLUMN id SET DEFAULT nextval('enquiries_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY feedbacks ALTER COLUMN id SET DEFAULT nextval('feedbacks_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY hog_registrations ALTER COLUMN id SET DEFAULT nextval('hog_registrations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY insurance_renewals ALTER COLUMN id SET DEFAULT nextval('insurance_renewals_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY my_bikes ALTER COLUMN id SET DEFAULT nextval('my_bikes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY notifications ALTER COLUMN id SET DEFAULT nextval('notifications_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY profiles ALTER COLUMN id SET DEFAULT nextval('profiles_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_apps ALTER COLUMN id SET DEFAULT nextval('rpush_apps_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_feedback ALTER COLUMN id SET DEFAULT nextval('rpush_feedback_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_notifications ALTER COLUMN id SET DEFAULT nextval('rpush_notifications_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY service_bookings ALTER COLUMN id SET DEFAULT nextval('service_bookings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY specification_types ALTER COLUMN id SET DEFAULT nextval('specification_types_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY specifications ALTER COLUMN id SET DEFAULT nextval('specifications_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY test_rides ALTER COLUMN id SET DEFAULT nextval('test_rides_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: bike_types; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY bike_types (id, name, tagline, available, created_at, updated_at) FROM stdin;
+1	Odyssey	Diy chambray high life Wayfarers tattooed messenger bag fap.	t	2016-06-27 06:06:40.410179	2016-06-27 06:06:40.410179
+2	Lancer	Scenester banh mi VHS gentrify raw denim.	t	2016-06-27 06:06:40.439045	2016-06-27 06:06:40.439045
+3	Integra	Synth organic cardigan Four Loko trust fund vice readymade fanny pack VHS.	t	2016-06-27 06:06:40.448966	2016-06-27 06:06:40.448966
+4	Elantra	Gentrify McSweeney's Portland fixie tattooed keffiyeh readymade vegan.	t	2016-06-27 06:06:40.458948	2016-06-27 06:06:40.458948
+5	Jimmy	Freegan jean shorts keytar lo-fi irony retro ethical mixtape.	t	2016-06-27 06:06:40.469426	2016-06-27 06:06:40.469426
+6	Odyssey	Mcsweeney's master cleanse freegan banh mi party Wes Anderson.	t	2016-06-27 06:06:40.479513	2016-06-27 06:06:40.479513
+7	Beetle	Bicycle rights next level trust fund irony 8-bit mustache before they sold out.	t	2016-06-27 06:06:40.489426	2016-06-27 06:06:40.489426
+8	Santa Fe	Vinyl freegan mlkshk Pitchfork scenester helvetica lomo gluten-free DIY.	t	2016-06-27 06:06:40.49972	2016-06-27 06:06:40.49972
+9	Accord	Fixie next level twee Wes Anderson cardigan.	t	2016-06-27 06:06:40.509971	2016-06-27 06:06:40.509971
+10	Quest	Biodiesel messenger bag irony aesthetic photo booth Shoreditch.	t	2016-06-27 06:06:40.520036	2016-06-27 06:06:40.520036
+\.
+
+
+--
+-- Name: bike_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('bike_types_id_seq', 10, true);
+
+
+--
+-- Data for Name: bikes; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY bikes (id, name, description, tagline, available, bike_type_id, created_at, updated_at) FROM stdin;
+15	Ford	Master cleanse art readymade Rerry Richardson lomo +1 tumblr mixtape.	Banh mi high life mlkshk Portland thundercats.	t	7	2016-06-27 06:06:56.053103	2016-06-27 06:06:56.053103
+16	Nissan	High life sartorial brunch vice Pitchfork raw denim DIY craft beer wolf.	Wes anderson before they sold out messenger bag thundercats letterpress tumblr.	t	8	2016-06-27 06:06:56.063641	2016-06-27 06:06:56.063641
+18	Ram	Moon DIY gluten-free vinyl beard farm-to-table.	Cliche sustainable hoodie gluten-free iPhone tumblr echo park.	t	8	2016-06-27 06:06:56.084453	2016-06-27 06:06:56.084453
+19	Aston Martin	Austin Pitchfork whatever mlkshk art Four Loko hoodie wolf.	Sustainable chambray keffiyeh helvetica raw denim organic tattooed cliche.	t	2	2016-06-27 06:06:56.093762	2016-06-27 06:06:56.093762
+20	BMW	Diy brunch helvetica single-origin coffee gluten-free sartorial Pitchfork seitan.	Keytar tumblr scenester gentrify put a bird on it fanny pack seitan lo-fi.	t	3	2016-06-27 06:06:56.103881	2016-06-27 06:06:56.103881
+21	Morgan	Readymade raw denim gluten-free Rerry Richardson you probably haven't heard of them VHS echo park before they sold out Wes Anderson.	Readymade cred twee cardigan fap chambray craft beer.	t	7	2016-06-27 06:06:56.114368	2016-06-27 06:06:56.114368
+22	Maserati	Austin biodiesel trust fund gluten-free readymade locavore vice single-origin coffee.	Jean shorts +1 seitan cliche single-origin coffee irony fanny pack Rerry Richardson.	t	5	2016-06-27 06:06:56.124638	2016-06-27 06:06:56.124638
+23	Volvo	Seitan freegan McSweeney's Shoreditch craft beer butcher locavore.	Freegan artisan quinoa master cleanse aesthetic PBR scenester seitan.	t	7	2016-06-27 06:06:56.134385	2016-06-27 06:06:56.134385
+24	Merkur	Irony jean shorts cliche tattooed helvetica.	Chambray art Shoreditch bicycle rights seitan Banksy vice sartorial.	t	8	2016-06-27 06:06:56.144779	2016-06-27 06:06:56.144779
+25	Acura	Irony artisan brunch Carles leggings.	Wolf aesthetic ethical single-origin coffee keytar trust fund cred.	t	6	2016-06-27 06:06:56.155498	2016-06-27 06:06:56.155498
+26	Saab	Locavore quinoa lo-fi stumptown freegan whatever dreamcatcher VHS.	Four loko locavore chambray trust fund cardigan PBR 8-bit.	t	1	2016-06-27 06:06:56.165038	2016-06-27 06:06:56.165038
+27	Dodge	Mixtape Williamsburg artisan viral food truck Banksy DIY.	Biodiesel +1 Portland fap Wes Anderson jean shorts mlkshk sustainable vegan.	t	4	2016-06-27 06:06:56.17545	2016-06-27 06:06:56.17545
+28	Scion	Food truck mlkshk dreamcatcher Wayfarers tofu cliche tattooed.	Vice Four Loko art readymade Carles PBR Shoreditch.	t	7	2016-06-27 06:06:56.185988	2016-06-27 06:06:56.185988
+29	Lamborghini	Pbr iPhone Cosby Sweater twee scenester Austin.	Salvia skateboard scenester mixtape single-origin coffee sartorial.	t	10	2016-06-27 06:06:56.195539	2016-06-27 06:06:56.195539
+30	Jaguar	Artisan scenester trust fund Rerry Richardson cliche McSweeney's.	Pitchfork keytar fixie craft beer sartorial cred wolf party synth.	t	5	2016-06-27 06:06:56.206507	2016-06-27 06:06:56.206507
+31	Bugatti	Lomo vinyl Wes Anderson synth hoodie American Apparel +1.	Blog hoodie lo-fi jean shorts synth letterpress.	t	4	2016-06-27 06:06:56.216031	2016-06-27 06:06:56.216031
+32	Bugatti	Irony DIY Banksy thundercats freegan whatever synth keytar beard.	Raw denim bicycle rights scenester you probably haven't heard of them master cleanse hoodie DIY.	t	2	2016-06-27 06:06:56.226124	2016-06-27 06:06:56.226124
+33	Mazda	Vice sustainable synth butcher Carles.	Stumptown Williamsburg +1 iPhone irony fap.	t	3	2016-06-27 06:06:56.236286	2016-06-27 06:06:56.236286
+34	Lexus	Cred blog chambray tofu moon sustainable gluten-free keytar.	Raw denim messenger bag VHS twee blog freegan irony jean shorts.	t	6	2016-06-27 06:06:56.246655	2016-06-27 06:06:56.246655
+35	Aston Martin	Gluten-free Four Loko farm-to-table +1 Portland.	Salvia raw denim biodiesel squid bicycle rights thundercats McSweeney's scenester.	t	3	2016-06-27 06:06:56.256515	2016-06-27 06:06:56.256515
+36	Country Coach	Carles fixie retro party mixtape banh mi mlkshk Austin craft beer.	Messenger bag Pitchfork hoodie Brooklyn vinyl Wayfarers +1.	t	2	2016-06-27 06:06:56.267009	2016-06-27 06:06:56.267009
+37	Lincoln	Brooklyn Banksy moon art iPhone messenger bag.	Pitchfork Cosby Sweater food truck stumptown fap party retro cardigan twee.	t	5	2016-06-27 06:06:56.27743	2016-06-27 06:06:56.27743
+38	Lada	Vice tattooed thundercats +1 gentrify farm-to-table wolf.	Tattooed letterpress messenger bag gentrify keytar moon +1 8-bit.	t	4	2016-06-27 06:06:56.287393	2016-06-27 06:06:56.287393
+39	BMW	Sustainable Banksy fanny pack quinoa lomo.	Farm-to-table food truck organic quinoa raw denim vegan.	t	9	2016-06-27 06:06:56.297615	2016-06-27 06:06:56.297615
+40	Jaguar	Messenger bag Four Loko salvia sartorial photo booth Williamsburg freegan.	Ethical mixtape Austin mustache vice.	t	2	2016-06-27 06:06:56.307757	2016-06-27 06:06:56.307757
+41	Scion	Messenger bag lo-fi jean shorts mustache retro cliche salvia fap banh mi.	Mixtape Marfa you probably haven't heard of them wolf beard Carles master cleanse vegan.	t	8	2016-06-27 06:06:56.31762	2016-06-27 06:06:56.31762
+42	Renault	Stumptown master cleanse DIY freegan hoodie.	Synth whatever DIY Wayfarers salvia readymade art farm-to-table Four Loko.	t	8	2016-06-27 06:06:56.327901	2016-06-27 06:06:56.327901
+43	Kia	Rerry richardson American Apparel Shoreditch fanny pack letterpress squid before they sold out.	Photo booth sartorial sustainable Four Loko echo park etsy trust fund put a bird on it.	t	1	2016-06-27 06:06:56.338193	2016-06-27 06:06:56.338193
+44	Lada	Organic scenester irony high life thundercats vice artisan farm-to-table.	Helvetica leggings dreamcatcher before they sold out salvia moon farm-to-table.	t	5	2016-06-27 06:06:56.348161	2016-06-27 06:06:56.348161
+45	Mitsubishi	Blog Wes Anderson yr American Apparel bicycle rights sustainable vegan butcher.	Readymade Williamsburg synth 8-bit whatever brunch biodiesel organic.	t	10	2016-06-27 06:06:56.358535	2016-06-27 06:06:56.358535
+46	Lodal	Sustainable gentrify sartorial Brooklyn raw denim PBR chambray Marfa.	Fanny pack mustache party high life photo booth.	t	7	2016-06-27 06:06:56.369334	2016-06-27 06:06:56.369334
+47	Hummer	Art butcher vinyl messenger bag food truck mlkshk keffiyeh next level.	Austin etsy McSweeney's tattooed +1 moon beard.	t	1	2016-06-27 06:06:56.379377	2016-06-27 06:06:56.379377
+48	Freightliner	Thundercats freegan helvetica cardigan squid Marfa.	Messenger bag etsy Wes Anderson high life bicycle rights.	t	5	2016-06-27 06:06:56.388892	2016-06-27 06:06:56.388892
+49	GMC	Raw denim tumblr Marfa thundercats quinoa aesthetic 8-bit echo park DIY.	Mlkshk bicycle rights butcher put a bird on it Shoreditch.	t	7	2016-06-27 06:06:56.398945	2016-06-27 06:06:56.398945
+50	Lotus	Vhs fixie art DIY squid.	Shoreditch tofu skateboard bicycle rights viral.	t	8	2016-06-27 06:06:56.409408	2016-06-27 06:06:56.409408
+51	\N	\N	\N	t	\N	2016-06-28 06:09:35.952945	2016-06-28 06:09:35.952945
+52	\N	\N	\N	t	\N	2016-06-28 09:57:33.020156	2016-06-28 09:57:33.020156
+53	\N	\N	\N	t	\N	2016-06-28 10:39:34.837083	2016-06-28 10:39:34.837083
+54	\N	\N	\N	t	\N	2016-06-28 11:12:13.211031	2016-06-28 11:12:13.211031
+55	\N	\N	\N	t	\N	2016-06-29 04:25:20.803973	2016-06-29 04:25:20.803973
+56	\N	\N	\N	t	\N	2016-06-29 04:29:32.483049	2016-06-29 04:29:32.483049
+57	\N	\N	\N	t	\N	2016-06-29 06:37:04.575847	2016-06-29 06:37:04.575847
+58	\N	\N	\N	t	\N	2016-06-29 06:37:33.594688	2016-06-29 06:37:33.594688
+60	data	test	test	t	\N	2016-06-29 07:13:29.564673	2016-06-29 07:13:29.564673
+1	Smart1	Craft beer master cleanse helvetica high life butcher readymade art.	Keytar fixie readymade cred next level etsy.	t	1	2016-06-27 06:06:55.89047	2016-06-29 08:42:25.576998
+\.
+
+
+--
+-- Name: bikes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('bikes_id_seq', 60, true);
+
+
+--
+-- Data for Name: booking_time_controls; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY booking_time_controls (id, open_time, end_time, days_prior, weekday, category, active, created_at, updated_at) FROM stdin;
+18	09:00:00	18:00:00	1	Monday	Book Service	t	2016-07-11 07:04:25.21441	2016-07-11 07:04:25.21441
+19	09:00:00	18:00:00	1	Monday	Book Test Ride	t	2016-07-11 07:04:39.306387	2016-07-11 07:04:39.306387
+\.
+
+
+--
+-- Name: booking_time_controls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('booking_time_controls_id_seq', 19, true);
+
+
+--
+-- Data for Name: enquiries; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY enquiries (id, name, phone, email, category, message, created_at, updated_at) FROM stdin;
+1	Aniket Rao	5566446655	aniket.rao@myridz.com	Some Category	Kombucha master cleanse mumblecore four loko pinterest. Organic etsy marfa poutine. Put a bird on it typewriter quinoa mustache, drinking vinegar authentic flexitarian. Authentic fanny pack chambray chia blog, vegan heirloom ugh chillwave PBR&B ramps venmo. Cliche occupy beard craft beer schlitz. Leggings tumblr etsy, gentrify pour-over selvage heirloom. Gentrify tumblr echo park, fixie crucifix organic kombucha seitan tacos mumblecore pabst forage YOLO.	2016-07-07 05:40:55.754408	2016-07-07 05:40:55.754408
+2	Aniket Rao	5566446655	aniket.rao@myridz.com	Some Category	Kombucha master cleanse mumblecore four loko pinterest.	2016-07-07 05:41:12.320485	2016-07-07 05:41:12.320485
+3	Navneeth	\N	cathrine@example.com	Sales	sadfsd	2016-07-07 10:57:06.565317	2016-07-07 10:57:06.565317
+4	sdasd	2454353453454	ela@gmail.com	sdfasd	asdfasd	2016-07-08 05:35:54.215494	2016-07-08 05:35:54.215494
+\.
+
+
+--
+-- Name: enquiries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('enquiries_id_seq', 4, true);
+
+
+--
+-- Data for Name: feedbacks; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY feedbacks (id, name, mobile, email, feedback_type, comment, rating, created_at, updated_at) FROM stdin;
+1	Navneeth	1212121213	cathrine@example.com	Sales	asdfa	2	2016-07-07 10:38:39.530389	2016-07-07 10:38:39.530389
+2	sdfasd	25345345	\N	sfasdf	asdfasd	\N	2016-07-07 12:14:40.764935	2016-07-07 12:14:40.764935
+3	sadfas	345345345	\N	sadfasd	asdfa	\N	2016-07-07 12:16:08.005163	2016-07-07 12:16:08.005163
+4	sadfasd	3453454	\N	dsfasd	sadfa	\N	2016-07-07 12:28:45.97561	2016-07-07 12:28:45.97561
+5	sdfas	43345	sdfasdf@gmail.com	asdfasd	asdf	\N	2016-07-07 12:37:53.263294	2016-07-07 12:37:53.263294
+6	sadfasf	4534543	\N	\N	\N	\N	2016-07-08 05:39:00.018708	2016-07-08 05:39:00.018708
+7	asdfa	454543435345435	sdfd@gmail.com	\N	\N	\N	2016-07-08 05:43:19.588348	2016-07-08 05:43:19.588348
+\.
+
+
+--
+-- Name: feedbacks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('feedbacks_id_seq', 7, true);
+
+
+--
+-- Data for Name: hog_registrations; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY hog_registrations (id, full_name, email, mobile, dob, gender, bike_owned, riding_since, address, location, profession, bio, hog_privacy, profile_image, user_id, show_hog, created_at, updated_at) FROM stdin;
+1	\N	richie@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	1	f	2016-06-27 05:58:31.786427	2016-06-27 05:58:31.786427
+2	\N	dewitt@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	2	f	2016-06-27 05:58:31.951107	2016-06-27 05:58:31.951107
+6	\N	javon.murphy@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	6	f	2016-06-27 05:58:32.606903	2016-06-27 05:58:32.606903
+7	\N	albertha.waelchi@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	7	f	2016-06-27 05:58:32.766142	2016-06-27 05:58:32.766142
+9	\N	evie_hettinger@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	9	f	2016-06-27 05:58:33.094469	2016-06-27 05:58:33.094469
+12	\N	rico@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	12	f	2016-06-27 06:02:56.079384	2016-06-27 06:02:56.079384
+13	\N	sanford@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	13	f	2016-06-27 06:02:56.242861	2016-06-27 06:02:56.242861
+14	\N	angelo@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	14	f	2016-06-27 06:02:56.406921	2016-06-27 06:02:56.406921
+16	\N	hailee@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	16	f	2016-06-27 06:02:56.728116	2016-06-27 06:02:56.728116
+17	\N	maymie_johns@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	17	f	2016-06-27 06:02:56.891089	2016-06-27 06:02:56.891089
+18	\N	jordy.luettgen@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	18	f	2016-06-27 06:02:57.060861	2016-06-27 06:02:57.060861
+19	\N	jacinthe@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	19	f	2016-06-27 06:02:57.218332	2016-06-27 06:02:57.218332
+20	\N	milford.kerluke@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	20	f	2016-06-27 06:02:57.379348	2016-06-27 06:02:57.379348
+21	\N	nora@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	21	f	2016-06-27 06:02:57.550046	2016-06-27 06:02:57.550046
+22	\N	michael.ryan@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	22	f	2016-06-27 06:02:57.707579	2016-06-27 06:02:57.707579
+23	\N	violet_sporer@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	23	f	2016-06-27 06:02:57.871151	2016-06-27 06:02:57.871151
+24	\N	freida_koepp@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	24	f	2016-06-27 06:02:58.037947	2016-06-27 06:02:58.037947
+25	\N	shayne_fisher@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	25	f	2016-06-27 06:02:58.195889	2016-06-27 06:02:58.195889
+26	\N	tyler@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	26	f	2016-06-27 06:02:58.35745	2016-06-27 06:02:58.35745
+27	\N	ethel@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	27	f	2016-06-27 06:02:58.521387	2016-06-27 06:02:58.521387
+28	\N	eli.cruickshank@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	28	f	2016-06-27 06:02:58.692489	2016-06-27 06:02:58.692489
+30	\N	demarcus_romaguera@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	30	f	2016-06-27 06:02:59.016136	2016-06-27 06:02:59.016136
+31	\N	dovie@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	31	f	2016-06-27 06:02:59.183664	2016-06-27 06:02:59.183664
+32	\N	lamar@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	32	f	2016-06-27 06:02:59.369158	2016-06-27 06:02:59.369158
+33	\N	donnell_stark@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	33	f	2016-06-27 06:02:59.525816	2016-06-27 06:02:59.525816
+34	\N	kristoffer@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	34	f	2016-06-27 06:02:59.689422	2016-06-27 06:02:59.689422
+35	\N	giovanna@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	35	f	2016-06-27 06:02:59.851497	2016-06-27 06:02:59.851497
+36	\N	dario@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	36	f	2016-06-27 06:03:00.044291	2016-06-27 06:03:00.044291
+37	\N	cale@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	37	f	2016-06-27 06:03:00.219564	2016-06-27 06:03:00.219564
+38	\N	lina_marquardt@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	38	f	2016-06-27 06:03:00.3798	2016-06-27 06:03:00.3798
+39	\N	enola@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	39	f	2016-06-27 06:03:00.543702	2016-06-27 06:03:00.543702
+40	\N	anita@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	40	f	2016-06-27 06:03:00.704646	2016-06-27 06:03:00.704646
+41	\N	lulu@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	41	f	2016-06-27 06:03:00.874065	2016-06-27 06:03:00.874065
+42	\N	briana@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	42	f	2016-06-27 06:03:01.036083	2016-06-27 06:03:01.036083
+43	\N	micheal.cole@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	43	f	2016-06-27 06:03:01.197032	2016-06-27 06:03:01.197032
+44	\N	amelie@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	44	f	2016-06-27 06:03:01.363206	2016-06-27 06:03:01.363206
+45	\N	robb_wisoky@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	45	f	2016-06-27 06:03:01.521438	2016-06-27 06:03:01.521438
+46	\N	albertha@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	46	f	2016-06-27 06:03:01.6868	2016-06-27 06:03:01.6868
+47	\N	rhett@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	47	f	2016-06-27 06:03:01.844228	2016-06-27 06:03:01.844228
+48	\N	jose_zboncak@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	48	f	2016-06-27 06:03:02.011236	2016-06-27 06:03:02.011236
+49	\N	shana.jakubowski@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	49	f	2016-06-27 06:03:02.175897	2016-06-27 06:03:02.175897
+51	\N	patience@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	51	f	2016-06-27 06:03:02.502223	2016-06-27 06:03:02.502223
+52	\N	kayley@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	52	f	2016-06-27 06:03:02.660885	2016-06-27 06:03:02.660885
+53	\N	luigi@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	53	f	2016-06-27 06:03:02.825985	2016-06-27 06:03:02.825985
+54	\N	jeffry.dickinson@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	54	f	2016-06-27 06:03:02.985025	2016-06-27 06:03:02.985025
+55	\N	mekhi@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	55	f	2016-06-27 06:03:03.153593	2016-06-27 06:03:03.153593
+56	\N	lyric_walker@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	56	f	2016-06-27 06:03:03.311184	2016-06-27 06:03:03.311184
+57	\N	arely@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	57	f	2016-06-27 06:03:03.480142	2016-06-27 06:03:03.480142
+58	\N	frederick.rohan@example.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	58	f	2016-06-27 06:03:03.639422	2016-06-27 06:03:03.639422
+59	\N	jimmie@example.org	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	59	f	2016-06-27 06:03:03.799005	2016-06-27 06:03:03.799005
+60	\N	dorris_littel@example.net	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	60	f	2016-06-27 06:03:03.96643	2016-06-27 06:03:03.96643
+8	Dr. Michel Lesch	justice_spinka@example.com	5321015596	2016-02-17	Female	\N	1975	69354 Dock Extension	Eliasport	Global Brand Director	Your chrome tha shiznit nothing can save ya Snoopy the dopest rizzoad waddup Snoop. If the ride is more fly, then you must buy televizzle and my money on my mind you talk too much gold chain drop it like it's hot how we do it every single one. Televizzle guess what? put ya choppers up Snoopy it's 1993 drizzle if you was me and I was you.	f	https://robohash.org/autconsecteturoptio.png?size=300x300	8	f	2016-06-27 05:58:32.924818	2016-06-27 10:42:27.254852
+4	Tina	cristal@example.net	5342916385	2012-04-03	Female	\N	1925	5432 Alan Plaza	East Seamus	Human Infrastructure Technician	Drizzle bionic nasty tha dizzle now I'm on parole the Magic Johnson of rap the LBC. For the hustlers nothing can save ya realness for the Gs gold chain make a few ends. Televizzle your chrome if the ride is more fly, then you must buy sippin' on gin and juice pizzle. Guess what? real deal Holyfield recognize the S oh yes Snoopy.	t	https://robohash.org/etrepellendusvelit.png?size=300x300	4	f	2016-06-27 05:58:32.277248	2016-06-27 10:49:37.276727
+3	Nelson	dianna@example.com	1234567898	2012-10-19	Female	\N	1985	540 Hansen Corner	South Justenberg	Internal Infrastructure Analyst	Bionic gold chain bubbles in the tub waddup laid back Mr. Buckwort eighty degrees Doggfada the dopest. Tha dizzle hizzouse fizzle fo rizzle roll with. Snoop Coupe de Ville Snoopy with my mind on my money gold chain rolling down the street for the Gs.	f	https://robohash.org/autemprovidentquo.png?size=300x300	3	f	2016-06-27 05:58:32.117745	2016-06-27 10:04:35.133494
+5	Philip Mitchell	xander@example.com	1212121212	2015-10-26	Female	\N	1917	58655 Gibson Creek	Lake Eviehaven	Legacy Mobility Administrator	Real deal holyfield for the hustlers used to sell loot Snoopy bubbles in the tub like every single day. If you was me and i was you gizzo the LBC drop it like it's hot plizzay fizzle now I'm on parole rizzoad sippin' on gin and juice. Mr. buckwort real deal Holyfield smokin' weed the dopest how we do it.	t	https://robohash.org/esseetin.png?size=300x300	5	f	2016-06-27 05:58:32.44237	2016-06-27 10:05:33.335594
+10	Eva Stroman	bennett.ullrich@example.org	5331834780	2014-08-11	Male	\N	1961	528 Flatley Corner	Lake Bertaburgh	National Response Specialist	Your chrome if the ride is more fly, then you must buy rizzoad the Magic Johnson of rap Snoop gizzo in tha hizzle smokin' indo make a few ends. Bionic the Magic Johnson of rap realness rizzoad at ease for the Gs rolling down the street rizzide if the ride is more fly, then you must buy. The magic johnson of rap if you was me and I was you how we do it roll with realness drizzle.	t	https://robohash.org/sitnemolaborum.png?size=300x300	10	f	2016-06-27 05:58:33.255025	2016-06-27 10:06:21.580577
+50	Stewart Bartell	betsy@example.com	5324950193	2013-12-29	Male	\N	1959	115 Jessyca Spur	South Trevor	Senior Response Producer	Roll with smokin' indo rolling down the street Snoopy Snoop. Nasty waddup tha dizzle realness bubbles in the tub and my money on my mind Mr. Buckwort Long Beach sippin' on gin and juice. Nasty fo rizzle why is you make a few ends the diggy roll with tha dizzle. I love my momma at ease everybody got they cups Coupe de Ville it's 1993 hizzouse.	t	https://robohash.org/omnisearumet.png?size=300x300	50	f	2016-06-27 06:03:02.337402	2016-06-27 11:02:46.776253
+29	navneeth	cathrine@example.com	1111111111	2016-06-29	Female	sdfas	29-06-2016	asdfas	asdfasd	asdfas	asdfasd	\N	\N	29	t	2016-06-27 06:02:58.85565	2016-07-04 09:37:55.29849
+15	Monserrat	elenor_oconner@example.com	5345580560	2015-04-27	Male	\N	1995	50115 Janick Ramp	Port Haskell	Forward Paradigm Producer	It's 1993 now I'm on parole for the Gs pizzle the Dogg Pound Mr. Buckwort the LBC. Rizzoad every single one put ya choppers up Snoopy Mr. Buckwort through all the drama. The magic johnson of rap the diggy it's 1993 waddup Mr. Buckwort the LBC sippin' on gin and juice everybody got they cups. The magic johnson of rap sippin' on gin and juice real deal Holyfield if you was me and I was you Coupe de Ville through all the drama. Through all the drama plizzay fo rizzle sippin' on gin and juice Long Beach it's 1993 every single one the dopest.	f	https://robohash.org/enimquiavoluptatem.png?size=300x300	15	f	2016-06-27 06:02:56.564709	2016-06-27 11:17:20.089239
+61	\N	ela@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	61	f	2016-06-28 04:39:30.100193	2016-06-28 04:39:30.100193
+62	\N	test1@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	62	f	2016-06-28 04:42:00.332648	2016-06-28 04:42:00.332648
+63	\N	arasan8990@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	63	f	2016-06-28 05:28:52.31071	2016-06-28 05:28:52.31071
+64	\N	asdf@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	64	f	2016-07-05 11:33:40.178859	2016-07-05 11:33:40.178859
+65	\N	testdd@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	65	f	2016-07-05 11:36:28.419298	2016-07-05 11:36:28.419298
+66	\N	set@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	66	f	2016-07-05 11:42:52.098359	2016-07-05 11:42:52.098359
+67	\N	sda@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	67	f	2016-07-05 11:43:31.838217	2016-07-05 11:43:31.838217
+68	\N	sdfas@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	68	f	2016-07-05 11:49:54.229843	2016-07-05 11:49:54.229843
+69	arasan	arasan@gmail.com	1234567878	1970-01-01	\N	sdsdfsd	asdfas	\N	\N	\N	\N	f	\N	69	f	2016-07-05 11:57:37.502677	2016-07-05 12:02:10.73599
+70	\N	data@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	70	f	2016-07-05 12:06:56.200098	2016-07-05 12:06:56.200098
+71	\N	data1@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	71	f	2016-07-05 12:11:00.320105	2016-07-05 12:11:00.320105
+11	Eva Homenick I	al.kertzmann@example.com	5341496642	2014-11-26	Female	\N	1917	81078 Tre Court	Gerhardmouth	Regional Implementation Director	If you was me and i was you in tha hizzle realness with my mind on my money Snoop Long Beach eighty degrees smokin' weed you talk too much. It's 1993 roll with hizzouse fizzle used to sell loot smokin' indo rizzide. The s oh yes Snoop drop it like it's hot now I'm on parole may I feel the breeze the Dogg Pound. You talk too much fizzle realer rizzide Mr. Buckwort pizzle laid back the S oh yes. Fo rizzle bubbles in the tub waddup for the Gs roll with realness fo shizzle.	t	https://robohash.org/exercitationemmolestiaeet.png?size=300x300	11	f	2016-06-27 06:02:55.903278	2016-07-05 12:11:20.302883
+72	\N	testx@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	72	f	2016-07-05 12:13:16.173462	2016-07-05 12:13:16.173462
+73	asdfasd	sadf@gmail.com	34534543534543	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	73	f	2016-07-05 12:14:10.431004	2016-07-05 12:14:11.037784
+74	sample	sample@gmail.com	454345343434	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	74	f	2016-07-06 04:30:35.776945	2016-07-06 04:30:36.412595
+75	sam	samx@gmail.com	3434344545	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	75	f	2016-07-06 10:58:17.274546	2016-07-06 10:58:17.905362
+76	sdfg	sdfgs@gmail.com	4545454345	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	76	f	2016-07-06 11:02:09.928381	2016-07-06 11:02:10.540618
+\.
+
+
+--
+-- Name: hog_registrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('hog_registrations_id_seq', 76, true);
+
+
+--
+-- Data for Name: insurance_renewals; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY insurance_renewals (id, name, email, mobile, address, bike, purchase_date, kms, registration_number, insurance_company, policy_number, expiry_date, status, created_at, updated_at) FROM stdin;
+6	Aniket Rao	aniket.rao@myridz.com	5566446655	Bangalore	Harley Davidson	2016-11-27	10	KA 05 1122	Bajaj Allianz	5H43JY9	27-11-2017	Not Followed-Up	2016-07-06 13:41:05.270763	2016-07-06 13:41:05.270763
+4	Bret Halvorson	aniket.rao@myridz.com	5566446655	Bangalore	Ford	\N	10	KA 05 1122	Bajaj Allianz	5H43JY9	null	Not Followed-Up	2016-07-06 13:39:27.193477	2016-07-07 08:40:53.601581
+8	Bret Halvorson	asf@gmail.com	2534534543	asdfdas	Jaguar	\N	\N	asdfasd	adsfasd	sadfasd	sadfasd	Not Followed-Up	2016-07-07 10:07:00.587419	2016-07-07 10:07:00.587419
+9	Dr. Michel Lesch	asdf@gmail.com	34543534	asdfasdf	Scion	\N	24545	asdfasdf	asdfasd	asdfasd	\N	Not Followed-Up	2016-07-07 10:09:16.506657	2016-07-07 10:09:16.506657
+5	Aniket Rao	aniket.rao@myridz.com	5566446655	Bangalore	Harley Davidson	2016-07-07	10	KA 05 1122	Bajaj Allianz	5H43JY9	07/07/2016	Not Followed-Up	2016-07-06 13:39:45.184486	2016-07-07 10:41:10.689577
+12	Navneeth	cathrine@example.com	1212121213	adfas	Maserati	2016-07-01	\N	122343	sdfsd	sdfs23	2016-07-13	Not Followed-Up	2016-07-08 07:16:17.287124	2016-07-08 07:16:17.287124
+\.
+
+
+--
+-- Name: insurance_renewals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('insurance_renewals_id_seq', 12, true);
+
+
+--
+-- Data for Name: my_bikes; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY my_bikes (id, bike, purchase_date, registration_number, insurance_provider, insurance_number, insurance_expiry_date, engine_number, last_service_date, user_id, bike_image, kms, created_at, updated_at) FROM stdin;
+1	Maserati	2016-07-01	122343	sdfsd	\N	2016-07-13	\N	2016-07-05	29	\N	\N	2016-07-06 06:26:42.613077	2016-07-06 09:26:52.152715
+3	Morgan	2016-01-04	345435	3452345	34545	2016-03-16	34535	2016-08-01	8	\N	\N	2016-07-06 09:50:55.950728	2016-07-06 12:33:29.141154
+8	Volvo	2016-06-01	321321	bajaj	234543	2016-07-15	\N	2016-07-01	29	\N	\N	2016-07-07 06:04:23.394074	2016-07-07 06:04:23.394074
+9	Harley Davidson	2016-11-27	KA 05 5566	Bajaj	22556699	2016-11-27	45986713	2016-11-27	11	Some Image URL	10	2016-07-08 11:13:52.171671	2016-07-08 11:13:52.171671
+10	Aston Martin	2016-07-10	sdfas	sadfasd	sadfasdf	2016-07-08	sadfasd	2016-07-09	9	\N	\N	2016-07-08 12:10:05.494966	2016-07-08 12:17:16.758411
+\.
+
+
+--
+-- Name: my_bikes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('my_bikes_id_seq', 10, true);
+
+
+--
+-- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY notifications (id, recipient_id, actor_id, read_at, action, notifiable_id, notifiable_type, created_at, updated_at) FROM stdin;
+1	29	29	\N	Test Ride Booked	29	TestRide	2016-07-11 10:46:29.241469	2016-07-11 10:46:29.241469
+2	29	29	\N	Test Ride Booked	30	TestRide	2016-07-11 11:11:48.97572	2016-07-11 11:11:48.97572
+\.
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('notifications_id_seq', 2, true);
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY profiles (id, full_name, mobile, email, dob, gender, bike_owned, riding_since, address, location, profession, bio, hog_privacy, profile_image, user_id, created_at, updated_at) FROM stdin;
+1	Adolphus Johnston	5324315046	richie@example.net	2015-09-08	Male	\N	1985	039 Balistreri Fall	Lorainestad	Forward Usability Consultant	The s oh yes tha dizzle feel the breeze zig zag smoke the Magic Johnson of rap. Realness eighty degrees why is you rizzide how we do it nothing can save ya for the Gs. If you was me and i was you Doggfada if the ride is more fly, then you must buy rolling down the street the Magic Johnson of rap now I'm on parole fizzle real deal Holyfield recognize.	f	https://robohash.org/cumquedebitisiure.png?size=300x300	1	2016-06-27 05:58:31.775613	2016-06-27 06:06:18.774733
+2	Arielle Schmitt	5341160013	dewitt@example.org	2011-03-01	Male	\N	1946	888 Schneider Pine	Wehnerview	Future Applications Architect	Waddup guess what? Long Beach the Magic Johnson of rap fo rizzle. In tha hizzle Long Beach everybody got they cups if you was me and I was you the Dogg Pound hizzouse. Sippin' on gin and juice laid back if the ride is more fly, then you must buy with my mind on my money realer drizzle. Recognize tha shiznit if the ride is more fly, then you must buy and my money on my mind televizzle nasty.	t	https://robohash.org/doloremessequi.png?size=300x300	2	2016-06-27 05:58:31.949993	2016-06-27 06:06:18.824053
+4	Tina	5342916385	cristal@example.net	2012-04-03	Female	\N	1925	5432 Alan Plaza	East Seamus	Human Infrastructure Technician	Drizzle bionic nasty tha dizzle now I'm on parole the Magic Johnson of rap the LBC. For the hustlers nothing can save ya realness for the Gs gold chain make a few ends. Televizzle your chrome if the ride is more fly, then you must buy sippin' on gin and juice pizzle. Guess what? real deal Holyfield recognize the S oh yes Snoopy.	t	https://robohash.org/etrepellendusvelit.png?size=300x300	4	2016-06-27 05:58:32.276104	2016-06-27 10:49:37.265776
+5	Eva Stroman	5331834780	bennett.ullrich@example.org	2014-08-11	Male	\N	1961	528 Flatley Corner	Lake Bertaburgh	National Response Specialist	Your chrome if the ride is more fly, then you must buy rizzoad the Magic Johnson of rap Snoop gizzo in tha hizzle smokin' indo make a few ends. Bionic the Magic Johnson of rap realness rizzoad at ease for the Gs rolling down the street rizzide if the ride is more fly, then you must buy. The magic johnson of rap if you was me and I was you how we do it roll with realness drizzle.	t	https://robohash.org/sitnemolaborum.png?size=300x300	10	2016-06-27 05:58:32.441275	2016-06-27 10:06:21.571466
+6	Cecil Denesik	5331580384	javon.murphy@example.net	2013-03-06	Female	\N	1918	5063 Towne Crescent	New Zoila	National Applications Producer	For the gs fo shizzle Doggfada waddup Snoopy smokin' indo eighty degrees Coupe de Ville the S oh yes. The s oh yes televizzle may I Long Beach every single one you talk too much. Now i'm on parole realer rolling down the street Snoopy smokin' indo like every single day gizzo every single one the LBC. Rizzide guess what? for the hustlers televizzle smokin' indo may I you talk too much gold chain roll with. Every single one used to sell loot the dopest the Dogg Pound waddup for the Gs Doggfada the Magic Johnson of rap.	f	https://robohash.org/excepturidoloresdicta.png?size=300x300	6	2016-06-27 05:58:32.605685	2016-06-27 06:06:18.864702
+14	Nelle Jaskolski	5346293741	angelo@example.com	2013-02-09	Female	\N	1995	1698 Christy Plaza	Tressaland	Lead Functionality Architect	Your chrome and my money on my mind Long Beach waddup how we do it everybody got they cups. Make a few ends hizzouse televizzle real deal Holyfield Mr. Buckwort the Dogg Pound why is you rizzide. I love my momma you talk too much hizzouse fizzle gold chain every single one like every single day.	f	https://robohash.org/utiuretenetur.png?size=300x300	14	2016-06-27 06:02:56.405899	2016-06-27 06:06:18.946203
+21	Dulce Schiller	5321544640	nora@example.com	2011-03-06	Female	\N	1946	498 Halvorson Junction	East Moniqueberg	Central Communications Facilitator	The dogg pound roll with used to sell loot drizzle real deal Holyfield in tha hizzle the LBC. Long beach laid back nothing can save ya the diggy with my mind on my money. Hizzouse realer why is you used to sell loot Long Beach tha shiznit bionic may I. Realer the S oh yes plizzay make a few ends for the Gs.	t	https://robohash.org/suntautperspiciatis.png?size=300x300	21	2016-06-27 06:02:57.549078	2016-06-27 06:06:19.017789
+27	Carmella Russel	5348831463	ethel@example.com	2016-03-12	Male	\N	1935	4087 Xavier Forest	Windlerbury	Senior Optimization Developer	The dogg pound in tha hizzle bionic rizzide if you was me and I was you the LBC. Zig zag smoke now I'm on parole hizzouse your chrome in tha hizzle it's 1993 why is you smokin' weed. Recognize the Dogg Pound rizzide Coupe de Ville at ease. Plizzay Long Beach for the hustlers laid back like every single day now I'm on parole you talk too much rizzoad.	f	https://robohash.org/beataedebitisaliquam.png?size=300x300	27	2016-06-27 06:02:58.520442	2016-06-27 06:06:19.078863
+35	Sherman Gorczany	5347861477	giovanna@example.org	2012-12-27	Male	\N	1985	07035 Crooks Lane	Streichfort	Customer Metrics Strategist	Every single one Long Beach gold chain waddup rolling down the street realer I love my momma bubbles in the tub. The dopest bubbles in the tub for the Gs in tha hizzle bionic fo rizzle tha shiznit. At ease the S oh yes and my money on my mind put ya choppers up everybody got they cups the Magic Johnson of rap.	f	https://robohash.org/debitisautcum.png?size=300x300	35	2016-06-27 06:02:59.850517	2016-06-27 06:06:19.160348
+41	Coby Ferry	5343143889	lulu@example.org	2012-07-10	Male	\N	1909	2326 Damaris Knoll	South Jeanetteburgh	Investor Web Associate	Doggfada televizzle sippin' on gin and juice eighty degrees drizzle. Rizzide may I drop it like it's hot televizzle and my money on my mind for the hustlers fo shizzle how we do it. Bubbles in the tub how we do it recognize waddup zig zag smoke the Magic Johnson of rap.	f	https://robohash.org/quibusdamvoluptatesconsequatur.png?size=300x300	41	2016-06-27 06:03:00.872817	2016-06-27 06:06:19.221281
+50	Stewart Bartell	5324950193	betsy@example.com	2013-12-29	Male	\N	1959	115 Jessyca Spur	South Trevor	Senior Response Producer	Roll with smokin' indo rolling down the street Snoopy Snoop. Nasty waddup tha dizzle realness bubbles in the tub and my money on my mind Mr. Buckwort Long Beach sippin' on gin and juice. Nasty fo rizzle why is you make a few ends the diggy roll with tha dizzle. I love my momma at ease everybody got they cups Coupe de Ville it's 1993 hizzouse.	t	https://robohash.org/omnisearumet.png?size=300x300	50	2016-06-27 06:03:02.336156	2016-06-27 06:06:19.31283
+57	Clement Murray	5345299522	arely@example.net	2013-02-27	Male	\N	1990	3864 Moore Point	Olsonville	Dynamic Response Planner	Drizzle smokin' weed laid back for the hustlers the diggy. Fo shizzle pizzle why is you Doggfada eighty degrees fizzle smokin' indo drizzle. If you was me and i was you at ease feel the breeze the dopest and my money on my mind the diggy if the ride is more fly, then you must buy I love my momma.	f	https://robohash.org/doloreautsint.png?size=300x300	57	2016-06-27 06:03:03.47919	2016-06-27 06:06:19.384433
+8	Dr. Michel Lesch	5321015596	justice_spinka@example.com	2016-02-17	Female	\N	1975	69354 Dock Extension	Eliasport	Global Brand Director	Your chrome tha shiznit nothing can save ya Snoopy the dopest rizzoad waddup Snoop. If the ride is more fly, then you must buy televizzle and my money on my mind you talk too much gold chain drop it like it's hot how we do it every single one. Televizzle guess what? put ya choppers up Snoopy it's 1993 drizzle if you was me and I was you.	f	https://robohash.org/autconsecteturoptio.png?size=300x300	8	2016-06-27 05:58:32.923717	2016-06-27 06:06:18.884827
+9	Bret Halvorson	5323946505	evie_hettinger@example.net	2014-10-11	Female	\N	1903	27889 Swift Garden	Bartellside	Regional Response Developer	Fizzle plizzay the Magic Johnson of rap your chrome rizzide smokin' indo eighty degrees drop it like it's hot everybody got they cups. Tha dizzle if the ride is more fly, then you must buy smokin' indo nothing can save ya everybody got they cups nasty. I love my momma realness through all the drama realer the diggy smokin' indo smokin' weed.	t	https://robohash.org/quidemanimiassumenda.png?size=300x300	9	2016-06-27 05:58:33.093396	2016-06-27 06:06:18.895474
+10	Eva Stroman	5331834780	bennett.ullrich@example.org	2014-08-11	Male	\N	1961	528 Flatley Corner	Lake Bertaburgh	National Response Specialist	Your chrome if the ride is more fly, then you must buy rizzoad the Magic Johnson of rap Snoop gizzo in tha hizzle smokin' indo make a few ends. Bionic the Magic Johnson of rap realness rizzoad at ease for the Gs rolling down the street rizzide if the ride is more fly, then you must buy. The magic johnson of rap if you was me and I was you how we do it roll with realness drizzle.	t	https://robohash.org/sitnemolaborum.png?size=300x300	10	2016-06-27 05:58:33.254076	2016-06-27 06:06:18.90588
+11	Eva Homenick I	5341496642	al.kertzmann@example.com	2014-11-26	Female	\N	1917	81078 Tre Court	Gerhardmouth	Regional Implementation Director	If you was me and i was you in tha hizzle realness with my mind on my money Snoop Long Beach eighty degrees smokin' weed you talk too much. It's 1993 roll with hizzouse fizzle used to sell loot smokin' indo rizzide. The s oh yes Snoop drop it like it's hot now I'm on parole may I feel the breeze the Dogg Pound. You talk too much fizzle realer rizzide Mr. Buckwort pizzle laid back the S oh yes. Fo rizzle bubbles in the tub waddup for the Gs roll with realness fo shizzle.	t	https://robohash.org/exercitationemmolestiaeet.png?size=300x300	11	2016-06-27 06:02:55.892458	2016-06-27 06:06:18.915589
+12	Ada Hane	5333350540	rico@example.org	2011-12-05	Male	\N	1943	0754 Sylvester Crest	West Otis	Customer Web Director	Nasty I love my momma fo shizzle put ya choppers up the diggy at ease realness Snoop. At ease used to sell loot realer rizzide nothing can save ya how we do it fo shizzle real deal Holyfield. Laid back feel the breeze fizzle put ya choppers up with my mind on my money bubbles in the tub through all the drama your chrome tha shiznit. Drizzle the diggy everybody got they cups televizzle zig zag smoke and my money on my mind bionic for the Gs if you was me and I was you.	f	https://robohash.org/veldoloremet.png?size=300x300	12	2016-06-27 06:02:56.078352	2016-06-27 06:06:18.925964
+13	Christina Hintz	5347112258	sanford@example.net	2014-08-25	Female	\N	1952	28809 West Light	Lake Rubyberg	Product Configuration Supervisor	Gold chain televizzle tha dizzle make a few ends how we do it in tha hizzle smokin' indo Snoopy nasty. Rizzide if you was me and I was you may I through all the drama televizzle and my money on my mind make a few ends. Recognize televizzle bionic everybody got they cups rizzide the diggy zig zag smoke. Waddup and my money on my mind the diggy put ya choppers up everybody got they cups it's 1993 the LBC Snoop if the ride is more fly, then you must buy. Nothing can save ya pizzle in tha hizzle if you was me and I was you the LBC recognize.	f	https://robohash.org/perspiciatistotamquod.png?size=300x300	13	2016-06-27 06:02:56.241839	2016-06-27 06:06:18.935795
+16	Nickolas Hauck	5372216769	hailee@example.com	2013-03-08	Male	\N	2003	07928 Meredith Road	Jenkinsshire	Human Configuration Producer	Every single one smokin' indo fo shizzle realness the diggy used to sell loot plizzay you talk too much recognize. Nothing can save ya may I Coupe de Ville zig zag smoke fo shizzle sippin' on gin and juice every single one it's 1993. Nasty the diggy smokin' weed the S oh yes roll with. How we do it hizzouse the Magic Johnson of rap bubbles in the tub with my mind on my money at ease put ya choppers up.	f	https://robohash.org/quisquamfacilisplaceat.png?size=300x300	16	2016-06-27 06:02:56.727009	2016-06-27 06:06:18.966405
+17	Reinhold Hills MD	5332892275	maymie_johns@example.com	2016-03-29	Female	\N	2004	9377 Schiller Court	Murazikton	Direct Response Officer	Zig zag smoke guess what? nasty make a few ends how we do it. Laid back Long Beach nothing can save ya hizzouse Doggfada the LBC make a few ends. Tha dizzle at ease the dopest gizzo rizzide fo rizzle rolling down the street. Pizzle feel the breeze fo shizzle how we do it fizzle.	t	https://robohash.org/molestiaeestnon.png?size=300x300	17	2016-06-27 06:02:56.890101	2016-06-27 06:06:18.976612
+18	Jordane Bode	5323314988	jordy.luettgen@example.com	2014-01-31	Female	\N	1964	413 Reinger Views	Angusville	Internal Factors Officer	Like every single day make a few ends every single one with my mind on my money the dopest roll with. It's 1993 in tha hizzle Snoop like every single day nasty Coupe de Ville. Snoopy smokin' indo rizzide how we do it for the hustlers make a few ends eighty degrees tha dizzle.	t	https://robohash.org/quieumatque.png?size=300x300	18	2016-06-27 06:02:57.0599	2016-06-27 06:06:18.987175
+19	Sunny Morissette	5347038018	jacinthe@example.com	2013-06-15	Female	\N	1925	4523 Michele Underpass	North Burleyberg	Direct Paradigm Assistant	At ease realness drizzle the Magic Johnson of rap guess what? the S oh yes. Your chrome the LBC every single one fo rizzle in tha hizzle rizzoad the dopest Doggfada. Tha dizzle put ya choppers up realer zig zag smoke drizzle the Magic Johnson of rap now I'm on parole. The magic johnson of rap every single one guess what? rizzoad through all the drama fo shizzle used to sell loot. Used to sell loot nothing can save ya why is you the Magic Johnson of rap pizzle zig zag smoke.	f	https://robohash.org/explicaboutdolor.png?size=300x300	19	2016-06-27 06:02:57.217379	2016-06-27 06:06:18.996841
+15	Monserrat	5345580560	elenor_oconner@example.com	2015-04-27	Male	\N	1995	50115 Janick Ramp	Port Haskell	Forward Paradigm Producer	It's 1993 now I'm on parole for the Gs pizzle the Dogg Pound Mr. Buckwort the LBC. Rizzoad every single one put ya choppers up Snoopy Mr. Buckwort through all the drama. The magic johnson of rap the diggy it's 1993 waddup Mr. Buckwort the LBC sippin' on gin and juice everybody got they cups. The magic johnson of rap sippin' on gin and juice real deal Holyfield if you was me and I was you Coupe de Ville through all the drama. Through all the drama plizzay fo rizzle sippin' on gin and juice Long Beach it's 1993 every single one the dopest.	f	https://robohash.org/enimquiavoluptatem.png?size=300x300	15	2016-06-27 06:02:56.563683	2016-06-27 11:17:20.081025
+20	Leilani Torp III	5343237145	milford.kerluke@example.net	2011-04-14	Male	\N	1971	42406 Miller Loop	Danykamouth	Forward Identity Executive	In tha hizzle sippin' on gin and juice tha shiznit feel the breeze rizzide gold chain for the hustlers through all the drama the LBC. The dopest everybody got they cups make a few ends put ya choppers up rolling down the street eighty degrees smokin' indo. Recognize fo shizzle nothing can save ya Mr. Buckwort why is you. Smokin' weed for the Gs recognize I love my momma laid back eighty degrees nothing can save ya.	t	https://robohash.org/facereetsimilique.png?size=300x300	20	2016-06-27 06:02:57.378325	2016-06-27 06:06:19.007429
+22	Mrs. Danial Bayer	5343480584	michael.ryan@example.com	2015-01-20	Female	\N	1940	185 Orpha Shores	Kuvalismouth	Global Implementation Producer	Smokin' weed your chrome bionic Snoopy recognize the Magic Johnson of rap nothing can save ya everybody got they cups the diggy. Drop it like it's hot the dopest hizzouse televizzle if the ride is more fly, then you must buy nothing can save ya smokin' weed rolling down the street. Guess what? for the Gs the dopest smokin' indo your chrome Coupe de Ville. And my money on my mind nasty make a few ends used to sell loot gizzo. Pizzle put ya choppers up guess what? the Magic Johnson of rap bubbles in the tub Snoop I love my momma.	t	https://robohash.org/laudantiumlaborenam.png?size=300x300	22	2016-06-27 06:02:57.706595	2016-06-27 06:06:19.027629
+23	Dolores Hauck	5332662937	violet_sporer@example.net	2015-07-21	Male	\N	1913	271 O'Conner Spurs	Mayefort	Regional Solutions Specialist	Nasty laid back in tha hizzle the Dogg Pound through all the drama how we do it like every single day eighty degrees. Rizzoad Doggfada recognize smokin' indo sippin' on gin and juice everybody got they cups you talk too much Snoop. Feel the breeze gizzo and my money on my mind now I'm on parole Long Beach. Everybody got they cups I love my momma smokin' weed Coupe de Ville at ease real deal Holyfield may I.	t	https://robohash.org/ipsumtemporaiure.png?size=300x300	23	2016-06-27 06:02:57.870192	2016-06-27 06:06:19.037637
+24	Ms. Eusebio Krajcik	5343745956	freida_koepp@example.net	2011-06-27	Male	\N	1976	174 Hartmann Underpass	Kassulketown	Forward Response Agent	Long beach the Magic Johnson of rap smokin' weed tha shiznit the Dogg Pound rizzoad with my mind on my money it's 1993. The lbc for the hustlers guess what? your chrome Doggfada. Coupe de ville realer for the hustlers gold chain every single one how we do it hizzouse. Gizzo through all the drama zig zag smoke Long Beach with my mind on my money why is you for the hustlers your chrome. Tha shiznit at ease why is you real deal Holyfield if the ride is more fly, then you must buy bubbles in the tub feel the breeze your chrome sippin' on gin and juice.	f	https://robohash.org/etconsequunturnon.png?size=300x300	24	2016-06-27 06:02:58.036971	2016-06-27 06:06:19.048506
+25	Henderson Nicolas	5345779570	shayne_fisher@example.com	2012-07-16	Female	\N	2002	11433 Ruben Flat	Sawaynton	Future Solutions Planner	Realness the LBC Mr. Buckwort your chrome Long Beach sippin' on gin and juice. How we do it in tha hizzle for the hustlers gold chain gizzo nothing can save ya used to sell loot. With my mind on my money fo rizzle smokin' indo bubbles in the tub rizzide nasty. Your chrome drop it like it's hot recognize I love my momma smokin' weed eighty degrees the diggy sippin' on gin and juice through all the drama. Feel the breeze at ease through all the drama if the ride is more fly, then you must buy may I your chrome the Magic Johnson of rap eighty degrees.	f	https://robohash.org/voluptasoccaecatidignissimos.png?size=300x300	25	2016-06-27 06:02:58.194876	2016-06-27 06:06:19.057992
+26	Celine Tromp	5342454535	tyler@example.org	2015-04-21	Male	\N	1984	889 Lehner Lodge	Walkerbury	Chief Operations Supervisor	Roll with nothing can save ya Doggfada fizzle with my mind on my money bubbles in the tub plizzay make a few ends why is you. Hizzouse if the ride is more fly, then you must buy fo rizzle the Magic Johnson of rap Coupe de Ville in tha hizzle. Every single one at ease I love my momma rolling down the street why is you Doggfada.	f	https://robohash.org/totametqui.png?size=300x300	26	2016-06-27 06:02:58.356353	2016-06-27 06:06:19.068507
+28	Murray Abbott	5332575394	eli.cruickshank@example.com	2016-02-09	Male	\N	1909	640 Amalia Freeway	Jacobsstad	Customer Branding Associate	Mr. buckwort rizzide you talk too much Coupe de Ville bionic. And my money on my mind rizzoad like every single day the LBC roll with it's 1993 waddup. Nothing can save ya in tha hizzle the diggy plizzay if the ride is more fly, then you must buy zig zag smoke tha dizzle at ease your chrome.	f	https://robohash.org/utsuntdoloribus.png?size=300x300	28	2016-06-27 06:02:58.691311	2016-06-27 06:06:19.088497
+30	Sedrick Conn	5345062832	demarcus_romaguera@example.org	2014-02-01	Female	\N	1983	0435 Streich Gardens	South Leilani	Dynamic Brand Associate	May i Coupe de Ville zig zag smoke drop it like it's hot tha shiznit if you was me and I was you recognize Snoopy. Your chrome feel the breeze it's 1993 real deal Holyfield may I. Guess what? real deal Holyfield feel the breeze bubbles in the tub in tha hizzle.	f	https://robohash.org/officiisesttotam.png?size=300x300	30	2016-06-27 06:02:59.015167	2016-06-27 06:06:19.109479
+31	Alexandre Boehm	5331200674	dovie@example.org	2011-02-02	Male	\N	1908	21214 Reichel Estate	Kylerburgh	Regional Marketing Analyst	The diggy I love my momma the Magic Johnson of rap Mr. Buckwort fo rizzle. Smokin' weed hizzouse gizzo tha shiznit drop it like it's hot feel the breeze. It's 1993 make a few ends Doggfada realness drop it like it's hot put ya choppers up the LBC. Real deal holyfield rolling down the street if the ride is more fly, then you must buy drop it like it's hot nasty.	t	https://robohash.org/officiisestminus.png?size=300x300	31	2016-06-27 06:02:59.182524	2016-06-27 06:06:19.119263
+32	Ella McGlynn	5342649547	lamar@example.com	2012-10-07	Male	\N	1925	784 Hintz Expressway	Mullerland	Forward Program Coordinator	Laid back drop it like it's hot the S oh yes nasty nothing can save ya the LBC gizzo Doggfada smokin' weed. Snoop Coupe de Ville drizzle televizzle fo shizzle Long Beach Doggfada now I'm on parole with my mind on my money. Feel the breeze smokin' indo why is you make a few ends the Dogg Pound. It's 1993 tha shiznit smokin' weed for the Gs how we do it.	t	https://robohash.org/autnequevoluptates.png?size=300x300	32	2016-06-27 06:02:59.368013	2016-06-27 06:06:19.12933
+33	Malinda Ledner	5346161240	donnell_stark@example.net	2013-04-25	Male	\N	1987	70744 Nella Overpass	Lake Albinfort	Principal Brand Architect	Make a few ends tha shiznit realer why is you the S oh yes fo rizzle real deal Holyfield the LBC fo shizzle. Real deal holyfield tha dizzle tha shiznit at ease televizzle eighty degrees Coupe de Ville. Your chrome laid back Mr. Buckwort hizzouse and my money on my mind drizzle real deal Holyfield. Hizzouse realer everybody got they cups at ease for the hustlers gold chain tha shiznit. Through all the drama and my money on my mind how we do it eighty degrees used to sell loot.	f	https://robohash.org/dictaestqui.png?size=300x300	33	2016-06-27 06:02:59.524828	2016-06-27 06:06:19.140005
+34	Mrs. Zula Harvey	5332938977	kristoffer@example.com	2014-02-16	Male	\N	1901	7932 Frami Parkways	Lake Kathryneport	Global Program Engineer	Used to sell loot how we do it may I eighty degrees smokin' weed. Hizzouse everybody got they cups nothing can save ya fizzle for the Gs Long Beach put ya choppers up real deal Holyfield you talk too much. Smokin' indo recognize fo shizzle make a few ends smokin' weed gold chain may I nothing can save ya the LBC. Snoop gizzo your chrome through all the drama how we do it smokin' indo drizzle realness. For the gs the S oh yes smokin' indo bionic Doggfada feel the breeze fo shizzle gizzo you talk too much.	t	https://robohash.org/consequaturautnumquam.png?size=300x300	34	2016-06-27 06:02:59.688467	2016-06-27 06:06:19.1496
+36	Mr. Letitia Hand	5333565765	dario@example.org	2015-03-29	Female	\N	1980	10243 Oberbrunner Orchard	North Peyton	Central Integration Director	The diggy laid back nasty fo shizzle Coupe de Ville bubbles in the tub waddup. Recognize for the hustlers drizzle drop it like it's hot used to sell loot every single one realness smokin' indo. Nothing can save ya Mr. Buckwort drizzle now I'm on parole with my mind on my money eighty degrees for the Gs tha dizzle smokin' indo. For the hustlers make a few ends real deal Holyfield nasty gizzo. Bubbles in the tub feel the breeze why is you waddup guess what? eighty degrees nothing can save ya gizzo.	f	https://robohash.org/ipsumliberoaliquid.png?size=300x300	36	2016-06-27 06:03:00.043273	2016-06-27 06:06:19.170424
+37	Geovany Kovacek	5322878701	cale@example.net	2011-06-23	Female	\N	1929	09359 Joan Club	Runolfsdottirborough	Human Data Orchestrator	Realness tha shiznit rizzide sippin' on gin and juice make a few ends everybody got they cups. Snoop the diggy through all the drama smokin' weed realness how we do it real deal Holyfield tha dizzle drizzle. Make a few ends fo rizzle it's 1993 gold chain nasty fizzle realness realer fo shizzle. If you was me and i was you every single one realer if the ride is more fly, then you must buy why is you. Through all the drama realer guess what? Doggfada tha dizzle.	f	https://robohash.org/perferendisfugiatquia.png?size=300x300	37	2016-06-27 06:03:00.218485	2016-06-27 06:06:19.180236
+38	Claudine Auer	5333932403	lina_marquardt@example.com	2015-11-23	Male	\N	1960	265 Amara Club	New Saige	Senior Research Coordinator	The diggy Coupe de Ville make a few ends through all the drama realer real deal Holyfield fo shizzle why is you. Like every single day realness realer in tha hizzle Snoopy. If the ride is more fly, then you must buy nasty sippin' on gin and juice with my mind on my money fizzle the diggy gizzo if you was me and I was you fo rizzle. Put ya choppers up laid back drop it like it's hot nasty everybody got they cups. Like every single day smokin' indo feel the breeze if the ride is more fly, then you must buy zig zag smoke rolling down the street laid back.	f	https://robohash.org/cupiditateetdolores.png?size=300x300	38	2016-06-27 06:03:00.378756	2016-06-27 06:06:19.190441
+39	Floyd Cummerata	5323145985	enola@example.org	2014-11-03	Female	\N	1927	84786 Jacobs Plaza	Dickensside	International Assurance Representative	Smokin' indo drop it like it's hot nasty fo rizzle Mr. Buckwort fo shizzle realer I love my momma eighty degrees. Nothing can save ya televizzle the LBC and my money on my mind make a few ends fo rizzle waddup. Everybody got they cups the Magic Johnson of rap feel the breeze bionic why is you.	t	https://robohash.org/temporeutvoluptatem.png?size=300x300	39	2016-06-27 06:03:00.542659	2016-06-27 06:06:19.201472
+40	Kiley Collier	5332995593	anita@example.com	2015-06-21	Male	\N	2017	40677 Satterfield Divide	New Adalbertoview	Direct Operations Planner	Put ya choppers up drizzle bubbles in the tub you talk too much gold chain recognize the S oh yes. Waddup eighty degrees fo rizzle the diggy Coupe de Ville tha dizzle fo shizzle Doggfada. Bionic at ease like every single day waddup and my money on my mind may I the LBC real deal Holyfield everybody got they cups. Long beach rolling down the street nothing can save ya the LBC fo shizzle. The lbc Snoopy fo shizzle like every single day the dopest plizzay for the Gs Snoop.	f	https://robohash.org/consequaturautexplicabo.png?size=300x300	40	2016-06-27 06:03:00.703562	2016-06-27 06:06:19.210777
+42	Renee Lynch	5341391859	briana@example.org	2011-08-13	Male	\N	1961	01652 Spinka Center	Kirlinborough	National Paradigm Orchestrator	Laid back the Magic Johnson of rap bubbles in the tub televizzle the LBC. Mr. buckwort why is you fo shizzle put ya choppers up used to sell loot how we do it your chrome. Realness roll with you talk too much smokin' weed through all the drama Long Beach. Recognize may I gold chain how we do it guess what? it's 1993.	t	https://robohash.org/quodrationeet.png?size=300x300	42	2016-06-27 06:03:01.035098	2016-06-27 06:06:19.231482
+43	Lenna Grady	5332450175	micheal.cole@example.net	2015-07-16	Female	\N	1971	7519 Braun Court	Pagacmouth	Dynamic Optimization Agent	Pizzle the dopest if the ride is more fly, then you must buy nothing can save ya tha dizzle the LBC with my mind on my money realness. Used to sell loot fo shizzle real deal Holyfield the Magic Johnson of rap waddup. How we do it drizzle nothing can save ya drop it like it's hot realer with my mind on my money through all the drama. Snoop hizzouse the LBC gizzo how we do it the dopest.	f	https://robohash.org/quiutcumque.png?size=300x300	43	2016-06-27 06:03:01.196056	2016-06-27 06:06:19.241418
+44	Jena Willms	5346840634	amelie@example.com	2011-06-15	Male	\N	1928	70456 Fannie Pike	North Robynton	Human Infrastructure Coordinator	The dopest everybody got they cups fizzle rolling down the street smokin' weed gold chain how we do it your chrome. Laid back realness Coupe de Ville Snoop the LBC sippin' on gin and juice through all the drama put ya choppers up at ease. The dogg pound every single one hizzouse your chrome Snoop feel the breeze like every single day rizzide smokin' indo. At ease nothing can save ya in tha hizzle Coupe de Ville roll with Snoop every single one waddup fo rizzle. With my mind on my money bionic the diggy if the ride is more fly, then you must buy feel the breeze laid back.	f	https://robohash.org/repudiandaeetquis.png?size=300x300	44	2016-06-27 06:03:01.362132	2016-06-27 06:06:19.25154
+45	Lonnie Altenwerth	5331990669	robb_wisoky@example.net	2013-11-17	Male	\N	1973	33342 Kaelyn Fort	East Shawnbury	Senior Usability Facilitator	Everybody got they cups feel the breeze why is you and my money on my mind I love my momma. Through all the drama used to sell loot like every single day hizzouse Long Beach. For the gs fo rizzle why is you waddup everybody got they cups tha dizzle gold chain roll with. Your chrome may I pizzle smokin' weed Mr. Buckwort.	t	https://robohash.org/facereliberoeum.png?size=300x300	45	2016-06-27 06:03:01.520458	2016-06-27 06:06:19.262608
+46	Florian Stamm	5324206778	albertha@example.net	2012-01-25	Female	\N	1995	912 Kerluke Forest	Garlandport	Global Factors Strategist	Feel the breeze Snoop sippin' on gin and juice and my money on my mind Mr. Buckwort through all the drama gold chain. Make a few ends it's 1993 your chrome bubbles in the tub Mr. Buckwort bionic smokin' indo like every single day realness. Rizzoad in tha hizzle roll with fizzle every single one Long Beach.	f	https://robohash.org/estomnisquae.png?size=300x300	46	2016-06-27 06:03:01.685721	2016-06-27 06:06:19.271738
+47	Jonatan Schneider	5321213918	rhett@example.com	2014-06-22	Female	\N	1927	7349 Juana Keys	Frederiqueview	Regional Usability Officer	Roll with put ya choppers up rizzide through all the drama recognize. Roll with realness every single one if the ride is more fly, then you must buy through all the drama. Pizzle tha shiznit rolling down the street if the ride is more fly, then you must buy fo shizzle. Make a few ends fo rizzle now I'm on parole real deal Holyfield smokin' weed feel the breeze realer. For the hustlers your chrome realer televizzle at ease if you was me and I was you Long Beach the dopest.	t	https://robohash.org/aspernaturoditperspiciatis.png?size=300x300	47	2016-06-27 06:03:01.843152	2016-06-27 06:06:19.282265
+48	Oran Schamberger	5331725209	jose_zboncak@example.org	2016-06-27	Female	\N	1921	731 Cassin Plains	Batzberg	Dynamic Configuration Executive	Waddup drizzle realer smokin' weed nothing can save ya may I at ease I love my momma. Mr. buckwort make a few ends bubbles in the tub everybody got they cups Snoopy pizzle. Your chrome laid back the S oh yes the dopest why is you used to sell loot. Sippin' on gin and juice zig zag smoke nasty every single one the diggy. At ease your chrome the Dogg Pound put ya choppers up if you was me and I was you smokin' indo laid back the LBC realer.	f	https://robohash.org/omnisfaceretempore.png?size=300x300	48	2016-06-27 06:03:02.010159	2016-06-27 06:06:19.292381
+49	Berniece Kiehn MD	5322752536	shana.jakubowski@example.org	2011-03-22	Male	\N	1919	568 Karli Meadow	Rocioside	Direct Group Architect	For the hustlers gizzo sippin' on gin and juice through all the drama roll with the dopest. Used to sell loot your chrome like every single day the dopest if the ride is more fly, then you must buy. Fo shizzle sippin' on gin and juice for the Gs the S oh yes drizzle zig zag smoke waddup. Long beach the S oh yes televizzle tha dizzle if the ride is more fly, then you must buy used to sell loot gold chain bubbles in the tub eighty degrees.	f	https://robohash.org/iureautquisquam.png?size=300x300	49	2016-06-27 06:03:02.174927	2016-06-27 06:06:19.30232
+51	Georgiana Abernathy	5333617308	patience@example.net	2012-07-01	Male	\N	1987	0172 Monte Branch	Mayermouth	Product Program Consultant	The magic johnson of rap the Dogg Pound smokin' weed fo rizzle eighty degrees the LBC and my money on my mind guess what? like every single day. Plizzay every single one Long Beach hizzouse tha shiznit at ease fizzle if the ride is more fly, then you must buy the S oh yes. Rizzide you talk too much realer real deal Holyfield like every single day rolling down the street Coupe de Ville bionic.	f	https://robohash.org/etexeos.png?size=300x300	51	2016-06-27 06:03:02.501193	2016-06-27 06:06:19.323426
+52	Elsa Bernier	5331235349	kayley@example.com	2012-06-25	Female	\N	1924	708 Schoen Extension	Raynorton	Investor Interactions Assistant	Smokin' indo the S oh yes the dopest Coupe de Ville everybody got they cups hizzouse smokin' weed rizzide gizzo. Zig zag smoke drizzle smokin' indo put ya choppers up guess what? rizzoad. Everybody got they cups at ease the Magic Johnson of rap you talk too much it's 1993 rizzide nothing can save ya hizzouse for the Gs. Fo rizzle the dopest everybody got they cups drizzle televizzle rizzide Long Beach.	t	https://robohash.org/consequaturautdolor.png?size=300x300	52	2016-06-27 06:03:02.659938	2016-06-27 06:06:19.333016
+53	Jovan Kulas	5341653205	luigi@example.org	2012-03-13	Male	\N	1974	3324 Kohler Mission	Port Seamus	Chief Creative Consultant	Realer fo shizzle feel the breeze why is you drop it like it's hot waddup the diggy for the hustlers Long Beach. The s oh yes it's 1993 rizzoad like every single day in tha hizzle realness. Fo rizzle the S oh yes the Dogg Pound every single one bionic rizzide. The magic johnson of rap through all the drama and my money on my mind Coupe de Ville everybody got they cups fo shizzle the S oh yes Long Beach. Smokin' indo real deal Holyfield hizzouse now I'm on parole Snoopy at ease I love my momma.	f	https://robohash.org/quieaquequo.png?size=300x300	53	2016-06-27 06:03:02.824997	2016-06-27 06:06:19.34317
+54	Marion Little	5345803431	jeffry.dickinson@example.com	2016-03-14	Female	\N	1998	9815 Misael Orchard	North Cleve	Legacy Solutions Architect	If you was me and i was you tha dizzle fo rizzle Doggfada everybody got they cups put ya choppers up the S oh yes. Waddup Snoop the Magic Johnson of rap with my mind on my money pizzle bionic for the hustlers fo shizzle feel the breeze. Like every single day your chrome eighty degrees why is you and my money on my mind drop it like it's hot the Magic Johnson of rap rizzide Long Beach. Gold chain the Magic Johnson of rap may I through all the drama I love my momma every single one laid back eighty degrees. Roll with at ease for the Gs smokin' weed recognize the Dogg Pound if the ride is more fly, then you must buy.	t	https://robohash.org/enimquibusdamtempora.png?size=300x300	54	2016-06-27 06:03:02.984052	2016-06-27 06:06:19.353801
+55	Susan Schuster	5323462239	mekhi@example.org	2013-12-02	Male	\N	1945	78895 Turcotte Meadows	New Wardville	District Directives Analyst	Hizzouse Long Beach the S oh yes recognize rolling down the street Snoopy at ease. Snoop tha shiznit the Dogg Pound why is you nothing can save ya if you was me and I was you Mr. Buckwort at ease. It's 1993 now I'm on parole roll with smokin' weed Snoopy. For the gs roll with bionic every single one the diggy feel the breeze you talk too much sippin' on gin and juice. Your chrome put ya choppers up everybody got they cups why is you for the Gs real deal Holyfield the Magic Johnson of rap.	f	https://robohash.org/sapientenesciuntet.png?size=300x300	55	2016-06-27 06:03:03.152548	2016-06-27 06:06:19.363558
+56	Ima Osinski	5323260089	lyric_walker@example.net	2012-08-22	Female	\N	1983	2305 Lesch Course	Nitzscheview	International Response Strategist	For the gs eighty degrees how we do it why is you rolling down the street Coupe de Ville the Dogg Pound may I fo rizzle. Drop it like it's hot eighty degrees pizzle tha dizzle real deal Holyfield how we do it televizzle sippin' on gin and juice waddup. Guess what? at ease through all the drama tha shiznit your chrome drizzle Snoopy televizzle for the Gs. For the hustlers laid back the Dogg Pound your chrome used to sell loot if you was me and I was you rizzoad real deal Holyfield. Like every single day I love my momma your chrome the dopest and my money on my mind plizzay.	t	https://robohash.org/cumquenonasperiores.png?size=300x300	56	2016-06-27 06:03:03.310235	2016-06-27 06:06:19.373638
+58	Amos Greenfelder	5348538200	frederick.rohan@example.com	2013-02-06	Male	\N	1953	554 Mueller Plain	East Marquesland	Chief Brand Architect	Nasty roll with the S oh yes why is you guess what? gizzo pizzle the LBC. Gold chain tha dizzle Long Beach like every single day rizzide hizzouse the diggy fizzle. Rizzide your chrome if the ride is more fly, then you must buy drop it like it's hot the dopest. Laid back it's 1993 with my mind on my money Snoopy fizzle.	f	https://robohash.org/beataeetautem.png?size=300x300	58	2016-06-27 06:03:03.638474	2016-06-27 06:06:19.394
+59	Liam Wolff	5341995591	jimmie@example.org	2012-07-28	Female	\N	1907	41243 Antonietta Green	Port Declanport	Product Configuration Producer	Sippin' on gin and juice the Dogg Pound pizzle fo shizzle it's 1993 gizzo why is you. In tha hizzle make a few ends used to sell loot why is you I love my momma realer eighty degrees sippin' on gin and juice. Pizzle at ease rizzide with my mind on my money fo rizzle Mr. Buckwort. Real deal holyfield rolling down the street smokin' indo every single one everybody got they cups with my mind on my money Mr. Buckwort televizzle.	t	https://robohash.org/veniamrecusandaeeum.png?size=300x300	59	2016-06-27 06:03:03.79804	2016-06-27 06:06:19.40448
+60	Anderson Herzog III	5345235722	dorris_littel@example.net	2011-04-26	Male	\N	1952	483 Prosacco Forks	Westport	Legacy Quality Associate	Nasty waddup make a few ends Snoop bionic put ya choppers up Mr. Buckwort in tha hizzle the dopest. Fizzle fo rizzle I love my momma make a few ends put ya choppers up now I'm on parole for the Gs rolling down the street. Smokin' indo sippin' on gin and juice guess what? Snoopy hizzouse. Waddup I love my momma put ya choppers up bionic guess what? with my mind on my money. Zig zag smoke smokin' indo for the hustlers Coupe de Ville roll with the Dogg Pound bubbles in the tub.	f	https://robohash.org/sapienteeligendinon.png?size=300x300	60	2016-06-27 06:03:03.965481	2016-06-27 06:06:19.414762
+3	Nelson	1234567898	dianna@example.com	2012-10-19	Female	\N	1985	540 Hansen Corner	South Justenberg	Internal Infrastructure Analyst	Bionic gold chain bubbles in the tub waddup laid back Mr. Buckwort eighty degrees Doggfada the dopest. Tha dizzle hizzouse fizzle fo rizzle roll with. Snoop Coupe de Ville Snoopy with my mind on my money gold chain rolling down the street for the Gs.	f	https://robohash.org/autemprovidentquo.png?size=300x300	3	2016-06-27 05:58:32.116624	2016-06-27 10:04:35.123245
+7	Eva Stroman	5331834780	bennett.ullrich@example.org	2014-08-11	Male	\N	1961	528 Flatley Corner	Lake Bertaburgh	National Response Specialist	Your chrome if the ride is more fly, then you must buy rizzoad the Magic Johnson of rap Snoop gizzo in tha hizzle smokin' indo make a few ends. Bionic the Magic Johnson of rap realness rizzoad at ease for the Gs rolling down the street rizzide if the ride is more fly, then you must buy. The magic johnson of rap if you was me and I was you how we do it roll with realness drizzle.	t	https://robohash.org/sitnemolaborum.png?size=300x300	10	2016-06-27 05:58:32.765063	2016-06-27 10:06:21.610337
+61	\N	\N	ela@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	61	2016-06-28 04:39:30.098863	2016-06-28 04:39:30.098863
+62	\N	\N	test1@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	62	2016-06-28 04:42:00.331316	2016-06-28 04:42:00.331316
+63	\N	\N	arasan8990@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	63	2016-06-28 05:28:52.30956	2016-06-28 05:28:52.30956
+70	data	4545344545	data@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	70	2016-07-05 12:06:56.198803	2016-07-05 12:06:56.807913
+71	datadsaf	1234343434	data1@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	71	2016-07-05 12:11:00.318952	2016-07-05 12:11:00.929946
+72	test	3434343434	testx@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	72	2016-07-05 12:13:16.172373	2016-07-05 12:13:16.75617
+29	Navneeth	1212121213	cathrine@example.com	2014-02-16	Female	\N	1979	473 Kulas Knolls	East Kaleighside	Legacy Mobility Officer	The magic johnson of rap plizzay now I'm on parole Mr. Buckwort may I it's 1993 the dopest rolling down the street eighty degrees. Televizzle Snoopy feel the breeze smokin' indo eighty degrees real deal Holyfield everybody got they cups gizzo. Doggfada you talk too much smokin' weed everybody got they cups like every single day in tha hizzle realness make a few ends the diggy.	t	https://robohash.org/quietcumque.png?size=300x300	29	2016-06-27 06:02:58.854652	2016-07-04 12:44:05.415076
+64	\N	\N	asdf@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	64	2016-07-05 11:33:40.177432	2016-07-05 11:33:40.177432
+65	\N	\N	testdd@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	65	2016-07-05 11:36:28.417944	2016-07-05 11:36:28.417944
+66	\N	\N	set@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	66	2016-07-05 11:42:52.097197	2016-07-05 11:42:52.097197
+67	\N	\N	sda@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	67	2016-07-05 11:43:31.837116	2016-07-05 11:43:31.837116
+68	\N	\N	sdfas@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	68	2016-07-05 11:49:54.228757	2016-07-05 11:49:54.228757
+69	arasan	1234567878	arasan@gmail.com	1970-01-01	\N	sdsdfsd	asdfas	\N	\N	\N	\N	f	\N	69	2016-07-05 11:57:37.501585	2016-07-05 12:02:10.727255
+73	asdfasd	34534543534543	sadf@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	73	2016-07-05 12:14:10.42994	2016-07-05 12:14:11.027629
+74	sample	454345343434	sample@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	74	2016-07-06 04:30:35.768065	2016-07-06 04:30:36.402444
+75	sam	3434344545	samx@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	75	2016-07-06 10:58:17.262106	2016-07-06 10:58:17.892833
+76	sdfg	4545454345	sdfgs@gmail.com	\N	\N	\N	\N	\N	\N	\N	\N	f	\N	76	2016-07-06 11:02:09.927298	2016-07-06 11:02:10.530075
+\.
+
+
+--
+-- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('profiles_id_seq', 76, true);
+
+
+--
+-- Data for Name: rpush_apps; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY rpush_apps (id, name, environment, certificate, password, connections, created_at, updated_at, type, auth_key, client_id, client_secret, access_token, access_token_expiration) FROM stdin;
+\.
+
+
+--
+-- Name: rpush_apps_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('rpush_apps_id_seq', 1, false);
+
+
+--
+-- Data for Name: rpush_feedback; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY rpush_feedback (id, device_token, failed_at, created_at, updated_at, app_id) FROM stdin;
+\.
+
+
+--
+-- Name: rpush_feedback_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('rpush_feedback_id_seq', 1, false);
+
+
+--
+-- Data for Name: rpush_notifications; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY rpush_notifications (id, badge, device_token, sound, alert, data, expiry, delivered, delivered_at, failed, failed_at, error_code, error_description, deliver_after, created_at, updated_at, alert_is_json, type, collapse_key, delay_while_idle, registration_ids, app_id, retries, uri, fail_after, processing, priority, url_args, category, content_available, notification) FROM stdin;
+\.
+
+
+--
+-- Name: rpush_notifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('rpush_notifications_id_seq', 1, false);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY schema_migrations (version) FROM stdin;
+20160615104558
+20160616105023
+20160618150016
+20160618150102
+20160627040702
+20160627041114
+20160627061830
+20160704082824
+20160704121719
+20160705085447
+20160706130304
+20160706120715
+20160707051724
+20160707111504
+20160711103337
+20160711114431
+20160711114432
+20160711114433
+20160711114434
+20160711114435
+\.
+
+
+--
+-- Data for Name: service_bookings; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY service_bookings (id, user_id, my_bike_id, registration_number, kms, service_date, service_time, service_station, comments, service_type, request_pick_up, service_status, created_at, updated_at) FROM stdin;
+12	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:29:33.356738	2016-07-06 10:29:33.356738
+13	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:30:55.773104	2016-07-06 10:30:55.773104
+14	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:31:08.549352	2016-07-06 10:31:08.549352
+15	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:33:37.206323	2016-07-06 10:33:37.206323
+16	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:37:48.214461	2016-07-06 10:37:48.214461
+17	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:38:15.556554	2016-07-06 10:38:15.556554
+18	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:38:41.763588	2016-07-06 10:38:41.763588
+19	20	5	KA 05 5566	10	2016-11-27	2016-07-06 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	t	Requested	2016-07-06 10:38:53.157028	2016-07-06 10:38:53.157028
+36	20	5	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-11 09:17:51.46103	2016-07-11 09:17:51.46103
+37	20	5	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-11 09:18:04.118343	2016-07-11 09:18:04.118343
+38	20	3	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-11 09:18:09.809488	2016-07-11 09:18:09.809488
+39	20	3	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-11 09:18:10.739633	2016-07-11 09:18:10.739633
+32	29	1	122343	232	2016-07-12	2016-07-11 01:20:00	Coromandal Harley Davidson	asdfasd	Periodic	f	Requested	2016-07-11 07:21:08.753583	2016-07-11 09:51:12.700152
+11	20	5	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Periodic	f	Requested	2016-07-06 10:29:23.088524	2016-07-11 09:53:00.136929
+40	29	8	321321	2323	2016-07-18	2016-07-11 17:15:00	Coromandal Harley Davidson	asdfas	Periodic	f	Requested	2016-07-11 11:23:14.099634	2016-07-11 11:23:14.099634
+41	29	1	122343	23423	2016-07-18	2016-07-11 17:55:00	Coromandal Harley Davidson	adfas	General check-up	f	Requested	2016-07-11 11:23:55.172822	2016-07-11 11:23:55.172822
+21	9	8	SDFASd	4545	\N	2016-07-08 00:00:00	sadfas	sadf	Accidental repair	f	Requested	2016-07-08 09:31:19.404722	2016-07-08 09:31:19.404722
+22	\N	\N	425435	34	2016-07-12	2016-07-08 00:00:00	\N	\N	\N	f	Requested	2016-07-08 09:32:46.182022	2016-07-08 09:32:46.182022
+23	12	8	345435	454	2016-07-08	2016-07-08 00:00:00	sdasdf	\N	Accidental repair	f	Requested	2016-07-08 09:34:01.747203	2016-07-08 09:34:01.747203
+24	10	1	sdfsa	454	2016-07-09	2016-07-08 03:00:00	\N	\N	General check-up	f	Requested	2016-07-08 09:35:25.248653	2016-07-08 09:35:25.248653
+25	8	1	34345	44	2016-07-27	2016-07-08 14:00:00	wretwe	wertwe	Accidental repair	f	Requested	2016-07-08 10:33:13.432443	2016-07-08 10:33:13.432443
+1	29	1	122343	1212	\N	2016-07-08 00:00:00	Coromandal Harley Davidson	asdfa	Accidental repair	f	Requested	2016-07-06 05:08:22.636189	2016-07-08 10:46:15.812291
+6	20	1	KA 05 1234	10	2016-07-08	2016-07-08 16:45:00	Coromandal Harley Davidson	Some Comments	Accidental repair	t	Requested	2016-07-06 05:44:30.699304	2016-07-08 10:55:39.090164
+26	11	9	KA 05 5566	10	2016-11-27	2016-07-08 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-08 11:15:12.694687	2016-07-08 11:15:12.694687
+27	11	9	KA 05 5566	10	2016-11-27	2016-07-08 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-08 11:16:39.089754	2016-07-08 11:16:39.089754
+28	11	9	KA 05 5566	10	2016-11-27	2016-07-08 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-08 11:24:19.284179	2016-07-08 11:24:19.284179
+29	11	9	KA 05 5566	10	2016-11-27	2016-07-08 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-08 11:33:34.43315	2016-07-08 11:33:34.43315
+30	29	8	321321	23423	2016-07-13	2016-07-08 17:15:00	Coromandal Harley Davidson	2323	Periodic	f	Requested	2016-07-08 11:37:31.459146	2016-07-08 12:34:39.794038
+31	9	3	sdasdf	1	2016-07-13	2016-07-11 11:00:00	\N	\N	Periodic	f	Requested	2016-07-11 07:20:57.101127	2016-07-11 07:20:57.101127
+33	10	1	aswfasdf	45435	2016-07-14	2016-07-11 13:00:00	sadfasdf	asdfasd	Accidental repair	t	Requested	2016-07-11 07:28:16.89497	2016-07-11 07:28:16.89497
+34	29	1	122343	343	2016-07-26	2016-07-11 11:00:00	sadfasf	\N	Periodic	f	Requested	2016-07-11 07:32:59.849794	2016-07-11 07:32:59.849794
+35	20	5	KA 05 5566	10	2016-11-27	2016-07-11 16:45:00	Coromandal Harley Davidson	Some Comments	Service Type	t	Requested	2016-07-11 09:17:07.520772	2016-07-11 09:17:07.520772
+\.
+
+
+--
+-- Name: service_bookings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('service_bookings_id_seq', 41, true);
+
+
+--
+-- Data for Name: specification_types; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY specification_types (id, name, display_order, active, created_at, updated_at) FROM stdin;
+1	Dimensions	1	t	2016-06-27 06:19:15.525277	2016-06-27 06:19:15.525277
+2	Engine	2	t	2016-06-27 06:19:39.005329	2016-06-27 06:19:39.005329
+3	DriveTrain	3	t	2016-06-27 06:19:39.038742	2016-06-27 06:19:39.038742
+4	Chassis	4	t	2016-06-27 06:19:39.058172	2016-06-27 06:19:39.058172
+6	Electric	6	t	2016-06-27 06:19:40.183979	2016-06-27 06:19:40.183979
+7	\N	\N	\N	2016-06-28 06:12:48.103023	2016-06-28 06:12:48.103023
+8	\N	\N	\N	2016-06-28 06:14:10.900311	2016-06-28 06:14:10.900311
+9	\N	\N	\N	2016-06-28 06:17:41.824265	2016-06-28 06:17:41.824265
+13	\N	4	t	2016-06-28 11:55:43.024068	2016-06-28 11:55:43.024068
+14	\N	7	t	2016-06-28 11:55:56.499878	2016-06-28 11:55:56.499878
+15	\N	7	t	2016-06-28 11:58:11.978668	2016-06-28 11:58:11.978668
+16	\N	3	t	2016-06-28 11:59:07.09283	2016-06-28 11:59:07.09283
+17	\N	5	t	2016-06-28 11:59:28.96921	2016-06-28 11:59:28.96921
+18	\N	5	t	2016-06-28 12:00:21.628743	2016-06-28 12:00:21.628743
+19	\N	7	t	2016-06-28 12:02:43.462639	2016-06-28 12:02:43.462639
+20	\N	8	t	2016-06-28 12:03:12.037409	2016-06-28 12:03:12.037409
+21	\N	14	t	2016-06-28 12:15:33.288549	2016-06-28 12:15:33.288549
+5	Performance	20	t	2016-06-27 06:19:39.082357	2016-06-28 12:29:51.645182
+22	Perform	20	t	2016-06-28 12:36:12.754339	2016-06-28 12:37:00.678698
+23	datax	24	t	2016-06-28 12:37:26.200895	2016-06-28 12:37:48.52611
+\.
+
+
+--
+-- Name: specification_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('specification_types_id_seq', 23, true);
+
+
+--
+-- Data for Name: specifications; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY specifications (id, name, specification_type_id, bike_id, value, active, created_at, updated_at) FROM stdin;
+1	tha shiznit	6	44	Doggfada	t	2016-06-27 06:29:04.239937	2016-06-27 06:29:04.239937
+2	tha shiznit	6	48	realness	t	2016-06-27 06:29:04.261004	2016-06-27 06:29:04.261004
+3	it's 1993	6	37	at ease	t	2016-06-27 06:29:04.271448	2016-06-27 06:29:04.271448
+4	fizzle	5	19	realer	t	2016-06-27 06:29:04.28118	2016-06-27 06:29:04.28118
+5	rizzide	1	17	every single one	t	2016-06-27 06:29:04.291792	2016-06-27 06:29:04.291792
+6	in tha hizzle	2	29	everybody got they cups	t	2016-06-27 06:29:04.302452	2016-06-27 06:29:04.302452
+7	feel the breeze	4	36	eighty degrees	t	2016-06-27 06:29:04.3117	2016-06-27 06:29:04.3117
+8	nasty	6	40	televizzle	t	2016-06-27 06:29:04.32243	2016-06-27 06:29:04.32243
+9	hizzouse	2	3	why is you	t	2016-06-27 06:29:04.332306	2016-06-27 06:29:04.332306
+10	like every single day	3	44	used to sell loot	t	2016-06-27 06:29:04.342173	2016-06-27 06:29:04.342173
+11	like every single day	4	37	smokin' indo	t	2016-06-27 06:29:04.352852	2016-06-27 06:29:04.352852
+12	put ya choppers up	3	48	Snoopy	t	2016-06-27 06:29:04.363352	2016-06-27 06:29:04.363352
+13	nothing can save ya	6	50	smokin' indo	t	2016-06-27 06:29:04.372629	2016-06-27 06:29:04.372629
+14	rizzide	5	27	every single one	t	2016-06-27 06:29:04.383216	2016-06-27 06:29:04.383216
+15	tha shiznit	2	21	if you was me and I was you	t	2016-06-27 06:29:04.393462	2016-06-27 06:29:04.393462
+16	the Magic Johnson of rap	3	20	Doggfada	t	2016-06-27 06:29:04.403363	2016-06-27 06:29:04.403363
+17	if the ride is more fly, then you must buy	5	31	every single one	t	2016-06-27 06:29:04.413706	2016-06-27 06:29:04.413706
+18	guess what?	3	24	bubbles in the tub	t	2016-06-27 06:29:04.424291	2016-06-27 06:29:04.424291
+19	the Dogg Pound	3	37	Coupe de Ville	t	2016-06-27 06:29:04.433792	2016-06-27 06:29:04.433792
+20	sippin' on gin and juice	5	10	Snoop	t	2016-06-27 06:29:04.444188	2016-06-27 06:29:04.444188
+21	rizzide	3	28	tha shiznit	t	2016-06-27 06:29:04.454788	2016-06-27 06:29:04.454788
+22	zig zag smoke	2	8	bionic	t	2016-06-27 06:29:04.464179	2016-06-27 06:29:04.464179
+23	through all the drama	5	20	for the hustlers	t	2016-06-27 06:29:04.474687	2016-06-27 06:29:04.474687
+24	Snoopy	6	14	Long Beach	t	2016-06-27 06:29:04.484958	2016-06-27 06:29:04.484958
+25	I love my momma	3	28	drop it like it's hot	t	2016-06-27 06:29:04.494966	2016-06-27 06:29:04.494966
+26	the LBC	3	19	realer	t	2016-06-27 06:29:04.505116	2016-06-27 06:29:04.505116
+27	used to sell loot	3	48	pizzle	t	2016-06-27 06:29:04.516007	2016-06-27 06:29:04.516007
+28	fizzle	4	17	your chrome	t	2016-06-27 06:29:04.525395	2016-06-27 06:29:04.525395
+29	why is you	6	27	tha shiznit	t	2016-06-27 06:29:04.535818	2016-06-27 06:29:04.535818
+30	it's 1993	6	15	the LBC	t	2016-06-27 06:29:04.545872	2016-06-27 06:29:04.545872
+31	if you was me and I was you	2	24	for the hustlers	t	2016-06-27 06:29:04.55606	2016-06-27 06:29:04.55606
+32	gizzo	4	44	laid back	t	2016-06-27 06:29:04.566167	2016-06-27 06:29:04.566167
+33	laid back	2	27	you talk too much	t	2016-06-27 06:29:04.576832	2016-06-27 06:29:04.576832
+34	tha shiznit	3	50	realness	t	2016-06-27 06:29:04.586605	2016-06-27 06:29:04.586605
+35	rizzoad	2	22	if the ride is more fly, then you must buy	t	2016-06-27 06:29:04.596785	2016-06-27 06:29:04.596785
+36	rolling down the street	6	17	Snoopy	t	2016-06-27 06:29:04.606987	2016-06-27 06:29:04.606987
+37	Snoopy	3	44	if you was me and I was you	t	2016-06-27 06:29:04.617182	2016-06-27 06:29:04.617182
+38	for the Gs	2	32	feel the breeze	t	2016-06-27 06:29:04.627513	2016-06-27 06:29:04.627513
+39	televizzle	5	22	the Magic Johnson of rap	t	2016-06-27 06:29:04.637766	2016-06-27 06:29:04.637766
+40	the diggy	2	20	the dopest	t	2016-06-27 06:29:04.647436	2016-06-27 06:29:04.647436
+41	guess what?	4	24	real deal Holyfield	t	2016-06-27 06:29:04.657946	2016-06-27 06:29:04.657946
+42	you talk too much	3	47	realness	t	2016-06-27 06:29:04.668117	2016-06-27 06:29:04.668117
+43	I love my momma	6	33	pizzle	t	2016-06-27 06:29:04.677997	2016-06-27 06:29:04.677997
+44	fizzle	4	35	gizzo	t	2016-06-27 06:29:04.688554	2016-06-27 06:29:04.688554
+45	smokin' indo	1	23	televizzle	t	2016-06-27 06:29:04.69898	2016-06-27 06:29:04.69898
+46	with my mind on my money	1	37	for the Gs	t	2016-06-27 06:29:04.78073	2016-06-27 06:29:04.78073
+47	fo rizzle	1	49	plizzay	t	2016-06-27 06:29:04.820845	2016-06-27 06:29:04.820845
+48	in tha hizzle	3	7	realness	t	2016-06-27 06:29:04.940758	2016-06-27 06:29:04.940758
+49	at ease	2	47	may I	t	2016-06-27 06:29:04.993708	2016-06-27 06:29:04.993708
+50	fizzle	5	29	waddup	t	2016-06-27 06:29:05.004128	2016-06-27 06:29:05.004128
+\.
+
+
+--
+-- Name: specifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('specifications_id_seq', 50, true);
+
+
+--
+-- Data for Name: test_rides; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY test_rides (id, user_id, name, mobile, email, address, request_pick_up, test_ride_done, test_ride_confirmed, bike, ride_date, ride_time, location, created_at, updated_at) FROM stdin;
+19	\N	Navneeth	1212121213	cathrine@example.com	473 Kulas Knolls	f	f	f	Scion	2016-07-08	2016-07-07 16:05:00	Chennai	2016-07-07 10:36:37.258108	2016-07-07 10:36:37.258108
+20	29	Navneeth	1212121213	cathrine@example.com	473 Kulas Knolls	t	f	f	Acura	2016-07-08	2016-07-07 15:10:00	Chennai	2016-07-07 10:38:55.291621	2016-07-07 10:42:25.186082
+22	29	Navneeth	1212121213	cathrine@example.com	473 Kulas Knolls	f	f	f	Acura	2016-07-13	2016-07-08 16:50:00	Chennai	2016-07-08 12:21:46.925987	2016-07-08 12:23:40.021686
+6	29	Navneeth	1212121213	cathrine@example.com	473 Kulas Knolls	f	f	f	Nissan	2016-07-06	2016-07-11 16:35:00	Chennai	2016-07-04 13:05:03.489926	2016-07-11 09:36:06.785543
+29	29	Ghost Rider	6655334433	ghost@ryder.com	Some Address	f	f	f	Harley Davidson	2016-11-27	2016-07-11 16:45:00	Chennai	2016-07-11 10:46:29.144333	2016-07-11 10:46:29.144333
+30	29	Navneeth	1212121213	cathrine@example.com	473 Kulas Knolls	f	f	f	Acura	2016-07-18	2016-07-11 15:40:00	Chennai	2016-07-11 11:11:48.964318	2016-07-11 11:11:48.964318
+\.
+
+
+--
+-- Name: test_rides_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('test_rides_id_seq', 32, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: user
+--
+
+COPY users (id, email, encrypted_password, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, authentication_token, authentication_token_created_at, created_at, updated_at, role) FROM stdin;
+5	xander@example.com	$2a$11$2ooTLXvMUWoFP4GqgH2DT.qnXkgk4q.QrlTkzQWrroBd0KaDzxsIq	\N	\N	\N	0	\N	\N	\N	\N	askyUFhieAMyeCyhNzXK	2016-06-27 05:58:32.440135	2016-06-27 05:58:32.440226	2016-06-27 05:58:32.440226	dealer-manager
+7	albertha.waelchi@example.com	$2a$11$YFpy96M0qRb/0SWhWEBZM.TUoh3Pi0ooB9uKjR80qn8oOOs9y05ri	\N	\N	\N	0	\N	\N	\N	\N	WQ1JjTRu-FccuZg-UkQy	2016-06-27 05:58:32.763891	2016-06-27 05:58:32.763996	2016-06-27 05:58:32.763996	super-admin
+8	justice_spinka@example.com	$2a$11$lN4KqKHZaMmcVQefRKjjl.c7/kxHdVa00EaTq4gR70USOI3F1P46a	\N	\N	\N	0	\N	\N	\N	\N	AqUyjtUDaq7srtmzjKv1	2016-06-27 05:58:32.922538	2016-06-27 05:58:32.922638	2016-06-27 05:58:32.922638	dealer-admin
+9	evie_hettinger@example.net	$2a$11$ynwXISHAb7MjRwHEugNLjeZ.lBKlJnIPlZiN/NyRHNRRYm11JY0Vm	\N	\N	\N	0	\N	\N	\N	\N	xGdRefKgr534dyxGaR1W	2016-06-27 05:58:33.092262	2016-06-27 05:58:33.092366	2016-06-27 05:58:33.092366	super-admin
+10	bennett.ullrich@example.org	$2a$11$W6CfcRCirc7fMF1V9GPmferhdZNetBANrqzVQEI6.mzCCzJLBACGK	\N	\N	\N	0	\N	\N	\N	\N	waDYDQATieyDsjyqqX1b	2016-06-27 05:58:33.253053	2016-06-27 05:58:33.253144	2016-06-27 05:58:33.253144	dealer-manager
+11	al.kertzmann@example.com	$2a$11$4krOAGcL2zfCGghrPRwlm.Ktoeu920tzjuofSvouqxrjuVwUPkI2a	\N	\N	\N	0	\N	\N	\N	\N	YZyYRyoyJEeYCK9sby_R	2016-06-27 06:02:55.877922	2016-06-27 06:02:55.87812	2016-06-27 06:02:55.87812	guest
+12	rico@example.org	$2a$11$4Et4P3FKCANihbmF.cwYG.a.7Cok.7R7qBaN5M1gLQ5OhgTohEgze	\N	\N	\N	0	\N	\N	\N	\N	xaVA8ooLqenMdHjqCpsf	2016-06-27 06:02:56.077209	2016-06-27 06:02:56.077304	2016-06-27 06:02:56.077304	guest
+15	elenor_oconner@example.com	$2a$11$5qEiOOzW6Ge0mbJLP15KeeXp95A1xy9fXaVI2u7uH.9fdG3Pdf5kG	\N	\N	\N	0	\N	\N	\N	\N	VUTWgFRU2sjuGyyeAax_	2016-06-27 06:02:56.562632	2016-06-27 06:02:56.562725	2016-06-27 06:02:56.562725	guest
+18	jordy.luettgen@example.com	$2a$11$822vRnld81aqqU2QAbmPxe2CJvQxClmZZFWPXeqBc9oAAFlDEkrt.	\N	\N	\N	0	\N	\N	\N	\N	_jCS6jzfcGy94i1Cyz3r	2016-06-27 06:02:57.058861	2016-06-27 06:02:57.058953	2016-06-27 06:02:57.058953	guest
+19	jacinthe@example.com	$2a$11$sikRxzDKqPJcfWXFwnJ3PO1JjJvvNoKRTCJaB5X3rSHVdMrB.dx5q	\N	\N	\N	0	\N	\N	\N	\N	cuiLJrGcBawxVi2hy4F1	2016-06-27 06:02:57.216225	2016-06-27 06:02:57.216316	2016-06-27 06:02:57.216316	guest
+20	milford.kerluke@example.net	$2a$11$d34RGyKEnL98WN2GtSzYr.0R4JM36Q.9QUQZ2bCSlRQ0fWhmJnQeW	\N	\N	\N	0	\N	\N	\N	\N	frzBeedKVtAxp9G5Cmzi	2016-06-27 06:02:57.377311	2016-06-27 06:02:57.377404	2016-06-27 06:02:57.377404	guest
+21	nora@example.com	$2a$11$LN6F99Zq7ZgjQGO5XCQ1m.qrpGos1zY5kfSR0f0L3FmHLdRRopWvG	\N	\N	\N	0	\N	\N	\N	\N	fxs1Jtv6A2f3TFyYnz-7	2016-06-27 06:02:57.547988	2016-06-27 06:02:57.548081	2016-06-27 06:02:57.548081	guest
+22	michael.ryan@example.com	$2a$11$0.5BhOOPP55YqylzAKFamen5nbml2CVBlUHZxv2DO5ptgEFbpuRmm	\N	\N	\N	0	\N	\N	\N	\N	s8wHD7vv5Fth6AWZ7Q_E	2016-06-27 06:02:57.705581	2016-06-27 06:02:57.705674	2016-06-27 06:02:57.705674	guest
+23	violet_sporer@example.net	$2a$11$4AyHW/2TOacqpOaXK2j1o.Gx2.11Q9r99L6XTvXDl9ux5Tu/jxhp6	\N	\N	\N	0	\N	\N	\N	\N	ZdGMmKnTfhjhKwUHr-TM	2016-06-27 06:02:57.869157	2016-06-27 06:02:57.869249	2016-06-27 06:02:57.869249	guest
+24	freida_koepp@example.net	$2a$11$5Wk8IEGBjv0Q6Tl.st2JWuK1ksynvfe7dVr1rIKb9iag5NRFrX.ja	\N	\N	\N	0	\N	\N	\N	\N	LuLPz-GyrAYfP1DUCtAy	2016-06-27 06:02:58.035963	2016-06-27 06:02:58.036057	2016-06-27 06:02:58.036057	guest
+25	shayne_fisher@example.com	$2a$11$VlJANmOkp1xgtamTMEGCR.pjPaw91RYtXnciXllACAHm4xFqjvJiC	\N	\N	\N	0	\N	\N	\N	\N	xw-aryTmic3spwRbS5ea	2016-06-27 06:02:58.193654	2016-06-27 06:02:58.19375	2016-06-27 06:02:58.19375	guest
+26	tyler@example.org	$2a$11$LCriD2H9T1pfH04uhD9lW.k/wTxfLM0hbMACUhcGuD3kV0jRIlDWa	\N	\N	\N	0	\N	\N	\N	\N	8JxcDwxuK6RvyRkXWEPK	2016-06-27 06:02:58.355163	2016-06-27 06:02:58.355289	2016-06-27 06:02:58.355289	guest
+27	ethel@example.com	$2a$11$HdeIh0kO7HQ7DO6RKZhKCe3Dxb9EKmJPS.Kz4WKrQ5alYPGkq9zxi	\N	\N	\N	0	\N	\N	\N	\N	G6m-g4sYpZq8yARNHyZQ	2016-06-27 06:02:58.5194	2016-06-27 06:02:58.519491	2016-06-27 06:02:58.519491	guest
+28	eli.cruickshank@example.com	$2a$11$uwSCZI1sngjlwhvXLeZ7z.QVHCZKiXkuVaLf2EzutBPR4/GH5bkbq	\N	\N	\N	0	\N	\N	\N	\N	463ZsywA2ot8TUs3qgya	2016-06-27 06:02:58.690351	2016-06-27 06:02:58.690442	2016-06-27 06:02:58.690442	guest
+30	demarcus_romaguera@example.org	$2a$11$l3L0UuC.nUm15O07IEdJ6O5X8F6Vz/PZ2ZFgxoNIBnRow.sDd6R5m	\N	\N	\N	0	\N	\N	\N	\N	zZMRU2vN2ZAyFyFpuqSF	2016-06-27 06:02:59.014049	2016-06-27 06:02:59.01414	2016-06-27 06:02:59.01414	guest
+31	dovie@example.org	$2a$11$Rub4eNUXuLQXmdVFQjwRbuHTio4WKMUU1CTSbUvSqHQjSMhzhPzlq	\N	\N	\N	0	\N	\N	\N	\N	EUgyjR2xsusizQEXakNy	2016-06-27 06:02:59.181391	2016-06-27 06:02:59.181485	2016-06-27 06:02:59.181485	guest
+32	lamar@example.com	$2a$11$qo2H08PG5uW6/JaEzCA7LOf/yqrSpH5okF9M8lBUV6fw8o2ns561e	\N	\N	\N	0	\N	\N	\N	\N	u8mUYTwzpQK7pLtF1P7D	2016-06-27 06:02:59.366997	2016-06-27 06:02:59.367091	2016-06-27 06:02:59.367091	guest
+33	donnell_stark@example.net	$2a$11$OsNbmf.x8LQFsJP2SxdrOO8oAIm8L3lirrR3GBro2FPMdmpbFY8Pq	\N	\N	\N	0	\N	\N	\N	\N	5rCwzY-ebSsKK6ofh88a	2016-06-27 06:02:59.523756	2016-06-27 06:02:59.523847	2016-06-27 06:02:59.523847	guest
+34	kristoffer@example.com	$2a$11$HI1uVvf1R.7mI8VYCNG/eubrN0PA3mNf5mcgRo.niKUqvfkeaC6AW	\N	\N	\N	0	\N	\N	\N	\N	cqMEJKF3Z9RyEs4rX-M3	2016-06-27 06:02:59.687463	2016-06-27 06:02:59.687554	2016-06-27 06:02:59.687554	guest
+35	giovanna@example.org	$2a$11$Bdd73NoH.1pkN4sYcmA0BO2F.Qy0mgvhRCjz2qjgtMCnyBaUNBhKS	\N	\N	\N	0	\N	\N	\N	\N	yowi6rhrEy2KspecLkfB	2016-06-27 06:02:59.849486	2016-06-27 06:02:59.849578	2016-06-27 06:02:59.849578	guest
+36	dario@example.org	$2a$11$BcLqpVvAamGorgO5Jz5p8.oXAyZ5TYgmjQXEyiWHbtiQmKJq3DR3K	\N	\N	\N	0	\N	\N	\N	\N	bGjh1vJz9FETaQf12NAJ	2016-06-27 06:03:00.042259	2016-06-27 06:03:00.042351	2016-06-27 06:03:00.042351	guest
+37	cale@example.net	$2a$11$rzFuX207vyWsQvvn3Is7RukwSPvV9gE7P0rzuQPPXtX.ZaA7U4Ski	\N	\N	\N	0	\N	\N	\N	\N	ztKjgffMLoYdjNjwytno	2016-06-27 06:03:00.217375	2016-06-27 06:03:00.217468	2016-06-27 06:03:00.217468	guest
+38	lina_marquardt@example.com	$2a$11$3jFrY6sjrvtNTaY5fZCgw.UJ0RxCwYBn2UuZ8SUAX7j4og6imDCu6	\N	\N	\N	0	\N	\N	\N	\N	d2D9HgyxXs4K4ZLJ8sz8	2016-06-27 06:03:00.377747	2016-06-27 06:03:00.377839	2016-06-27 06:03:00.377839	guest
+39	enola@example.org	$2a$11$8SQOvGotB1DMaeI0G/7Yie9IGJkrMiZqAIxXpCq8DLsE1T3ZjbwNu	\N	\N	\N	0	\N	\N	\N	\N	BdvssZzxySnPgx9DJmkC	2016-06-27 06:03:00.541591	2016-06-27 06:03:00.541682	2016-06-27 06:03:00.541682	guest
+40	anita@example.com	$2a$11$Kf3Lr/rQOp7KA52Qnxlh7u6A9oQX.0G.M9BAv9a1Q0oM99.nbb/4.	\N	\N	\N	0	\N	\N	\N	\N	cXR2MqoF4GFmzYTzeBib	2016-06-27 06:03:00.702339	2016-06-27 06:03:00.702442	2016-06-27 06:03:00.702442	guest
+41	lulu@example.org	$2a$11$B4j03fxZxd/Wr91wS.M2gOJgf1JTaeQmCURU9penw0eZOHpRm3V9e	\N	\N	\N	0	\N	\N	\N	\N	a2-wd8RyL7wsyYLBCzEw	2016-06-27 06:03:00.871471	2016-06-27 06:03:00.87158	2016-06-27 06:03:00.87158	guest
+42	briana@example.org	$2a$11$lGAQuQua.d3cZ.fwmiCZ1Ouyb8Fzk2ZEjVyWn/ZZlrYTHlYcvSeCS	\N	\N	\N	0	\N	\N	\N	\N	VgSJ4_xzabFsxwZLM334	2016-06-27 06:03:01.034091	2016-06-27 06:03:01.034183	2016-06-27 06:03:01.034183	guest
+43	micheal.cole@example.net	$2a$11$2k0R/NYCw/YUQyYLPmeMv.YLKP4zoPoaU690MkQUGqPO/trC6hAVW	\N	\N	\N	0	\N	\N	\N	\N	Eihtt8MJ2GsocC_f2UBW	2016-06-27 06:03:01.19505	2016-06-27 06:03:01.195143	2016-06-27 06:03:01.195143	guest
+44	amelie@example.com	$2a$11$Cger7MTrIhzEIN/YdNaGZOyq4M9CKQfMO7GMgONIXPP9.B3Ayw9p2	\N	\N	\N	0	\N	\N	\N	\N	DwGxtuiMso5LKQFuuqTg	2016-06-27 06:03:01.360988	2016-06-27 06:03:01.36109	2016-06-27 06:03:01.36109	guest
+3	dianna@example.com	$2a$11$3JgXrkbx7xUwKf3ioSaJqunYJ35xdiDhAbJLq8ljJ2waA0T/.lDCq	\N	\N	\N	24	2016-06-27 12:38:36.133807	2016-06-27 12:09:45.06664	171.48.26.118	171.48.26.118	jzHCh5x3Vdo8aB_NuNSa	2016-06-27 11:42:22.43385	2016-06-27 05:58:32.11556	2016-06-27 12:38:36.135887	dealer-manager
+2	dewitt@example.org	$2a$11$8dKqp3atRovtHik0iJi3NOXqgChcrBhHjGbAVzVVEpsgm1xAkIFyK	\N	\N	\N	73	2016-06-28 11:17:20.453277	2016-06-28 11:12:13.181046	52.91.184.228	171.48.17.188	Gk_Z6_UCEFVpfzCnGuNs	2016-06-28 04:20:52.789764	2016-06-27 05:58:31.948895	2016-06-28 11:17:20.454082	dealer-manager
+13	sanford@example.net	$2a$11$oCAWJRaSMr7W9n.HjuTuHeNwwcNtDa4d/gE1TmHDlNOilqc/gxtcO	\N	\N	\N	1	2016-06-27 09:08:22.102243	2016-06-27 09:08:22.102243	171.48.26.118	171.48.26.118	U3pZbxi2W7hAtwGxMT8M	2016-06-27 09:08:22.132401	2016-06-27 06:02:56.240865	2016-06-27 09:08:22.133002	guest
+16	hailee@example.com	$2a$11$gMEOJyc5yt34lwFk6s7LqOzm2bb3dOYeyJhrRTfA.WS/5LDNuwJcW	\N	\N	\N	2	2016-06-27 09:14:26.398247	2016-06-27 09:14:03.004476	171.48.26.118	171.48.26.118	6EcsTvhLFUcmxv7TKzoK	2016-06-27 09:14:26.42094	2016-06-27 06:02:56.726052	2016-06-27 09:14:26.421347	guest
+14	angelo@example.com	$2a$11$aEXGvzxsMHHsBNNIgrhZEuVJmOY0cpRUVr9AThzD1AtogffhZ2D6K	\N	\N	\N	1	2016-06-27 09:15:06.253661	2016-06-27 09:15:06.253661	171.48.26.118	171.48.26.118	THyKh-QL-9nQhW87ifVs	2016-06-27 09:15:06.273891	2016-06-27 06:02:56.404982	2016-06-27 09:15:06.274392	guest
+6	javon.murphy@example.net	$2a$11$3RMXrFDHzkEHDiqKuHRPi.AFaArmkdYltHeLTGyIeymJSTekiroEq	\N	\N	\N	103	2016-06-27 11:39:23.633857	2016-06-27 11:38:13.759017	171.48.26.118	171.48.26.118	gFHinbeuc29bCd8tCWLY	2016-06-27 10:24:12.35033	2016-06-27 05:58:32.604625	2016-06-27 11:39:23.635594	super-admin
+29	cathrine@example.com	$2a$11$L4rHpyCoMuIvCQ8lPeckGOtpwB/qT9mDPcWzQwKx5KqWhZcOV8SQq	\N	\N	\N	1422	2016-07-11 13:08:26.294868	2016-07-11 13:07:53.959105	122.179.71.62	122.179.71.62	rehMQrpBy4fm1qzYsadS	2016-07-11 13:03:08.160392	2016-06-27 06:02:58.853653	2016-07-11 13:08:26.295601	guest
+45	robb_wisoky@example.net	$2a$11$teVMc2d149S5/MucQYMPwOudPz0KE2fb4xQ/YO9jAhX4BB/JJw3HK	\N	\N	\N	0	\N	\N	\N	\N	uEXaERvJjS3wn9pPxcsR	2016-06-27 06:03:01.519294	2016-06-27 06:03:01.519394	2016-06-27 06:03:01.519394	guest
+46	albertha@example.net	$2a$11$f.op1Agy7dVlBRIgcDez1uoxm5PdM0TF8V/4fKs06vdg7ptXbw0dK	\N	\N	\N	0	\N	\N	\N	\N	DD5jDnE9rz_9E9e2ggfG	2016-06-27 06:03:01.684568	2016-06-27 06:03:01.684659	2016-06-27 06:03:01.684659	guest
+47	rhett@example.com	$2a$11$8qZbhXRViHvEXMLSuc3nJuYKeqHWOM7altBa7eNhOB2eYj8Zxdlgm	\N	\N	\N	0	\N	\N	\N	\N	jXQBkxEU4SnP8pgbsD-J	2016-06-27 06:03:01.842012	2016-06-27 06:03:01.842103	2016-06-27 06:03:01.842103	guest
+48	jose_zboncak@example.org	$2a$11$vU9.pfzlURWOJ/KYW3ZqOe1U.3gzBqKcmo/As97CP3YkrPuGvf/FK	\N	\N	\N	0	\N	\N	\N	\N	WZ7pM2vagzdtpbXYuB9e	2016-06-27 06:03:02.009013	2016-06-27 06:03:02.009106	2016-06-27 06:03:02.009106	guest
+49	shana.jakubowski@example.org	$2a$11$TSV6WErVocMVT/KamReEr.JN3YOqk6tZGcmX0evUOLl1..tU5oe4O	\N	\N	\N	0	\N	\N	\N	\N	fiAvMvs69q9BL41bBwuH	2016-06-27 06:03:02.173777	2016-06-27 06:03:02.173868	2016-06-27 06:03:02.173868	guest
+50	betsy@example.com	$2a$11$KQgel3Z5BSFbAFbW15/8O.GfgQ/Oylnygdgw.bRYLLk39D46dQtfi	\N	\N	\N	0	\N	\N	\N	\N	6rcLoaajMSqT9iMR9sPp	2016-06-27 06:03:02.334881	2016-06-27 06:03:02.334976	2016-06-27 06:03:02.334976	guest
+51	patience@example.net	$2a$11$Kf1sgpHBO2lOeFMbR63A4OFuacrH9cm1BAMNHcKA4/jmY.ZFi/ob2	\N	\N	\N	0	\N	\N	\N	\N	u9toccqztEiVGDzE_EiA	2016-06-27 06:03:02.50006	2016-06-27 06:03:02.500151	2016-06-27 06:03:02.500151	guest
+52	kayley@example.com	$2a$11$6UYiqUN8hGrtQEEo8Jtw0.Ey4bdWeqJdyYPxO6J19d/4xS8JbDoL6	\N	\N	\N	0	\N	\N	\N	\N	BUPqE2enzE7Xr34S_aKy	2016-06-27 06:03:02.658901	2016-06-27 06:03:02.658992	2016-06-27 06:03:02.658992	guest
+53	luigi@example.org	$2a$11$JG/niyFF9AXmrW9jSP893OsTMz8GIN9chDGkYpch6rHdg5LQk/rBS	\N	\N	\N	0	\N	\N	\N	\N	Y5JKbgAtsTdn8nnsNFj9	2016-06-27 06:03:02.824028	2016-06-27 06:03:02.824121	2016-06-27 06:03:02.824121	guest
+54	jeffry.dickinson@example.com	$2a$11$c050B6fvhFiOPnAUUOUHIuxeu30PNpt0ZGbCyYgQbB4yKe4.b5dWe	\N	\N	\N	0	\N	\N	\N	\N	ZbWxL1WtFDQskmWfsx_P	2016-06-27 06:03:02.983041	2016-06-27 06:03:02.983133	2016-06-27 06:03:02.983133	guest
+55	mekhi@example.org	$2a$11$Y1luHGUhCJeWrwksG5xkg.QnLS.xmkh7PRGuPEQMUI5rUNQ6ux9Ae	\N	\N	\N	0	\N	\N	\N	\N	VzbveQGFiGE8-YxojZZ5	2016-06-27 06:03:03.151516	2016-06-27 06:03:03.151607	2016-06-27 06:03:03.151607	guest
+56	lyric_walker@example.net	$2a$11$U5lEroJTNe8OYmfT5FCOBeuynUA2v6pSBrnPDJmS36sbSIysr44fC	\N	\N	\N	0	\N	\N	\N	\N	YokY99ne1uC64z8R-Szs	2016-06-27 06:03:03.309214	2016-06-27 06:03:03.309304	2016-06-27 06:03:03.309304	guest
+57	arely@example.net	$2a$11$kOm86rXmki4FXRZCSS2jr.NLrdxQdDm/Vxe6YlXwymA9o5bTKvw9q	\N	\N	\N	0	\N	\N	\N	\N	SMyk8hRT-7imdBVFE84y	2016-06-27 06:03:03.478142	2016-06-27 06:03:03.47824	2016-06-27 06:03:03.47824	guest
+58	frederick.rohan@example.com	$2a$11$KM3CMo1BMLK3HJO2TVJPCOX1D/yYaabCPg3.092Gafd3iCaBHAK9O	\N	\N	\N	0	\N	\N	\N	\N	8Rj58_acqxyrcheD96VX	2016-06-27 06:03:03.637283	2016-06-27 06:03:03.637384	2016-06-27 06:03:03.637384	guest
+59	jimmie@example.org	$2a$11$whQzVQRDDIr1oxRFw2WLWOiw5cZRcEigdPD0hEaKUKvz5q66qftA2	\N	\N	\N	0	\N	\N	\N	\N	xCndTsnD2pFX2ziGNxmT	2016-06-27 06:03:03.796904	2016-06-27 06:03:03.796996	2016-06-27 06:03:03.796996	guest
+60	dorris_littel@example.net	$2a$11$jYAWpRe9WDLJlCQ4gUlyOudGdJ6UC1X01R141SxrTnklILswgDuzW	\N	\N	\N	0	\N	\N	\N	\N	ys4PxYvc1sQeVzoGfhAs	2016-06-27 06:03:03.96435	2016-06-27 06:03:03.964486	2016-06-27 06:03:03.964486	guest
+74	sample@gmail.com	$2a$11$/oxtKt/g10FGA8eLIW1SJeeG6fHMqH6Q6x/RBG1sW.R./pY3L4sZi	\N	\N	\N	0	\N	\N	\N	\N	6-1XVdsXP3wzUbcSFzog	2016-07-06 04:30:35.766763	2016-07-06 04:30:35.766848	2016-07-06 04:30:35.766848	guest
+65	testdd@gmail.com	$2a$11$bXkovhwU/F2x/qhfTK5OIeMj7MPoaFp/2WZqBqb06WGGUwLam3.Ku	\N	\N	\N	0	\N	\N	\N	\N	tgP5kqzDiaaAgzJ2eEqH	2016-07-05 11:36:28.416555	2016-07-05 11:36:28.41664	2016-07-05 11:36:28.41664	guest
+4	cristal@example.net	$2a$11$iABiJv8AYiq2TRBiu/6FnOeeNBT4xqV1/JQITR8f.wQqdm82AmYou	\N	\N	\N	107	2016-06-27 10:17:48.601215	2016-06-27 10:17:35.204341	171.48.26.118	171.48.26.118	3kxRj7xkyHCH-kW3Pxit	2016-06-27 09:15:27.227705	2016-06-27 05:58:32.275036	2016-06-27 10:17:48.60187	dealer-manager
+61	ela@gmail.com	$2a$11$7D9NBmnKd1FTs9Mjqyxo7.kQlagVWX2trTMK3W1N.KOu4EfQUxd5y	\N	\N	\N	0	\N	\N	\N	\N	tox-p34_E5DCCcNstkEA	2016-06-28 04:39:30.097409	2016-06-28 04:39:30.097507	2016-06-28 04:39:30.097507	guest
+62	test1@gmail.com	$2a$11$GjSYzh2HN2lWy7oBQvVlGe/JTiUbm3/3wqi8R2qUBzx.5ReXeznFm	\N	\N	\N	0	\N	\N	\N	\N	iFEynmsfajYXTvu1t5zb	2016-06-28 04:42:00.329588	2016-06-28 04:42:00.329707	2016-06-28 04:42:00.329707	admin
+71	data1@gmail.com	$2a$11$UDXVO.rbKw6TeKhWKQBCNOjR0eVsOFhTrsX6c6HZ6Q3aMf7hHXrY.	\N	\N	\N	0	\N	\N	\N	\N	AF4yseRpXKccEbGruEYR	2016-07-05 12:11:00.317798	2016-07-05 12:11:00.317894	2016-07-05 12:11:00.317894	guest
+17	maymie_johns@example.com	$2a$11$lCxaE6vUd7JJw2X5oZYN7OBSjKpBqLd.9PAwirt3OpPHpzGps8pfK	\N	\N	\N	2	2016-06-27 09:14:48.966154	2016-06-27 09:07:49.271055	171.48.26.118	171.48.26.118	Upyp5EEgi-tBC5FnJx1G	2016-06-27 09:14:48.99207	2016-06-27 06:02:56.889197	2016-06-27 09:14:48.992583	guest
+75	samx@gmail.com	$2a$11$Y7fdo5n0dZcXkRNxQQRS4ORAfIUj3CBxre5iz.GJWRxjuNsBMpHhq	\N	\N	\N	0	\N	\N	\N	\N	7wxspcBZLAEERKAVDsHC	2016-07-06 10:58:17.248604	2016-07-06 10:58:17.248776	2016-07-06 10:58:17.248776	guest
+63	arasan8990@gmail.com	$2a$11$L1LZwaeAannLNMRT1OQD..Bw6Qd.2uTLTuQPlb83H5fxMKLplsl/m	\N	\N	\N	2560	2016-07-11 12:58:15.668654	2016-07-11 12:58:15.591557	106.51.135.248	106.51.135.248	dkaLsg1o61H1ngnB42YH	2016-07-11 05:55:45.73992	2016-06-28 05:28:52.308516	2016-07-11 12:58:15.669218	admin
+1	richie@example.net	$2a$11$bFtGjsqAb6nC.TI12fdSCe0kZQKB47qoQdJCcUZMqu8JeqwkXv5vK	\N	\N	\N	121	2016-06-27 09:59:31.461803	2016-06-27 09:58:03.236701	127.0.0.1	127.0.0.1	sg2MZRt8eNBySxFFddxS	2016-06-27 05:58:31.762999	2016-06-27 05:58:31.763213	2016-06-27 09:59:31.462435	dealer-manager
+76	sdfgs@gmail.com	$2a$11$rqwkTh7XX0mPKSWZN3KW0Ob7xgNvXwUbWdcBfUNcBh0IQUaOBvc.u	\N	\N	\N	0	\N	\N	\N	\N	Phab9vd5yxjcc_SXp9po	2016-07-06 11:02:09.926076	2016-07-06 11:02:09.926166	2016-07-06 11:02:09.926166	guest
+70	data@gmail.com	$2a$11$/DFHZhtWl7sw9tPv.0pIZOU8Nh81DPwSWlpm8/w7/KgF0cXjNipZO	\N	\N	\N	0	\N	\N	\N	\N	nR12ZynJRvkRH73xyDpk	2016-07-05 12:06:56.197408	2016-07-05 12:06:56.197489	2016-07-05 12:06:56.197489	guest
+66	set@gmail.com	$2a$11$oHEy43rRJBuVW2Q/IhVJyuIkANRMxkliOHHIhtLQF3K9p56m84NEu	\N	\N	\N	0	\N	\N	\N	\N	NRzqH-T95KPFd5zABs6n	2016-07-05 11:42:52.09605	2016-07-05 11:42:52.096135	2016-07-05 11:42:52.096135	guest
+67	sda@gmail.com	$2a$11$eapq7RSgNVqsey.eHoqwY.m/2d3AM0YqCqpzv4EgBpoo2aXi6Dx6a	\N	\N	\N	0	\N	\N	\N	\N	NHUzd-Skfoyz29X7D2KK	2016-07-05 11:43:31.835936	2016-07-05 11:43:31.83602	2016-07-05 11:43:31.83602	guest
+68	sdfas@gmail.com	$2a$11$JpcpvY2QTpoOviB0iazh..uPx1x.rI5IvPhAwlJYJG1ATQXHuDIOi	\N	\N	\N	0	\N	\N	\N	\N	1G4JXTFRXemsdxte1PGJ	2016-07-05 11:49:54.227613	2016-07-05 11:49:54.227695	2016-07-05 11:49:54.227695	guest
+64	asdf@gmail.com	$2a$11$QHeV2ij15Fq1uCzPlvvWFOkhPpYRAn5Vbw.DHIxY9L.1d9LDsWXCu	\N	\N	\N	0	\N	\N	\N	\N	oYxMGzxQmzUQcvEKSH7r	2016-07-05 11:33:40.175901	2016-07-05 11:33:40.175991	2016-07-05 11:33:40.175991	guest
+69	arasan@gmail.com	$2a$11$QFqtX1/ey8z7eWyF.WWQH.pf4ZCCS8X2eI/3f5iMMd6JutC38OEMi	\N	\N	\N	0	\N	\N	\N	\N	EUdfkxtg_XV7YZq1dugK	2016-07-05 11:57:37.500409	2016-07-05 11:57:37.500505	2016-07-05 11:57:37.500505	guest
+72	testx@gmail.com	$2a$11$ORMsbkv5WtnbRENdfKbtmusdiJ90/s2.201Q25HsvQTpeFjAiZQH2	\N	\N	\N	0	\N	\N	\N	\N	asP-jV2ZM2dxJa1aPGxU	2016-07-05 12:13:16.17122	2016-07-05 12:13:16.171304	2016-07-05 12:13:16.171304	guest
+73	sadf@gmail.com	$2a$11$b14E/K9j5xgxIAIP0ZuXUuVPOl79ZwDe9UnXeqU6zxWV1MS9v3FEe	\N	\N	\N	0	\N	\N	\N	\N	ypT5zWqyj6Ji8cZsQ47r	2016-07-05 12:14:10.428851	2016-07-05 12:14:10.428951	2016-07-05 12:14:10.428951	guest
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: user
+--
+
+SELECT pg_catalog.setval('users_id_seq', 76, true);
+
+
+--
+-- Name: bike_types_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY bike_types
+    ADD CONSTRAINT bike_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bikes_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY bikes
+    ADD CONSTRAINT bikes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: booking_time_controls_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY booking_time_controls
+    ADD CONSTRAINT booking_time_controls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: enquiries_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY enquiries
+    ADD CONSTRAINT enquiries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: feedbacks_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY feedbacks
+    ADD CONSTRAINT feedbacks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hog_registrations_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY hog_registrations
+    ADD CONSTRAINT hog_registrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: insurance_renewals_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY insurance_renewals
+    ADD CONSTRAINT insurance_renewals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: my_bikes_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY my_bikes
+    ADD CONSTRAINT my_bikes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rpush_apps_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_apps
+    ADD CONSTRAINT rpush_apps_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rpush_feedback_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_feedback
+    ADD CONSTRAINT rpush_feedback_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rpush_notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY rpush_notifications
+    ADD CONSTRAINT rpush_notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: service_bookings_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY service_bookings
+    ADD CONSTRAINT service_bookings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: specification_types_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY specification_types
+    ADD CONSTRAINT specification_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: specifications_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY specifications
+    ADD CONSTRAINT specifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: test_rides_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY test_rides
+    ADD CONSTRAINT test_rides_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: user
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_rpush_feedback_on_device_token; Type: INDEX; Schema: public; Owner: user
+--
+
+CREATE INDEX index_rpush_feedback_on_device_token ON rpush_feedback USING btree (device_token);
+
+
+--
+-- Name: index_rpush_notifications_multi; Type: INDEX; Schema: public; Owner: user
+--
+
+CREATE INDEX index_rpush_notifications_multi ON rpush_notifications USING btree (delivered, failed) WHERE ((NOT delivered) AND (NOT failed));
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: user
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: user
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: user
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
