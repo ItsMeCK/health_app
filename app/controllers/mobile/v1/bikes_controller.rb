@@ -6,14 +6,13 @@ class Mobile::V1::BikesController < ApplicationController
   # GET /mobile/v1/bikes.json
   def index
     @bikes = Bike.all.includes(:specifications)
-    render json: @bikes, each_serializer: Mobile::V1::BikeSerializer
+    render json: @bikes
   end
 
   # GET /mobile/v1/bikes/1
   # GET /mobile/v1/bikes/1.json
   def show
-    @bike
-    render json: @bike, serializer: Mobile::V1::BikeSerializer
+    render json: @bike
   end
 
   private
