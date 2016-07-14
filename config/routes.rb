@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       resources :key_features
       resources :price_fields
       resources :pricings
+      resources :bike_colors
     end
   end
 
