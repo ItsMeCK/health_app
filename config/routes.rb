@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resources :bike_colors
       resources :accessories
       resources :accessory_categories
+      resources :my_docs
     end
   end
 
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
       resources :insurance_renewals, only: [:create, :show]
       resources :enquiries, only: [:create]
       post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
+      resources :my_docs
     end
   end
 
