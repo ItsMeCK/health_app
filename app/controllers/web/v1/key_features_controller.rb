@@ -21,7 +21,7 @@ class Web::V1::KeyFeaturesController < ApplicationController
     @key_feature = KeyFeature.new(key_feature_params)
 
     if @key_feature.save
-      render json: @key_feature, status: :created, location: @key_feature
+      render json: @key_feature, status: :created
     else
       render json: @key_feature.errors, status: :unprocessable_entity
     end

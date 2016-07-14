@@ -12,8 +12,17 @@ class Bike < ActiveRecord::Base
 	  @specifications.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[specification_type: k, values: v.map(&:last)]}
 	end
 
+	def key_feature
+		@key_features = []
+		self.key_features.each do |key_feature|
+			@key_feature_name = KeyFeatureType.find_by_id(key_feature.key_feature_type_id).feature_type_name
+			@key_features << Hash[@key_feature_name, key_feature]
+		end
+	  @key_features.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[key_feature_type: k, values: v.map(&:last)]}
+	end
+
 	def as_json(options={})
-		super.as_json(options).merge({:specifications => my_bike_name})
+		super.as_json(options).merge({:specifications => my_bike_name, :key_features => key_feature})
 	end
 
 end

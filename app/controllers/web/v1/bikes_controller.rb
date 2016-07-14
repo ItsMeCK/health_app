@@ -1,18 +1,18 @@
 class Web::V1::BikesController < ApplicationController
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   before_action :set_bike, only: [:show, :update, :destroy]
 
   # GET /web/v1/bikes
   # GET /web/v1/bikes.json
   def index
     @bikes = Bike.all
-    render json: @bikes.includes(:specifications), each_serializer: Web::V1::BikeSerializer
+    render json: @bikes.includes(:specifications)  #each_serializer: Web::V1::BikeSerializer
   end
 
   # GET /web/v1/bikes/1
   # GET /web/v1/bikes/1.json
   def show
-    render json: @bike, serializer: Web::V1::BikeSerializer
+    render json: @bike  #serializer: Web::V1::BikeSerializer
   end
 
   # POST /web/v1/bikes
