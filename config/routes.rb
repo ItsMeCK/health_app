@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       resources :insurance_renewals, except: [:delete]
       resources :enquiries, except: [:delete]
       resources :booking_time_controls
+      resources :key_feature_types
+      resources :key_features
     end
   end
 
