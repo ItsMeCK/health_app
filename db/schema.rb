@@ -11,10 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714070110) do
+ActiveRecord::Schema.define(version: 20160714100309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accessories", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "tag"
+    t.string   "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "accessory_categories", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "image"
+    t.integer  "accessory_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "accessory_wishlists", force: :cascade do |t|
+    t.integer  "accessory_id"
+    t.integer  "wishlist_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "bike_colors", force: :cascade do |t|
+    t.string   "label"
+    t.string   "color"
+    t.integer  "bike_id"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "bike_types", force: :cascade do |t|
     t.string   "name"
@@ -316,5 +350,11 @@ ActiveRecord::Schema.define(version: 20160714070110) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "wishlists", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

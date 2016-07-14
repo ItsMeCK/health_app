@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       resources :booking_time_controls
       resources :key_feature_types
       resources :key_features
+      resources :accessories
+      resources :accessory_categories
     end
   end
 
