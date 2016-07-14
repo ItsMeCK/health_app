@@ -3,6 +3,8 @@ class Bike < ActiveRecord::Base
 	has_many :specifications
 	has_many :key_features
 	has_many :pricings
+	has_many :bike_colors
+
 
 	def my_bike_name
 		@specifications = []

@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714070110) do
+ActiveRecord::Schema.define(version: 20160714100309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bike_colors", force: :cascade do |t|
+    t.string   "label"
+    t.string   "color"
+    t.integer  "bike_id"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "bike_types", force: :cascade do |t|
     t.string   "name"
