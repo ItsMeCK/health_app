@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :my_bikes
   has_many :notifications, foreign_key: :recipient_id
   has_one :wishlist
+  has_many :rides, through: :user_rides
+  has_many :events, through: :user_events
 
   # Validations
   validates :authentication_token, :uniqueness => true

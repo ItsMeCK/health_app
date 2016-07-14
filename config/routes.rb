@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       resources :bike_colors
       resources :accessories
       resources :accessory_categories
+      resources :events
+      resources :rides
     end
   end
 
