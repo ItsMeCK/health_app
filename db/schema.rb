@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711114435) do
+ActiveRecord::Schema.define(version: 20160714064538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,24 @@ ActiveRecord::Schema.define(version: 20160711114435) do
     t.datetime "updated_at",                                      null: false
   end
 
+  create_table "key_feature_types", force: :cascade do |t|
+    t.string   "feature_type_name"
+    t.boolean  "active",            default: true
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  create_table "key_features", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "image"
+    t.integer  "bike_id"
+    t.integer  "key_feature_type_id"
+    t.boolean  "active",              default: true
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
   create_table "my_bikes", force: :cascade do |t|
     t.string   "bike"
     t.date     "purchase_date"
@@ -128,6 +146,23 @@ ActiveRecord::Schema.define(version: 20160711114435) do
     t.string   "notifiable_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "price_fields", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "display_order"
+    t.boolean  "active",        default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "prices", force: :cascade do |t|
+    t.integer  "price_field_id"
+    t.string   "value"
+    t.integer  "bike_id"
+    t.boolean  "active",         default: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "profiles", force: :cascade do |t|

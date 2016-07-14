@@ -1,2 +1,2 @@
-class PriceField < ActiveRecord::Base
-end
+	class PriceField < ActiveRecord::Base
+	end
