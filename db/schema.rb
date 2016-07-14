@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714100309) do
+ActiveRecord::Schema.define(version: 20160714114930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accessories", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "tag"
+    t.string   "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "accessory_categories", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "image"
+    t.integer  "accessory_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "accessory_wishlists", force: :cascade do |t|
+    t.integer  "accessory_id"
+    t.integer  "wishlist_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "bike_colors", force: :cascade do |t|
     t.string   "label"
@@ -62,6 +87,16 @@ ActiveRecord::Schema.define(version: 20160714100309) do
     t.text     "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.date     "event_date"
+    t.time     "event_time"
+    t.string   "location"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "feedbacks", force: :cascade do |t|
@@ -193,6 +228,19 @@ ActiveRecord::Schema.define(version: 20160714100309) do
     t.datetime "updated_at",                    null: false
   end
 
+  create_table "rides", force: :cascade do |t|
+    t.date     "ride_date"
+    t.string   "route"
+    t.string   "distance"
+    t.datetime "assembly_time"
+    t.string   "assembly_location"
+    t.time     "destination_time"
+    t.string   "destination_location"
+    t.boolean  "notify"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "rpush_apps", force: :cascade do |t|
     t.string   "name",                                null: false
     t.string   "environment"
@@ -305,6 +353,20 @@ ActiveRecord::Schema.define(version: 20160714100309) do
     t.datetime "updated_at",                          null: false
   end
 
+  create_table "user_events", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_rides", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "ride_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                           default: "",      null: false
     t.string   "encrypted_password",              default: "",      null: false
@@ -325,5 +387,11 @@ ActiveRecord::Schema.define(version: 20160714100309) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "wishlists", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
