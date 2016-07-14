@@ -1,6 +1,6 @@
-class CreatePrices < ActiveRecord::Migration
+class CreatePricings < ActiveRecord::Migration
   def change
-    create_table :prices do |t|
+    create_table :pricings do |t|
       t.integer :price_field_id
       t.string :value
       t.integer :bike_id

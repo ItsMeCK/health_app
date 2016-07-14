@@ -1,6 +1,7 @@
 class Bike < ActiveRecord::Base
 	belongs_to :bike_type
 	has_many :specifications
+	has_many :pricings
 
 	def my_bike_name
 		@specifications = []
