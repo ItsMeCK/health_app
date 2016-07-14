@@ -21,7 +21,7 @@ class Web::V1::BikeColorsController < ApplicationController
     @bike_color = BikeColor.new(bike_color_params)
 
     if @bike_color.save
-      render json: @bike_color, status: :created, location: @bike_color
+      render json: @bike_color, status: :created
     else
       render json: @bike_color.errors, status: :unprocessable_entity
     end

@@ -33,8 +33,12 @@ class Bike < ActiveRecord::Base
 	  @pricings.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[price_field_type: k, values: v.map(&:last)]}
 	end
 
+	def bike_color
+		self.bike_colors
+	end
+
 	def as_json(options={})
-		super.as_json(options).merge({:specifications => my_bike_name, :key_features => key_feature, :price => pricing })
+		super.as_json(options).merge({:specifications => my_bike_name, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
 	end
 
 end
