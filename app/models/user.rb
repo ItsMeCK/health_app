@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_one :wishlist
   has_many :rides, through: :user_rides
   has_many :events, through: :user_events
+  has_many :my_docs
 
   # Validations
   validates :authentication_token, :uniqueness => true
