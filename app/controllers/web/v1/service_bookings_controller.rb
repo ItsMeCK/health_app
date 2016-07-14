@@ -30,7 +30,6 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # PATCH/PUT /web/v1/service_bookings/1
   # PATCH/PUT /web/v1/service_bookings/1.json
   def update
-    @service_booking = ServiceBooking.find(params[:id])
 
     if @service_booking.update(service_booking_params)
       render json: @service_booking, status: :ok, serializer: Web::V1::ServiceBookingSerializer

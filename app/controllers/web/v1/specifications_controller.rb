@@ -21,7 +21,7 @@ class Web::V1::SpecificationsController < ApplicationController
     @specification = Specification.new(specification_params)
 
     if @specification.save
-      render json: @specification, status: :created, location: @specification, serializer: Web::V1::SpecificationSerializer
+      render json: @specification, status: :created, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
     end
@@ -30,8 +30,7 @@ class Web::V1::SpecificationsController < ApplicationController
   # PATCH/PUT /web/v1/specifications/1
   # PATCH/PUT /web/v1/specifications/1.json
   def update
-    update_params = specification_params(specification_params)
-    if @specification.update(update_params)
+    if @specification.update(specification_params)
       render json: @specification, status: :ok, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
