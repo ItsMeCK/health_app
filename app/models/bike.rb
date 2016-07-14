@@ -5,9 +5,9 @@ class Bike < ActiveRecord::Base
 		@specifications = []
 		self.specifications.each do |specification|
 			@specification_name = SpecificationType.find_by_id(specification.specification_type_id).name
-			@specifications << { "#{@specification_name}": specification }
+			@specifications << Hash[@specification_name, specification]
 		end
-	  @specifications.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[k, v.map(&:last)]}
+	  @specifications.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[specification_type: k, values: v.map(&:last)]}
 	end
 	def as_json(options={})
 		super.as_json(options).merge({:specifications => my_bike_name})
