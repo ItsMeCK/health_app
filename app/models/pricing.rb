@@ -8,7 +8,7 @@ class Pricing < ActiveRecord::Base
 	end
 
 	def bike_type
-	    Bike.find_by_id(self.bike_id).name
+	    Bike.find_by_id(self.bike_id).try(:name)
 	end
 
 	def as_json(options={})
