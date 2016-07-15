@@ -11,6 +11,10 @@ gem 'puma'
 gem 'pg'
 gem 'rpush'
 
+#image uploading
+gem 'carrierwave'
+gem 'carrierwave-base64'
+
 group :development do
 	gem 'spring'
 	gem 'pry-rails'

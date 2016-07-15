@@ -36,8 +36,7 @@ module CoromandelHarleyDavidson
       # config.time_zone = 'Chennai'
       # config.active_record.default_timezone = 'Chennai'
 
-      config.autoload_paths += %W(\#{config.root}/lib)
-  
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/uploaders)
     config.active_record.raise_in_transactional_callbacks = true
   end
 end

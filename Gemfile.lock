@@ -65,6 +65,14 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
+    carrierwave (0.11.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+      mimemagic (>= 0.3.0)
+    carrierwave-base64 (2.3.1)
+      carrierwave (>= 0.8.0, < 0.12.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     devise (4.1.1)
@@ -89,6 +97,7 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.1)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
@@ -179,6 +188,8 @@ DEPENDENCIES
   capistrano-rails-console
   capistrano-rbenv (~> 2.0, >= 2.0.4)
   capistrano3-puma
+  carrierwave
+  carrierwave-base64
   devise
   devise-token_authenticatable
   ffaker
