@@ -4,7 +4,7 @@ class Pricing < ActiveRecord::Base
 
 
 	def price_field_type
-		 PriceField.find_by_id(self.price_field_id).name
+		 PriceField.find_by_id(self.price_field_id).try(:name)
 	end
 
 	def bike_type
