@@ -21,3 +21,4 @@
 /config/database.yml
 /config/secrets.yml
 /config/app_config.yml
+/public/uploads
