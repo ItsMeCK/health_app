@@ -1,5 +1,5 @@
 class Mobile::V1::UsersController < ApplicationController
-	before_filter :authenticate_user!, only: [:update, :show, :destroy]
+	before_filter :authenticate_user!, only: [:update, :show, :destroy, :update_wishlist_items, :remove_wishlist_items, :get_wishlist_items]
 	respond_to :json
 	# before_action :set_user, only: [:show, :update, :destroy]
 
@@ -30,6 +30,29 @@ class Mobile::V1::UsersController < ApplicationController
 	  @user.destroy
 	  message = "Your account has been successfully deleted"
 	  render json: { message: message}, status: 204
+	end
+
+	def update_wishlist_items
+		accessories = params[:accessory_ids]
+		binding.pry
+		wishlist_id = current_user.wishlist.id
+		accessories.each do |accessory|
+			AccessoryWishlist.create(accessory_id: accessory, wishlist_id: wishlist_id)
+		end
+	end
+
+	def get_wishlist_items
+		@accessories = current_user.wishlist.accessories
+		render json: @accessories
+	end
+
+	def remove_wishlist_items
+		@accessory = params[:accessory_ids]
+		@accessory.each do |accessory|
+		 current_user.wishlist.accessories.find(accessory).destroy
+		end
+		 @remaining_accessories = current_user.wishlist.accessories
+		 render json: @remaining_accessories
 	end
 
 	private

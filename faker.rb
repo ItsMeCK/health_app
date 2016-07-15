@@ -47,3 +47,7 @@ AccessoryCategory.create(title: "Clothing Accessories", description: "Cool Bike 
 40.times do
 	Accessory.create(title: "Accessory", accessory_category_id: AccessoryCategory.pluck(:id).shuffle.first)
 end
+
+User.all.each do |user|
+	Wishlist.create(user_id: user.id)
+end

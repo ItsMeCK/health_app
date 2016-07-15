@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :test_rides
   has_many :my_bikes
   has_many :notifications, foreign_key: :recipient_id
-  has_one :wishlist
+  has_one :wishlist, :dependent => :destroy
   has_many :rides, through: :user_rides
   has_many :events, through: :user_events
   has_many :my_docs
@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
   after_create :create_profile_hog
   accepts_nested_attributes_for :profile
+  after_create :create_wishlist
 
 
 	private
@@ -27,6 +28,10 @@ class User < ActiveRecord::Base
   def create_profile_hog
   	Profile.create( user_id: self.id, email: self.email )
   	HogRegistration.create( user_id: self.id, email: self.email )
+  end
+
+  def create_wishlist
+    Wishlist.create(user_id: self.id)
   end
 
 end

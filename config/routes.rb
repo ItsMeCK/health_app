@@ -40,6 +40,9 @@ Rails.application.routes.draw do
     scope module: :v1 do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy]
+      post '/update_wishlist_items' => 'users#update_wishlist_items'
+      post '/get_wishlist_items' => 'users#get_wishlist_items'
+      post '/remove_wishlist_items' => 'users#remove_wishlist_items'
       resources :sessions, :only => [:create, :destroy]
       resources :profiles, :except => [:delete]
       resources :hog_registrations, :except => [:delete]
