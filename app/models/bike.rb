@@ -18,7 +18,7 @@ class Bike < ActiveRecord::Base
 	def key_feature
 		@key_features = []
 		self.key_features.each do |key_feature|
-			@key_feature_name = KeyFeatureType.find_by_id(key_feature.key_feature_type_id).feature_type_name
+			@key_feature_name = KeyFeatureType.find_by_id(key_feature.key_feature_type_id).try(:feature_type_name)
 			@key_features << Hash[@key_feature_name, key_feature]
 		end
 	  @key_features.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[key_feature_type: k, values: v.map(&:last)]}
@@ -27,7 +27,7 @@ class Bike < ActiveRecord::Base
 	def pricing
 		@pricings = []
 		self.pricings.each do |price|
-			@price_field_name = PriceField.find_by_id(price.price_field_id).name
+			@price_field_name = PriceField.find_by_id(price.price_field_id).try(:name)
 			@pricings << Hash[@price_field_name, price]
 		end
 	  @pricings.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[price_field_type: k, values: v.map(&:last)]}

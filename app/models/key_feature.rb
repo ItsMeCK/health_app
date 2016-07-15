@@ -3,11 +3,11 @@ class KeyFeature < ActiveRecord::Base
 	belongs_to :key_feature_type
 
 	def key_feature_type
-		 KeyFeatureType.find_by_id(self.key_feature_type_id).feature_type_name
+		 KeyFeatureType.find_by_id(self.key_feature_type_id).try(:feature_type_name)
 	end
 
 	def bike_type
-	    Bike.find_by_id(self.bike_id).name
+	    Bike.find_by_id(self.bike_id).try(:name)
 	end
 
 	def as_json(options={})
