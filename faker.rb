@@ -38,3 +38,12 @@ SpecificationType.create(name: "Chassis", display_order: 4, active: true)
 SpecificationType.create(name: "Performance", display_order: 5, active: true)
 SpecificationType.create(name: "Electric", display_order: 6, active: true)
 
+
+
+AccessoryCategory.create(title: "Bike Accessories", description: "Cool Bike Accessories", image: "http://www.google.com")
+AccessoryCategory.create(title: "Clothing Accessories", description: "Cool Bike Clothing Accessories", image: "http://www.google.com")
+
+
+40.times do
+	Accessory.create(title: "Accessory", accessory_category_id: AccessoryCategory.pluck(:id).shuffle.first)
+end
