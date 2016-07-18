@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715093031) do
+ActiveRecord::Schema.define(version: 20160718093842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,15 @@ ActiveRecord::Schema.define(version: 20160715093031) do
     t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "email_notification_templates", force: :cascade do |t|
+    t.text     "content"
+    t.string   "title"
+    t.string   "category"
+    t.boolean  "active",     default: true
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "enquiries", force: :cascade do |t|
@@ -187,6 +196,14 @@ ActiveRecord::Schema.define(version: 20160715093031) do
     t.integer  "user_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "notification_templates", force: :cascade do |t|
+    t.text     "content"
+    t.string   "category"
+    t.boolean  "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -391,6 +408,8 @@ ActiveRecord::Schema.define(version: 20160715093031) do
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
     t.string   "role",                            default: "guest"
+    t.string   "ios_token"
+    t.string   "android_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
