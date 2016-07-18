@@ -11,8 +11,8 @@ class Notification < ActiveRecord::Base
 	def send_notification
 		@user = self.recipient
 		@notification_type = self.action
-		@notification_template = NotificationTemplate.find_by_category(@notification_type)
-		if @notification_template.active == true	
+		# @notification_template = NotificationTemplate.find_by_category(@notification_type)
+		# if @notification_template.active == true	
 			if @user.android_token.present?
 				n = Rpush::Gcm::Notification.new
 				n.app = Rpush::Gcm::App.find_by_name("coromandal_harley_davidson")
@@ -31,7 +31,7 @@ class Notification < ActiveRecord::Base
 			# 	n.data = { foo: :bar }
 			# 	n.save!
 			# end
-		end
+		# end
 	end
 
 
