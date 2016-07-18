@@ -23,15 +23,17 @@ class Notification < ActiveRecord::Base
 				n.notification = { body: 'great match!', title: 'Portugal vs. Denmark', icon: 'myicon' }
 				n.save!
 			end
-			if @user.ios_token.present?
-				n = Rpush::Apns::Notification.new
-				n.app = Rpush::Apns::App.find_by_name("coromandal_harley_davidson")
-				n.device_token = "..." # 64-character hex string
-				n.alert = "You have a notification"
-				n.data = { foo: :bar }
-				n.save!
-			end
+			# if @user.ios_token.present?
+			# 	n = Rpush::Apns::Notification.new
+			# 	n.app = Rpush::Apns::App.find_by_name("coromandal_harley_davidson")
+			# 	n.device_token = "..." # 64-character hex string
+			# 	n.alert = "You have a notification"
+			# 	n.data = { foo: :bar }
+			# 	n.save!
+			# end
 		end
+		
+		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
 
 
