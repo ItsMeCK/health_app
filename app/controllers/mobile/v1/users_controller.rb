@@ -34,7 +34,6 @@ class Mobile::V1::UsersController < ApplicationController
 
 	def update_wishlist_items
 		accessories = params[:accessory_ids]
-		binding.pry
 		wishlist_id = current_user.wishlist.id
 		accessories.each do |accessory|
 			AccessoryWishlist.create(accessory_id: accessory, wishlist_id: wishlist_id)

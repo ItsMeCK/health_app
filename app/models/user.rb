@@ -10,7 +10,9 @@ class User < ActiveRecord::Base
   has_many :notifications, foreign_key: :recipient_id
   has_one :wishlist, :dependent => :destroy
   has_many :rides, through: :user_rides
+  has_many :user_rides
   has_many :events, through: :user_events
+  has_many :user_events
   has_many :my_docs
 
   # Validations
