@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       resources :hog_registrations, :except => [:delete]
       resources :bike_types, :only => [:show, :index]
       resources :bikes, :only => [:show, :index]
+      post '/bike_filter' => 'bikes#bike_filter'
       resources :specifications, :only => [:show, :index]
       resources :specification_types, :only => [:show, :index]
       resources :test_rides, :except => [:index]
