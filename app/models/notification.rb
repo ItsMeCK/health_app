@@ -17,10 +17,10 @@ class Notification < ActiveRecord::Base
 				n = Rpush::Gcm::Notification.new
 				n.app = Rpush::Gcm::App.find_by_name("coromandal_harley_davidson")
 				n.registration_ids = [@user.android_token]
-				n.data = { message: @notification_template.content }
+				n.data = { message: "Hello World" }
 				n.priority = 'high'        # Optional, can be either 'normal' or 'high'
 				n.content_available = true # Optional
-				n.notification = { body: @notification_template.content, title: @notification_template.title, icon: 'myicon' }
+				# n.notification = { body: @notification_template.content, title: @notification_template.title, icon: 'myicon' }
 				n.save!
 			end
 			# if @user.ios_token.present?
