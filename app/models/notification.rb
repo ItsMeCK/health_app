@@ -32,6 +32,8 @@ class Notification < ActiveRecord::Base
 			# 	n.save!
 			# end
 		# end
+		
+		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
 
 

@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       resources :events
       resources :rides
       resources :my_docs
+      resources :email_notification_templates
+      resources :notification_templates
     end
   end
 
