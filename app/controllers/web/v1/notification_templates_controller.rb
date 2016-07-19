@@ -47,6 +47,11 @@ class Web::V1::NotificationTemplatesController < ApplicationController
     head :no_content
   end
 
+  def notification_category
+    @notification_template = NotificationTemplate.pluck(:category)
+    render json: @notification_template
+  end
+
   private
 
     def set_notification_template
