@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       resources :email_notification_templates
       resources :notification_templates
       resources :dealer_types
+      resources :dealers
     end
   end
 
@@ -64,6 +65,7 @@ Rails.application.routes.draw do
       post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
       resources :my_docs
       resources :dealer_types, :only => [:show]
+      resources :dealers, :only => [:show]
       resources :accessory_categories, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
     end
