@@ -62,6 +62,8 @@ Rails.application.routes.draw do
       resources :enquiries, only: [:create]
       post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
       resources :my_docs
+      resources :accessory_categories, only: [:index, :show]
+      post '/get_accessories' => 'accessory_categories#get_accessories'
     end
   end
 
