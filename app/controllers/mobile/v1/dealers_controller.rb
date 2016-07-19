@@ -1,4 +1,4 @@
-class Web::V1::DealersController < ApplicationController
+class Mobile::V1::DealersController < ApplicationController
   before_action :set_dealer, only: [:show]
 
   # GET /web/v1/dealers
