@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       resources :dealers
       resources :set_booking_numbers
       resources :finance_documents
+      resources :tenures
     end
   end
 
@@ -72,6 +73,7 @@ Rails.application.routes.draw do
       resources :dealer_types, :only => [:show]
       resources :dealers, :only => [:show]
       resources :finance_documents, :only => [:show]
+      resources :tenures, :only => [:show]
       resources :accessory_categories, only: [:index, :show]
       resources :set_booking_numbers, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
