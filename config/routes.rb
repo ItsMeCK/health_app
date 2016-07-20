@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       resources :tenures
       resources :banners
       resources :service_schedules
+      resources :set_rules
     end
   end
 
