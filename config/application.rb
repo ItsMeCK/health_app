@@ -39,6 +39,6 @@ module CoromandelHarleyDavidson
     config.autoload_paths += %W(#{config.root}/lib #{config.root}/app/uploaders)
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.action_dispatch.default_headers = { 'Access-Control-Allow-Origin' => 'http://coromandal.myridz.com.s3-website-us-east-1.amazonaws.com', 'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")}
+    # config.action_dispatch.default_headers = { 'Access-Control-Allow-Origin' => 'http://coromandal.myridz.com.s3-website-us-east-1.amazonaws.com', 'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")}
   end
 end
