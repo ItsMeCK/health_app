@@ -54,6 +54,6 @@ class Web::V1::AccessoriesController < ApplicationController
     end
 
     def accessory_params
-      params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id)
+      params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
     end
 end
