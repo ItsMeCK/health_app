@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720092746) do
+ActiveRecord::Schema.define(version: 20160720095556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -392,6 +392,18 @@ ActiveRecord::Schema.define(version: 20160720092746) do
     t.string   "service_status",      default: "Requested"
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
+  end
+
+  create_table "service_schedules", force: :cascade do |t|
+    t.string   "service_number"
+    t.integer  "bike_id"
+    t.string   "months"
+    t.integer  "total_kms"
+    t.string   "service_type"
+    t.integer  "range"
+    t.boolean  "active",         default: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "set_booking_numbers", force: :cascade do |t|

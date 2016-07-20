@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       resources :finance_documents
       resources :tenures
       resources :banners
+      resources :service_schedules
     end
   end
 
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
       resources :accessory_categories, only: [:index, :show]
       resources :set_booking_numbers, only: [:index, :show]
       resources :banners, only: [:index, :show]
+      resources :service_schedules, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
     end
   end
