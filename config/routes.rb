@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       get '/get_email_notification_category' => 'email_notification_templates#email_template_category'
       resources :dealer_types
       resources :dealers
+      resources :finance_documents
     end
   end
 
@@ -69,6 +70,7 @@ Rails.application.routes.draw do
       resources :my_docs
       resources :dealer_types, :only => [:show]
       resources :dealers, :only => [:show]
+      resources :finance_documents, :only => [:show]
       resources :accessory_categories, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719124955) do
+ActiveRecord::Schema.define(version: 20160720070156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,13 @@ ActiveRecord::Schema.define(version: 20160719124955) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "dealer_dealer_types", force: :cascade do |t|
+    t.integer  "dealer_id"
+    t.integer  "dealer_type_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "dealer_types", force: :cascade do |t|
     t.string   "dealer_type"
     t.datetime "created_at",  null: false
@@ -144,6 +151,13 @@ ActiveRecord::Schema.define(version: 20160719124955) do
     t.string   "feedback_type"
     t.text     "comment"
     t.integer  "rating"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "finance_documents", force: :cascade do |t|
+    t.string   "category"
+    t.text     "document_list"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
@@ -389,6 +403,12 @@ ActiveRecord::Schema.define(version: 20160719124955) do
     t.boolean  "active"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+  end
+
+  create_table "tenures", force: :cascade do |t|
+    t.string   "month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "test_rides", force: :cascade do |t|
