@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       resources :set_booking_numbers
       resources :finance_documents
       resources :tenures
+      resources :banners
     end
   end
 
@@ -76,6 +77,7 @@ Rails.application.routes.draw do
       resources :tenures, :only => [:show]
       resources :accessory_categories, only: [:index, :show]
       resources :set_booking_numbers, only: [:index, :show]
+      resources :banners, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
     end
   end
