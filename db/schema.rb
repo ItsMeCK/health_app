@@ -79,13 +79,6 @@ ActiveRecord::Schema.define(version: 20160719124955) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "dealer_types", force: :cascade do |t|
     t.string   "dealer_type"
     t.datetime "created_at",  null: false
