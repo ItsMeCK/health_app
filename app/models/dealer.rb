@@ -1,13 +1,19 @@
 class Dealer < ActiveRecord::Base
+	serialize :dealer_type_id, Array
 	has_and_belongs_to_many :dealer_types
 
 	mount_base64_uploader :image, ImageUploader, file_name: 'dealer'
 	#call back
-	after_create :create_joint_table
+	#after_create :create_joint_table
 
 	
 	def dealer_tyep_name
-		DealerType.find(self.dealer_type_id).dealer_type
+		@dealer_type_ids = self.dealer_type_id.flatten
+		@dealer = []
+		@dealer_type_ids.each do |id|
+		 @dealer << DealerType.find(id).dealer_type
+	    end
+	    @dealer
 	end
 
 	def as_json(options={})

@@ -19,7 +19,8 @@ class Web::V1::DealersController < ApplicationController
   # POST /web/v1/dealers.json
   def create
     @dealer = Dealer.new(dealer_params)
-
+    @dealer.dealer_type_id << params[:dealer][:dealer_type_id]
+    
     if @dealer.save
       render json: @dealer, status: :created
     else
