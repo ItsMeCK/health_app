@@ -1,5 +1,5 @@
 class Dealer < ActiveRecord::Base
-	serialize :dealer_type_id, Array
+	serialize :dealer_type_id
 	has_and_belongs_to_many :dealer_types
 
 	mount_base64_uploader :image, ImageUploader, file_name: 'dealer'
@@ -7,12 +7,13 @@ class Dealer < ActiveRecord::Base
 	#after_create :create_joint_table
 
 	
-	def dealer_tyep_name
+	def dealer_tyep_name	
 		if self.dealer_type_id.class == Array
-		  @dealer_type_ids = self.dealer_type_id.flatten
-	    else
-	    	@dealer_type_ids = [self.dealer_type_id]
-	    end
+			binding.pry
+		  @dealer_type_ids = self.dealer_type_id
+	     else
+	     	@dealer_type_ids = [self.dealer_type_id]
+	     end
 		@dealer = []
 		@dealer_type_ids.each do |id|
 		 @dealer << DealerType.find(id).try(:dealer_type) if id != 0
