@@ -16,7 +16,7 @@ class Dealer < ActiveRecord::Base
 	     end
 		@dealer = []
 		@dealer_type_ids.each do |id|
-		 @dealer << DealerType.find(id).try(:dealer_type) if id != 0
+		 @dealer << DealerType.find(id).try(:dealer_type) if id 
 	    end
 	    @dealer
 	end
