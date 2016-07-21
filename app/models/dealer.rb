@@ -8,10 +8,14 @@ class Dealer < ActiveRecord::Base
 
 	
 	def dealer_tyep_name
-		@dealer_type_ids = self.dealer_type_id.flatten
+		if self.dealer_type_id.class == Array
+		  @dealer_type_ids = self.dealer_type_id.flatten
+	    else
+	    	@dealer_type_ids = [self.dealer_type_id]
+	    end
 		@dealer = []
 		@dealer_type_ids.each do |id|
-		 @dealer << DealerType.find(id).dealer_type
+		 @dealer << DealerType.find(id).try(:dealer_type) if id != 0
 	    end
 	    @dealer
 	end

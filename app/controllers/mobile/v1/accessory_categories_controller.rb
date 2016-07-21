@@ -1,5 +1,6 @@
 class Mobile::V1::AccessoryCategoriesController < ApplicationController
   before_action :set_accessory_category, only: [:show]
+  before_filter :authenticate_user!, only: [:get_accessories]
 
   # GET /web/v1/accessory_categories
   # GET /web/v1/accessory_categories.json
@@ -17,7 +18,14 @@ class Mobile::V1::AccessoryCategoriesController < ApplicationController
 
   def get_accessories
     @accessories = Accessory.where(accessory_category_id: params[:category_id])
-    render json: @accessories
+    @user_accessories = current_user.wishlist.accessories.uniq
+     if @accessories.each_cons(@user_accessories.size).include? @user_accessories
+  
+       render json: @accessories, each_serializer: Mobile::V1::AccessorySerializer
+     else
+      render json: @accessories
+     end
+    #render json: @accessories
   end
 
   # POST /web/v1/accessory_categories
