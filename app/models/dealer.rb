@@ -9,7 +9,6 @@ class Dealer < ActiveRecord::Base
 	
 	def dealer_tyep_name	
 		if self.dealer_type_id.class == Array
-			binding.pry
 		  @dealer_type_ids = self.dealer_type_id
 	     else
 	     	@dealer_type_ids = [self.dealer_type_id]
