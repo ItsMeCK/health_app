@@ -19,12 +19,15 @@ class Mobile::V1::AccessoryCategoriesController < ApplicationController
   def get_accessories
     @accessories = Accessory.where(accessory_category_id: params[:category_id])
     @user_accessories = current_user.wishlist.accessories.uniq
+    if @user_accessories.present?
      if @accessories.each_cons(@user_accessories.size).include? @user_accessories
-  
        render json: @accessories, each_serializer: Mobile::V1::AccessorySerializer
      else
       render json: @accessories
      end
+   else
+     render json: @accessories
+   end
     #render json: @accessories
   end
 
