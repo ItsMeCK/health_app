@@ -32,6 +32,9 @@ class Web::V1::DealersController < ApplicationController
   # PATCH/PUT /web/v1/dealers/1.json
   def update
     @dealer = Dealer.find(params[:id])
+    if params[:dealer][:dealer_type_id]
+      @dealer.dealer_type_id.replace(params[:dealer][:dealer_type_id])
+    end
 
     if @dealer.update(dealer_params)
       head :no_content
@@ -50,11 +53,11 @@ class Web::V1::DealersController < ApplicationController
 
   private
 
-    def set_dealer
-      @dealer = Dealer.find(params[:id])
-    end
+  def set_dealer
+    @dealer = Dealer.find(params[:id])
+  end
 
-    def dealer_params
-      params.require(:dealer).permit(:dealer_name, :address, :dealer_type_id, :working_hours, :email, :latitude, :longitude, :active, :image, :service_display_order, :sales_display_order)
-    end
+  def dealer_params
+    params.require(:dealer).permit(:dealer_name, :address, :dealer_type_id, :working_hours, :email, :latitude, :longitude, :active, :image, :service_display_order, :sales_display_order)
+  end
 end
