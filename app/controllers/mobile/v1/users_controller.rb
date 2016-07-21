@@ -49,11 +49,11 @@ class Mobile::V1::UsersController < ApplicationController
 		@accessory = params[:accessory_ids]
 		@remove_wishlist = []
 		@accessory.each  do |accessory|
-		 @remove_wishlist << current_user.wishlist.accessories.find(accessory)
+		current_user.wishlist.accessories.find(accessory).delete
 		end
 		#message = "Removed From Wishlist"
-		 #@remaining_accessories = current_user.wishlist.accessories
-		 render json: @remove_wishlist, each_serializer: Mobile::V1::User::RemoveWishlistItemsSerializer
+		 @remaining_accessories = current_user.wishlist.accessories
+		 render json: @remove_wishlist#, each_serializer: Mobile::V1::User::RemoveWishlistItemsSerializer
 	end
 
 	private
