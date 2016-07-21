@@ -82,6 +82,7 @@ Rails.application.routes.draw do
       resources :banners, only: [:index, :show]
       resources :service_schedules, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
+      post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
     end
   end
 
