@@ -47,6 +47,11 @@ class Web::V1::AccessoriesController < ApplicationController
     head :no_content
   end
 
+  def get_accessories_enquiries
+    @accessory_enquiries = AccessoryEnquiry.all
+    render json: @accessory_enquiries
+  end
+
   private
 
     def set_accessory

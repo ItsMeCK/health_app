@@ -1,4 +1,3 @@
 class AccessoryEnquiry < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :accessory
+	serialize :accessory_id
 end

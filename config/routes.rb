@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :pricings
       resources :bike_colors
       resources :accessories
+      get '/get_accessories_enquiries' => 'accessories#get_accessories_enquiries'
       resources :accessory_categories
       resources :events
       resources :rides
