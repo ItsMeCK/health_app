@@ -47,10 +47,10 @@ class Web::V1::EmailNotificationTemplatesController < ApplicationController
     head :no_content
   end
 
-  def email_template_category
-    @email_notification_template = EmailNotificationTemplate.pluck(:category)
-    render json: @email_notification_template
-  end
+  # def email_template_category
+  #   @email_notification_template = EmailNotificationTemplate.pluck(:category)
+  #   render json: @email_notification_template
+  # end
 
   private
 

@@ -35,8 +35,8 @@ Rails.application.routes.draw do
       resources :email_notification_templates
       resources :notification_templates
       #get all categories
-      get '/get_notification_category' => 'notification_templates#notification_category'
-      get '/get_email_notification_category' => 'email_notification_templates#email_template_category'
+      # get '/get_notification_category' => 'notification_templates#notification_category'
+      # get '/get_email_notification_category' => 'email_notification_templates#email_template_category'
       resources :dealer_types
       resources :dealers
       resources :set_booking_numbers
