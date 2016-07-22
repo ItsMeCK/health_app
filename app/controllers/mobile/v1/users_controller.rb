@@ -52,7 +52,7 @@ class Mobile::V1::UsersController < ApplicationController
 		end
 		#message = "Removed From Wishlist"
 		 @remaining_accessories = current_user.wishlist.accessories
-		 render json: @remaining_accessories#, each_serializer: Mobile::V1::User::RemoveWishlistItemsSerializer
+		 render json: @remaining_accessories #,each_serializer: Mobile::V1::User::RemoveWishlistItemsSerializer
 	end
 
 	private
