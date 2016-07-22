@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       resources :banners
       resources :service_schedules
       resources :set_rules
+      resources :notification_categories
     end
   end
 
