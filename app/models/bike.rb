@@ -5,6 +5,7 @@ class Bike < ActiveRecord::Base
 	has_many :pricings
 	has_many :bike_colors
 	has_many :service_schedules
+	has_many :service_histories
 
 
 	def my_bike_name

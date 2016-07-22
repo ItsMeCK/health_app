@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :service_schedules
       resources :set_rules
       resources :notification_categories
+      resources :service_histories
     end
   end
 
@@ -85,6 +86,7 @@ Rails.application.routes.draw do
       resources :service_schedules, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'
       post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
+      resources :service_histories, :except => [:index]
     end
   end
 
