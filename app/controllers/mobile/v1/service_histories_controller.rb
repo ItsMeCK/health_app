@@ -54,6 +54,6 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     end
 
     def service_history_params
-      params.require(:service_history).permit(:service_date, :service_type, :kms, :total_cost, :bike_id, :bill_image)
+      params.require(:service_history).permit(:service_date, :service_type, :kms, :total_cost, :my_bike_id, :bill_image)
     end
 end
