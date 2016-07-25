@@ -39,6 +39,12 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     end
   end
 
+  def get_my_bike_service_histories
+    @my_bike = MyBike.find(params[:my_bike_id])
+    @service_histories = @my_bike.service_histories
+     render json: @service_histories
+  end
+
   # DELETE /web/v1/service_histories/1
   # DELETE /web/v1/service_histories/1.json
   def destroy

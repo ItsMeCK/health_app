@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       resources :set_rules
       resources :notification_categories
       resources :service_histories
+
     end
   end
 
@@ -87,6 +88,7 @@ Rails.application.routes.draw do
       post '/get_accessories' => 'accessory_categories#get_accessories'
       post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
       resources :service_histories, :except => [:index]
+      post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
     end
   end
 
