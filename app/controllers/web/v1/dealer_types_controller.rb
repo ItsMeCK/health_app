@@ -1,4 +1,4 @@
-.order("updated_at DESC").order("created_at DESC")class Web::V1::DealerTypesController < ApplicationController
+class Web::V1::DealerTypesController < ApplicationController
   before_action :se_dealer_type, only: [:show, :update, :destroy]
 
   # GET /web/v1/dealer_types
