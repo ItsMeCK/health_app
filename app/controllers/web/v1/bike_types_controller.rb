@@ -7,13 +7,13 @@ class Web::V1::BikeTypesController < ApplicationController
   def index
     @bike_types = BikeType.all.order("updated_at DESC").order("created_at DESC")
 
-    render json: @bike_types, each_serializer: Web::V1::BikeTypeSerializer
+    render json: @bike_types #each_serializer: Web::V1::BikeTypeSerializer
   end
 
   # GET /web/v1/bike_types/1
   # GET /web/v1/bike_types/1.json
   def show
-    render json: @bike_type, serializer: Web::V1::BikeTypeSerializer
+    render json: @bike_type
   end
 
   # POST /web/v1/bike_types
@@ -22,7 +22,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.new(bike_type_params)
 
     if @bike_type.save
-      render json: @bike_type, status: :created, location: @bike_type, serializer: Web::V1::BikeTypeSerializer
+      render json: @bike_type, status: :created
     else
       render json: @bike_type.errors, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.find(params[:id])
 
     if @bike_type.update(bike_type_params)
-      render json: @bike_type, status: :ok, location: @bike_type, serializer: Web::V1::BikeTypeSerializer
+      render json: @bike_type, status: :ok
     else
       render json: @bike_type.errors, status: :unprocessable_entity
     end
@@ -55,6 +55,6 @@ class Web::V1::BikeTypesController < ApplicationController
     end
 
     def bike_type_params
-      params[:bike_type]
+      params.require(:bike_type).permit(:name, :tagline, :available)
     end
 end

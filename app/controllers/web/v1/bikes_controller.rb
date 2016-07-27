@@ -47,13 +47,20 @@ class Web::V1::BikesController < ApplicationController
     head :no_content
   end
 
+  def delete_bikes
+    @bikes = params[:bike_ids]
+    @bikes.each do |bike_id|
+      Bike.find(bike_id).delete
+    end
+  end
+
   private
 
-    def set_bike
-      @bike = Bike.find(params[:id])
-    end
+  def set_bike
+    @bike = Bike.find(params[:id])
+  end
 
-    def bike_params
-      params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline)
-    end
+  def bike_params
+    params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline)
+  end
 end

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :hog_registrations
       resources :bike_types
       resources :bikes
+      post '/delete_all_bikes' => 'bikes#delete_bikes'
       resources :specifications
       resources :specification_types
       resources :test_rides
