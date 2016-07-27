@@ -10,6 +10,7 @@ gem 'ffaker'
 gem 'puma'
 gem 'pg'
 gem 'rpush'
+gem 'rack-cors', :require => 'rack/cors'
 
 #image uploading
 gem 'carrierwave'
