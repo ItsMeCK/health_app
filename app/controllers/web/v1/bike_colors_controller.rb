@@ -4,7 +4,7 @@ class Web::V1::BikeColorsController < ApplicationController
   # GET /web/v1/bike_colors
   # GET /web/v1/bike_colors.json
   def index
-    @bike_colors = BikeColor.all
+    @bike_colors = BikeColor.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @bike_colors
   end

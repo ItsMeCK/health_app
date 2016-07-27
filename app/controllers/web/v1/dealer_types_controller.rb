@@ -1,10 +1,10 @@
-class Web::V1::DealerTypesController < ApplicationController
+.order("updated_at DESC").order("created_at DESC")class Web::V1::DealerTypesController < ApplicationController
   before_action :se_dealer_type, only: [:show, :update, :destroy]
 
   # GET /web/v1/dealer_types
   # GET /web/v1/dealer_types.json
   def index
-   @dealer_types = DealerType.all
+   @dealer_types = DealerType.all.order("updated_at DESC").order("created_at DESC")
 
     render json:@dealer_types
   end

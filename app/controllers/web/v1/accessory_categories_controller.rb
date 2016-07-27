@@ -4,7 +4,7 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
   # GET /web/v1/accessory_categories
   # GET /web/v1/accessory_categories.json
   def index
-    @accessory_categories = AccessoryCategory.all
+    @accessory_categories = AccessoryCategory.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @accessory_categories
   end

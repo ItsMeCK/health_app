@@ -4,7 +4,7 @@ class Web::V1::BannersController < ApplicationController
   # GET /web/v1/banners
   # GET /web/v1/banners.json
   def index
-    @banners = Banner.all
+    @banners = Banner.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @banners
   end

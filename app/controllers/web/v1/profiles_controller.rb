@@ -5,7 +5,7 @@ class Web::V1::ProfilesController < ApplicationController
   # GET /profiles
   # GET /profiles.json
   def index
-    @profiles = Profile.all
+    @profiles = Profile.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @profiles
   end

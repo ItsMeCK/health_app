@@ -4,7 +4,7 @@ class Web::V1::DealersController < ApplicationController
   # GET /web/v1/dealers
   # GET /web/v1/dealers.json
   def index
-    @dealers = Dealer.all
+    @dealers = Dealer.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @dealers
   end

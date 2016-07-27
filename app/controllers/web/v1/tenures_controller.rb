@@ -4,7 +4,7 @@ class Web::V1::TenuresController < ApplicationController
   # GET /web/v1/tenures
   # GET /web/v1/tenures.json
   def index
-    @tenures = Tenure.all
+    @tenures = Tenure.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @tenures
   end

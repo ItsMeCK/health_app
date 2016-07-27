@@ -4,7 +4,7 @@ class Web::V1::PricingsController < ApplicationController
   # GET /web/v1/pricings
   # GET /web/v1/pricings.json
   def index
-    @pricings = Pricing.all
+    @pricings = Pricing.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @pricings
   end

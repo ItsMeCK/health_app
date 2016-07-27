@@ -3,7 +3,7 @@ class Web::V1::UsersController < ApplicationController
 	respond_to :json
 
 	def index
-		@users = User.all
+		@users = User.all.order("updated_at DESC").order("created_at DESC")
 		render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
 	end
 

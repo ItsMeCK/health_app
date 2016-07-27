@@ -4,7 +4,7 @@ class Web::V1::SetBookingNumbersController < ApplicationController
   # GET /web/v1/set_booking_numbers
   # GET /web/v1/set_booking_numbers.json
   def index
-    @set_booking_numbers = SetBookingNumber.all
+    @set_booking_numbers = SetBookingNumber.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @set_booking_numbers
   end

@@ -4,7 +4,7 @@ class Web::V1::NotificationTemplatesController < ApplicationController
   # GET /web/v1/notification_templates
   # GET /web/v1/notification_templates.json
   def index
-    @notification_templates = NotificationTemplate.all
+    @notification_templates = NotificationTemplate.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @notification_templates
   end

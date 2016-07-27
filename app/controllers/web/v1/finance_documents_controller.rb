@@ -4,7 +4,7 @@ class Web::V1::FinanceDocumentsController < ApplicationController
   # GET /web/v1/finance_documents
   # GET /web/v1/finance_documents.json
   def index
-    @finance_documents = FinanceDocument.all
+    @finance_documents = FinanceDocument.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @finance_documents
   end

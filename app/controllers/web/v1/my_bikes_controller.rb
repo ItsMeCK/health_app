@@ -4,7 +4,7 @@ class Web::V1::MyBikesController < ApplicationController
   # GET /web/v1/my_bikes
   # GET /web/v1/my_bikes.json
   def index
-    @my_bikes = MyBike.all
+    @my_bikes = MyBike.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @my_bikes
   end

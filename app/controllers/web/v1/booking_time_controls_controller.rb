@@ -4,7 +4,7 @@ class Web::V1::BookingTimeControlsController < ApplicationController
   # GET /web/v1/booking_time_controls
   # GET /web/v1/booking_time_controls.json
   def index
-    @booking_time_controls = BookingTimeControl.all
+    @booking_time_controls = BookingTimeControl.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @booking_time_controls, each_serializer: Web::V1::BookingTimeControlSerializer
   end

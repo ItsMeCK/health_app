@@ -15,6 +15,11 @@ class Mobile::V1::SetBookingNumbersController < ApplicationController
     render json: @set_booking_number
   end
 
+  def find_by_categopry
+    @category =  SetBookingNumber.find_by_category(params[:category])
+    render json: @category
+  end
+
   # POST /web/v1/set_booking_numbers
   # POST /web/v1/set_booking_numbers.json
  

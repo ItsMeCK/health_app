@@ -4,7 +4,7 @@ class Web::V1::SpecificationTypesController < ApplicationController
   # GET /web/v1/specification_types
   # GET /web/v1/specification_types.json
   def index
-    @specification_types = SpecificationType.all
+    @specification_types = SpecificationType.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @specification_types, each_serializer: Web::V1::SpecificationTypeSerializer
   end

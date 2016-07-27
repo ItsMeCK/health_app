@@ -4,7 +4,7 @@ class Web::V1::TestRidesController < ApplicationController
   # GET /web/v1/test_rides
   # GET /web/v1/test_rides.json
   def index
-    @test_rides = TestRide.all
+    @test_rides = TestRide.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @test_rides, each_serializer: Web::V1::TestRideSerializer
   end
@@ -47,13 +47,41 @@ class Web::V1::TestRidesController < ApplicationController
     head :no_content
   end
 
-  private
 
-    def set_test_ride
-      @test_ride = TestRide.find(params[:id])
-    end
+  def all_bookings
+   service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
+   test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?',  params[:year]).where('extract(month  from ride_date) = ?',  params[:month]) 
+   insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?',  params[:year]).where('extract(month  from purchase_date) = ?',  params[:month]) 
+   service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
+    Hash[date, service_booking] }
+    test_ride = test_ride_bookings.collect { |test_ride| date = test_ride.ride_date.strftime("%d/%m/%Y")
+      Hash[date, test_ride] }
+      insurance_renewal = insurance_bookings.collect { |insurance_booking| date = insurance_booking.purchase_date.strftime("%d/%m/%Y") 
+        Hash[date, insurance_booking] }
+        all_bookings_array = service + test_ride + insurance_renewal
+        bookings = all_bookings_array.flat_map(&:entries).group_by(&:first)
+        @all_bookings = bookings.map{|k,v| Hash[date: k, all_bookings: v.map(&:last).collect{ |bookings| 
+          if bookings.try(:service_date) 
+            { service_bookings: bookings }
+          elsif bookings.try(:ride_date)
+            { test_ride_bookings: bookings }
+          elsif bookings.try(:purchase_date)
+            { insurence_renewal_bookings: bookings }
+          else
+            {contact: bookings }
+          end
+          }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[k, v.map(&:last)] }  ]  }
 
-    def test_ride_params
-      params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
-    end
-end
+          render json: @all_bookings, :root => "bookings"
+        end
+
+        private
+
+        def set_test_ride
+          @test_ride = TestRide.find(params[:id])
+        end
+
+        def test_ride_params
+          params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
+        end
+      end

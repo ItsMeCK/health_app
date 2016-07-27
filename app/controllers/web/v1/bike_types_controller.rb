@@ -5,7 +5,7 @@ class Web::V1::BikeTypesController < ApplicationController
   # GET /web/v1/bike_types
   # GET /web/v1/bike_types.json
   def index
-    @bike_types = BikeType.all
+    @bike_types = BikeType.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @bike_types, each_serializer: Web::V1::BikeTypeSerializer
   end

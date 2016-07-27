@@ -4,7 +4,7 @@ class Web::V1::NotificationCategoriesController < ApplicationController
   # GET /web/v1/notification_categories
   # GET /web/v1/notification_categories.json
   def index
-    @notification_categories = NotificationCategory.all
+    @notification_categories = NotificationCategory.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @notification_categories
   end

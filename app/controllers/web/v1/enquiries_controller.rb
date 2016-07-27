@@ -4,7 +4,7 @@ class Web::V1::EnquiriesController < ApplicationController
   # GET /web/v1/enquiries
   # GET /web/v1/enquiries.json
   def index
-    @enquiries = Enquiry.all
+    @enquiries = Enquiry.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @enquiries
   end

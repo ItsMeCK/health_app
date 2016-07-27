@@ -5,7 +5,7 @@ class Web::V1::BikesController < ApplicationController
   # GET /web/v1/bikes
   # GET /web/v1/bikes.json
   def index
-    @bikes = Bike.all
+    @bikes = Bike.all.order("updated_at DESC").order("created_at DESC")
     render json: @bikes.includes(:specifications)  #each_serializer: Web::V1::BikeSerializer
   end
 

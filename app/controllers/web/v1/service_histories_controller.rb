@@ -4,7 +4,7 @@ class Web::V1::ServiceHistoriesController < ApplicationController
   # GET /web/v1/service_histories
   # GET /web/v1/service_histories.json
   def index
-    @service_histories = ServiceHistory.all
+    @service_histories = ServiceHistory.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @service_histories
   end

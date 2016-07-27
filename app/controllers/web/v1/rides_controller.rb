@@ -4,7 +4,7 @@ class Web::V1::RidesController < ApplicationController
   # GET /web/v1/rides
   # GET /web/v1/rides.json
   def index
-    @rides = Ride.all
+    @rides = Ride.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @rides
   end
@@ -21,7 +21,7 @@ class Web::V1::RidesController < ApplicationController
     @ride = Ride.new(ride_params)
 
     if @ride.save
-      render json: @ride, status: :createdP
+      render json: @ride, status: :created
     else
       render json: @ride.errors, status: :unprocessable_entity
     end

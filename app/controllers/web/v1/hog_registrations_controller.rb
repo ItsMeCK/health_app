@@ -5,7 +5,7 @@ class Web::V1::HogRegistrationsController < ApplicationController
   # GET /hog_registrations
   # GET /hog_registrations.json
   def index
-    @hog_registrations = HogRegistration.all
+    @hog_registrations = HogRegistration.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @hog_registrations
   end

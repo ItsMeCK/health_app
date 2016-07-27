@@ -4,7 +4,7 @@ class Web::V1::ServiceSchedulesController < ApplicationController
   # GET /web/v1/service_schedules
   # GET /web/v1/service_schedules.json
   def index
-    @service_schedules = ServiceSchedule.all
+    @service_schedules = ServiceSchedule.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @service_schedules
   end

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
       resources :specifications
       resources :specification_types
       resources :test_rides
+      #api for the all bookings
+      post '/get_all_bookings' => 'test_rides#all_bookings'
       resources :service_bookings
       resources :my_bikes
       resources :feedbacks, only: [:index, :show, :create]
@@ -83,6 +85,8 @@ Rails.application.routes.draw do
       resources :tenures, :only => [:show]
       resources :accessory_categories, only: [:index, :show]
       resources :set_booking_numbers, only: [:index, :show]
+      post '/find_by_categopry' => 'set_booking_numbers#find_by_categopry'
+      post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
       resources :banners, only: [:index, :show]
       resources :service_schedules, only: [:index, :show]
       post '/get_accessories' => 'accessory_categories#get_accessories'

@@ -4,7 +4,7 @@ class Web::V1::SetRulesController < ApplicationController
   # GET /web/v1/set_rules
   # GET /web/v1/set_rules.json
   def index
-    @set_rules = SetRule.all
+    @set_rules = SetRule.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @set_rules
   end

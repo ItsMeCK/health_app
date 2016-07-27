@@ -4,7 +4,7 @@ class Web::V1::MyDocsController < ApplicationController
   # GET /web/v1/my_docs
   # GET /web/v1/my_docs.json
   def index
-    @my_docs = MyDoc.all
+    @my_docs = MyDoc.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @my_docs
   end

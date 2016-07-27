@@ -4,7 +4,7 @@ class Web::V1::FeedbacksController < ApplicationController
   # GET /web/v1/feedbacks
   # GET /web/v1/feedbacks.json
   def index
-    @feedbacks = Feedback.all
+    @feedbacks = Feedback.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @feedbacks
   end

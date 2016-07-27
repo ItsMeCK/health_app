@@ -4,7 +4,7 @@ class Web::V1::KeyFeaturesController < ApplicationController
   # GET /web/v1/key_features
   # GET /web/v1/key_features.json
   def index
-    @key_features = KeyFeature.all
+    @key_features = KeyFeature.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @key_features
   end

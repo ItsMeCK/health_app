@@ -4,7 +4,7 @@ class Web::V1::EventsController < ApplicationController
   # GET /web/v1/events
   # GET /web/v1/events.json
   def index
-    @events = Event.all
+    @events = Event.all.order("updated_at DESC").order("created_at DESC")
 
     render json: @events
   end
