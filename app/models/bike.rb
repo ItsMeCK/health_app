@@ -7,7 +7,11 @@ class Bike < ActiveRecord::Base
 	has_many :service_schedules
 
 
-	def my_bike_name
+    def bike_type_name
+    	self.bike_type.try(:name)
+    end
+
+	def bike_specifications
 		@specifications = []
 		self.specifications.each do |specification|
 			@specification_name = SpecificationType.find_by_id(specification.specification_type_id).name
@@ -39,7 +43,7 @@ class Bike < ActiveRecord::Base
 	end
 
 	def as_json(options={})
-		super.as_json(options).merge({:specifications => my_bike_name, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
+		super.as_json(options).merge({:bike_type_name => bike_type_name, :specifications => bike_specifications, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
 	end
 
 end
