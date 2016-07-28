@@ -1,5 +1,6 @@
 class Bike < ActiveRecord::Base
 	belongs_to :bike_type
+	has_one :default_bike_image
 	has_many :specifications
 	has_many :key_features
 	has_many :pricings
@@ -9,6 +10,10 @@ class Bike < ActiveRecord::Base
 
     def bike_type_name
     	self.bike_type.try(:name)
+    end
+
+    def bike_image_url
+    	self.default_bike_image.image_url
     end
 
 	def bike_specifications
@@ -43,7 +48,7 @@ class Bike < ActiveRecord::Base
 	end
 
 	def as_json(options={})
-		super.as_json(options).merge({:bike_type_name => bike_type_name, :specifications => bike_specifications, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
+		super.as_json(options).merge({:bike_type_name => bike_type_name, :bike_image_url => bike_image_url, :specifications => bike_specifications, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
 	end
 
 end

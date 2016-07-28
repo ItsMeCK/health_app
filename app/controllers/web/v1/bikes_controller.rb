@@ -61,6 +61,6 @@ class Web::V1::BikesController < ApplicationController
   end
 
   def bike_params
-    params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline)
+    params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline, :display_order)
   end
 end

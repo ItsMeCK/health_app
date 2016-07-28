@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       resources :set_rules
       resources :notification_categories
       resources :service_histories
+      resources :default_bike_images
 
     end
   end

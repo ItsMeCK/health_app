@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725060557) do
+ActiveRecord::Schema.define(version: 20160728062000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,10 +79,11 @@ ActiveRecord::Schema.define(version: 20160725060557) do
     t.string   "name"
     t.text     "description"
     t.text     "tagline"
-    t.boolean  "available",    default: true
+    t.boolean  "available",     default: true
     t.integer  "bike_type_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "display_order"
   end
 
   create_table "booking_time_controls", force: :cascade do |t|
@@ -94,6 +95,13 @@ ActiveRecord::Schema.define(version: 20160725060557) do
     t.boolean  "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "dealer_dealer_types", force: :cascade do |t|
+    t.integer  "dealer_id"
+    t.integer  "dealer_type_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "dealer_types", force: :cascade do |t|
@@ -123,6 +131,13 @@ ActiveRecord::Schema.define(version: 20160725060557) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.text     "dealer_type_id"
+  end
+
+  create_table "default_bike_images", force: :cascade do |t|
+    t.string   "image_url"
+    t.integer  "bike_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "email_notification_templates", force: :cascade do |t|
@@ -241,6 +256,7 @@ ActiveRecord::Schema.define(version: 20160725060557) do
     t.integer  "kms"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "default_bike_image_id"
   end
 
   create_table "my_docs", force: :cascade do |t|
