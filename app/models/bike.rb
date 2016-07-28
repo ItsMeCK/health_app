@@ -13,7 +13,7 @@ class Bike < ActiveRecord::Base
     end
 
     def bike_image_url
-    	self.default_bike_image.image_url
+    	self.default_bike_image.try(:image_url)
     end
 
 	def bike_specifications
