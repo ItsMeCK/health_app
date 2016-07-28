@@ -4,7 +4,7 @@ class Web::V1::SpecificationSerializer < ActiveModel::Serializer
   def attributes
   	data = super
   	data[:bike_name] = Bike.find_by_id(data[:bike_id]).try(:name)
-  	data[:specification_type] = SpecificationType.find_by_id(data[:specification_type_id]).name
+  	data[:specification_type] = SpecificationType.find_by_id(data[:specification_type_id]).try(:name)
   	data
   end
 

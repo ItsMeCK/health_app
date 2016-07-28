@@ -19,13 +19,16 @@ class Web::V1::RidesController < ApplicationController
   # POST /web/v1/rides.json
   def create
     @ride = Ride.new(ride_params)
-
+    users = User.all
     if @ride.save
-      render json: @ride, status: :created
-    else
-      render json: @ride.errors, status: :unprocessable_entity
-    end
+      users.each do |user|
+       UserMailer.notification_mail_for_ride(user).deliver
+      end
+    render json: @ride, status: :created
+  else
+    render json: @ride.errors, status: :unprocessable_entity
   end
+end
 
   # PATCH/PUT /web/v1/rides/1
   # PATCH/PUT /web/v1/rides/1.json
@@ -49,11 +52,11 @@ class Web::V1::RidesController < ApplicationController
 
   private
 
-    def set_ride
-      @ride = Ride.find(params[:id])
-    end
+  def set_ride
+    @ride = Ride.find(params[:id])
+  end
 
-    def ride_params
-      params.require(:ride).permit(:ride_date, :route, :distance, :assembly_time, :assembly_location, :destination_time, :destination_location, :notify)
-    end
+  def ride_params
+    params.require(:ride).permit(:ride_date, :route, :distance, :assembly_time, :assembly_location, :destination_time, :destination_location, :notify)
+  end
 end

@@ -33,6 +33,7 @@ class Web::V1::MyBikesController < ApplicationController
     @my_bike = MyBike.find(params[:id])
 
     if @my_bike.update(my_bike_params)
+      render json: @my_bike
       head :no_content
     else
       render json: @my_bike.errors, status: :unprocessable_entity
