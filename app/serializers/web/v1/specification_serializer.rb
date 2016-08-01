@@ -1,5 +1,5 @@
 class Web::V1::SpecificationSerializer < ActiveModel::Serializer
-  attributes :id, :name, :value, :active, :bike_id, :specification_type_id
+  attributes :id, :name, :value, :active, :bike_id, :specification_type_id, :created_at, :updated_at
 
   def attributes
   	data = super

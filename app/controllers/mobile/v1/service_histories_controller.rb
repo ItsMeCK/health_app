@@ -53,6 +53,14 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     head :no_content
   end
 
+  def get_ride_and_events
+     rides = Ride.where('extract(year  from ride_date) = ?', params[:year]).where('extract(month  from ride_date) = ?', params[:month])
+     events = Event.where('extract(year  from event_date) = ?', params[:year]).where('extract(month  from event_date) = ?', params[:month])
+     @ride_events = {rides: rides}.merge({events: events})
+
+     render json: @ride_events
+  end
+
   private
 
     def set_service_history

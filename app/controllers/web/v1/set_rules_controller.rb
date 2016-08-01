@@ -19,6 +19,7 @@ class Web::V1::SetRulesController < ApplicationController
   # POST /web/v1/set_rules.json
   def create
     @set_rule = SetRule.new(set_rule_params)
+    @set_rule.days = params[:set_rule][:days]
 
     if @set_rule.save
       render json: @set_rule, status: :created

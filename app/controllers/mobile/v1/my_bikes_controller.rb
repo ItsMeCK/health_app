@@ -1,5 +1,5 @@
 class Mobile::V1::MyBikesController < ApplicationController
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   before_action :set_my_bike, only: [:show, :update, :destroy]
 
   # GET /web/v1/my_bikes
@@ -31,17 +31,17 @@ class Mobile::V1::MyBikesController < ApplicationController
   # PATCH/PUT /web/v1/my_bikes/1
   # PATCH/PUT /web/v1/my_bikes/1.json
   def update
-    @my_bike = MyBike.find(params[:id])
-    binding.pry
-    @my_bike.delete
-    @my = MyBike.new(my_bike_params)
-    if @my.save
-      @my.update(id: params[:id])
-       binding.pry
-      head :no_content
+     @my_bike = MyBike.find(params[:id])
+     #@my_bike.remove_bike_image! if @my_bike.bike_image
+    if @my_bike.update(my_bike_params)
+
+       #@my_bike.bike_image.store!
+      render json: @my_bike
+      #head :no_content
     else
       render json: @my_bike.errors, status: :unprocessable_entity
     end
+   
   end
 
   # DELETE /web/v1/my_bikes/1

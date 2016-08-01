@@ -95,6 +95,9 @@ Rails.application.routes.draw do
       post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
       resources :service_histories, :except => [:index]
       post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
+      #getting ride and events based on month and year
+      post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
+
     end
   end
 

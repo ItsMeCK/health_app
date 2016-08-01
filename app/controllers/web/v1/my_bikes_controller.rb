@@ -31,8 +31,7 @@ class Web::V1::MyBikesController < ApplicationController
   # PATCH/PUT /web/v1/my_bikes/1.json
   def update
     @my_bike = MyBike.find(params[:id])
-    binding.pry
-      @my_bike.update(bike_image: params[:my_bike][:bike_image])
+    
     if @my_bike.update(my_bike_params)
       render json: @my_bike
       #head :no_content
