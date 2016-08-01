@@ -61,6 +61,18 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
      render json: @ride_events
   end
 
+  def get_ride_status
+    @user_ride = UserRide.where('ride_id = ? AND perticipate_ride = ?', params[:ride_id], params[:status])
+
+    render json: @user_ride, root: "rides status"
+  end
+
+  def get_event_status
+    @user_ride = UserEvent.where('event_id = ? AND perticipate_event = ?', params[:event_id], params[:status])
+
+    render json: @user_ride, root: "events status"
+  end
+
   private
 
     def set_service_history

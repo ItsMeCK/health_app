@@ -97,6 +97,8 @@ Rails.application.routes.draw do
       post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
       #getting ride and events based on month and year
       post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
+      post '/get_ride_status' => 'service_histories#get_ride_status'
+      post '/get_event_status' => 'service_histories#get_event_status'
 
     end
   end
