@@ -31,6 +31,7 @@ class Web::V1::MyBikesController < ApplicationController
   # PATCH/PUT /web/v1/my_bikes/1.json
   def update
     @my_bike = MyBike.find(params[:id])
+    binding.pry
       @my_bike.update(bike_image: params[:my_bike][:bike_image])
     if @my_bike.update(my_bike_params)
       render json: @my_bike
@@ -55,6 +56,6 @@ class Web::V1::MyBikesController < ApplicationController
     end
 
     def my_bike_params
-      params.require(:my_bike).permit(:bike, :purchase_date, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+      params.require(:my_bike).permit(:bike, :purchase_date, :my_bike_image_url, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
     end
 end

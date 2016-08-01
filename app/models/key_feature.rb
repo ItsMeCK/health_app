@@ -1,7 +1,7 @@
 class KeyFeature < ActiveRecord::Base
 	belongs_to :bike
 	belongs_to :key_feature_type
-	mount_base64_uploader :image, ImageUploader, file_name: 'key_feature'
+	#mount_base64_uploader :image, ImageUploader, file_name: 'key_feature'
 
 	def key_feature_type
 		 KeyFeatureType.find_by_id(self.key_feature_type_id).try(:feature_type_name)

@@ -32,8 +32,12 @@ class Mobile::V1::MyBikesController < ApplicationController
   # PATCH/PUT /web/v1/my_bikes/1.json
   def update
     @my_bike = MyBike.find(params[:id])
-
-    if @my_bike.update(my_bike_params)
+    binding.pry
+    @my_bike.delete
+    @my = MyBike.new(my_bike_params)
+    if @my.save
+      @my.update(id: params[:id])
+       binding.pry
       head :no_content
     else
       render json: @my_bike.errors, status: :unprocessable_entity
@@ -55,6 +59,6 @@ class Mobile::V1::MyBikesController < ApplicationController
     end
 
     def my_bike_params
-      params.require(:my_bike).permit(:bike, :purchase_date, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+      params.require(:my_bike).permit(:bike, :purchase_date, :default_bike_image_id, :my_bike_image_url, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
     end
 end

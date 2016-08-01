@@ -2,7 +2,7 @@ class Dealer < ActiveRecord::Base
 	serialize :dealer_type_id
 	has_and_belongs_to_many :dealer_types
 
-	mount_base64_uploader :image, ImageUploader, file_name: 'dealer'
+	#mount_base64_uploader :image, ImageUploader, file_name: 'dealer'
 	#call back
 	#after_create :create_joint_table
 
