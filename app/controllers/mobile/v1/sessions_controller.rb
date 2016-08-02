@@ -8,7 +8,6 @@ class Mobile::V1::SessionsController < ApplicationController
     if user.present?
       if user.valid_password? user_password
         sign_in user, store: false
-        user.reset_authentication_token!
         user.save
         render json: user, status: 200, location: [:mobile, user]
       else
