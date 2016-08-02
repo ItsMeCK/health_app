@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       resources :service_histories
       resources :default_bike_images
       resources :set_mails
+      resources :service_numbers
 
     end
   end
