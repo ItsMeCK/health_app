@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :finance_documents
       resources :tenures
       resources :banners
+      post '/update_image' => 'banners#update_image'
       resources :service_schedules
       resources :set_rules
       resources :notification_categories
@@ -79,6 +80,7 @@ Rails.application.routes.draw do
       resources :service_bookings, :except => [:index]
       post '/my_bookings' => 'service_bookings#my_bookings'
       resources :my_bikes
+      post '/update_image' => 'my_bikes#update_image'
       resources :feedbacks, only: [:create]
       resources :insurance_renewals, only: [:create, :show]
       resources :enquiries, only: [:create]

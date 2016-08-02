@@ -44,6 +44,20 @@ class Mobile::V1::MyBikesController < ApplicationController
    
   end
 
+  def update_image
+     @my_bike = MyBike.find(params[:id])
+     @my_bike.remove_bike_image! if @my_bike.bike_image
+    if @my_bike.update(my_bike_params)
+        binding.pry
+       #@my_bike.bike_image.store!
+      render json: @my_bike
+      #head :no_content
+    else
+      render json: @my_bike.errors, status: :unprocessable_entity
+    end
+   
+  end
+
   # DELETE /web/v1/my_bikes/1
   # DELETE /web/v1/my_bikes/1.json
   def destroy
