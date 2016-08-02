@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       resources :default_bike_images
       resources :set_mails
       resources :service_numbers
+      resources :contact_numbers
 
     end
   end
@@ -101,6 +102,8 @@ Rails.application.routes.draw do
       post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'
       post '/get_event_status' => 'service_histories#get_event_status'
+
+      resources :contact_numbers, only: [:index, :show]
 
     end
   end
