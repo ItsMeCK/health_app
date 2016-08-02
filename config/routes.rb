@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       resources :notification_categories
       resources :service_histories
       resources :default_bike_images
+      resources :set_mails
 
     end
   end
