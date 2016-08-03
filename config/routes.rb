@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 	
   devise_for :users
   # API Definition
+  #API for password reset common for both web and mob
+  post '/update_passwords' => 'devise/passwords#update_password'
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here
@@ -54,7 +56,8 @@ Rails.application.routes.draw do
       resources :set_mails
       resources :service_numbers
       resources :contact_numbers
-
+      resources :passwords, only: [:create]
+      
     end
   end
 
@@ -102,8 +105,8 @@ Rails.application.routes.draw do
       post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'
       post '/get_event_status' => 'service_histories#get_event_status'
-
       resources :contact_numbers, only: [:index, :show]
+      resources :passwords, only: [:create]
 
     end
   end
