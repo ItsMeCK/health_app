@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803060815) do
+ActiveRecord::Schema.define(version: 20160803071353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,8 +102,30 @@ ActiveRecord::Schema.define(version: 20160803060815) do
     t.string   "category"
     t.string   "number"
     t.string   "label"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "contact_type_id"
+  end
+
+  create_table "contact_types", force: :cascade do |t|
+    t.string   "label"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "contact_type"
+  end
+
+  create_table "dealer_contact_labels ", force: :cascade do |t|
+    t.string   "label_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "dealer_contact_numbers", force: :cascade do |t|
+    t.string   "number"
+    t.integer  "dealer_id"
+    t.integer  "dealer_contact_label_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "dealer_dealer_types", force: :cascade do |t|

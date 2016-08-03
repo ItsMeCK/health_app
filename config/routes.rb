@@ -66,7 +66,10 @@ Rails.application.routes.draw do
       resources :service_numbers
       resources :contact_numbers
       resources :passwords, only: [:create]
-      
+      resources :dealer_contact_labels
+      resources :dealer_contact_numbers
+      resources :contact_types
+
     end
   end
 

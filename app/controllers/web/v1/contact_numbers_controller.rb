@@ -54,6 +54,6 @@ class Web::V1::ContactNumbersController < ApplicationController
     end
 
     def contact_number_params
-      params.require(:contact_number).permit(:category, :number, :label)
+      params.require(:contact_number).permit(:category, :number, :label, :contact_type_id)
     end
 end
