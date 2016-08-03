@@ -40,6 +40,19 @@ class Web::V1::MyBikesController < ApplicationController
     end
   end
 
+  def my_bike_image_update
+    @my_bike = MyBike.find(params[:id])
+    @my_bike.remove_bike_image! if @my_bike.bike_image
+    if @my_bike.update(my_bike_params)
+     @my_bike.bike_image = params[:my_bike][:bike_image]
+     @my_bike.save
+     render json: @my_bike
+      #head :no_content
+    else
+      render json: @my_bike.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /web/v1/my_bikes/1
   # DELETE /web/v1/my_bikes/1.json
   def destroy
@@ -50,11 +63,11 @@ class Web::V1::MyBikesController < ApplicationController
 
   private
 
-    def set_my_bike
-      @my_bike = MyBike.find(params[:id])
-    end
+  def set_my_bike
+    @my_bike = MyBike.find(params[:id])
+  end
 
-    def my_bike_params
-      params.require(:my_bike).permit(:bike, :purchase_date, :my_bike_image_url, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
-    end
+  def my_bike_params
+    params.require(:my_bike).permit(:bike, :purchase_date, :my_bike_image_url, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+  end
 end

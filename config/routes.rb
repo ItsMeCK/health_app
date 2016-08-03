@@ -9,7 +9,9 @@ Rails.application.routes.draw do
       resources :sessions, :only => [:create, :destroy]
       resource :api_token
       resources :profiles
+      post '/profile_image_update' => 'profiles#profile_image_update'
       resources :hog_registrations
+      post '/hog_registration_image_update' => 'hog_registrations#hog_registration_image_update'
       resources :bike_types
       resources :bikes
       post '/delete_all_bikes' => 'bikes#delete_bikes'
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
       post '/get_all_bookings' => 'test_rides#all_bookings'
       resources :service_bookings
       resources :my_bikes
+      post '/my_bike_image_update' => 'my_bikes#my_bike_image_update'
       resources :feedbacks, only: [:index, :show, :create]
       resources :insurance_renewals, except: [:delete]
       resources :enquiries, except: [:delete]
@@ -30,11 +33,14 @@ Rails.application.routes.draw do
       resources :pricings
       resources :bike_colors
       resources :accessories
+      post '/update_accessory_image' => 'accessories#update_accessory_image'
       get '/get_accessories_enquiries' => 'accessories#get_accessories_enquiries'
       resources :accessory_categories
+      post '/update_accessory_categery_image' => 'accessories#update_accessory_categery_image'
       resources :events
       resources :rides
       resources :my_docs
+      post '/my_docs_image_update' => 'my_docs#my_docs_image_update'
       resources :email_notification_templates
       resources :notification_templates
       #get all categories
@@ -42,6 +48,7 @@ Rails.application.routes.draw do
       # get '/get_email_notification_category' => 'email_notification_templates#email_template_category'
       resources :dealer_types
       resources :dealers
+      post '/dealers_image_update' => 'dealers#dealers_image_update'
       resources :set_booking_numbers
       resources :finance_documents
       resources :tenures
@@ -51,6 +58,7 @@ Rails.application.routes.draw do
       resources :set_rules
       resources :notification_categories
       resources :service_histories
+      post '/update_service_history_image' => 'service_histories#update_service_history_image'
       resources :default_bike_images
       resources :set_mails
       resources :service_numbers
@@ -70,7 +78,9 @@ Rails.application.routes.draw do
       post '/remove_wishlist_items' => 'users#remove_wishlist_items'
       resources :sessions, :only => [:create, :destroy]
       resources :profiles, :except => [:delete]
+      post '/update_profile_image' => 'profiles#update_profile_image'
       resources :hog_registrations, :except => [:delete]
+      post '/update_hog_registration_image' => 'hog_registrations#update_hog_registration_image'
       resources :bike_types, :only => [:show, :index]
       resources :bikes, :only => [:show, :index]
       post '/bike_filter' => 'bikes#bike_filter'
@@ -80,12 +90,13 @@ Rails.application.routes.draw do
       resources :service_bookings, :except => [:index]
       post '/my_bookings' => 'service_bookings#my_bookings'
       resources :my_bikes
-      post '/update_image' => 'my_bikes#update_image'
+      post '/update_my_bike_image' => 'my_bikes#update_my_bike_image'
       resources :feedbacks, only: [:create]
       resources :insurance_renewals, only: [:create, :show]
       resources :enquiries, only: [:create]
       post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
       resources :my_docs
+      post '/update_my_docs_image' => 'my_docs#update_my_docs_image'
       resources :dealer_types, :only => [:show]
       resources :dealers, :only => [:show]
       resources :finance_documents, :only => [:show]
@@ -100,6 +111,7 @@ Rails.application.routes.draw do
       post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
       resources :service_histories, :except => [:index]
       post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
+      post '/service_history_image_update' => 'service_histories#service_history_image_update'
       #getting ride and events based on month and year
       post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'

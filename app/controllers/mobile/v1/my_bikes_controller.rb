@@ -44,12 +44,12 @@ class Mobile::V1::MyBikesController < ApplicationController
    
   end
 
-  def update_image
+  def update_my_bike_image
      @my_bike = MyBike.find(params[:id])
      @my_bike.remove_bike_image! if @my_bike.bike_image
     if @my_bike.update(my_bike_params)
-        binding.pry
-       #@my_bike.bike_image.store!
+       @my_bike.bike_image = params[:my_bike][:bike_image]
+       @my_bike.save
       render json: @my_bike
       #head :no_content
     else

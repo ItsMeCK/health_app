@@ -39,6 +39,20 @@ class Web::V1::ServiceHistoriesController < ApplicationController
     end
   end
 
+  def update_service_history_image
+   @service_history = ServiceHistory.find(params[:id])
+   @service_history.remove_bill_image! if @service_history.bill_image
+
+    if @service_history.update(service_history_params)
+     @service_history.bill_image = params[:service_history][:bill_image]
+     @service_history.save
+     render json: @service_history
+      #head :no_content
+    else
+      render json: @service_history.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /web/v1/service_histories/1
   # DELETE /web/v1/service_histories/1.json
   def destroy
@@ -49,11 +63,11 @@ class Web::V1::ServiceHistoriesController < ApplicationController
 
   private
 
-    def set_service_history
-      @service_history = ServiceHistory.find(params[:id])
-    end
+  def set_service_history
+    @service_history = ServiceHistory.find(params[:id])
+  end
 
-    def service_history_params
-      params.require(:service_history).permit(:service_date, :service_type, :kms, :total_cost, :my_bike_id, :bill_image)
-    end
+  def service_history_params
+    params.require(:service_history).permit(:service_date, :service_type, :kms, :total_cost, :my_bike_id, :bill_image)
+  end
 end

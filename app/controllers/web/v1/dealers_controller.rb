@@ -32,12 +32,26 @@ class Web::V1::DealersController < ApplicationController
   # PATCH/PUT /web/v1/dealers/1.json
   def update
     @dealer = Dealer.find(params[:id])
-    if params[:dealer][:dealer_type_id]
-      @dealer.dealer_type_id.replace(params[:dealer][:dealer_type_id])
-    end
+    # if params[:dealer][:dealer_type_id]
+    #   @dealer.dealer_type_id.replace(params[:dealer][:dealer_type_id])
+    # end
 
     if @dealer.update(dealer_params)
       head :no_content
+    else
+      render json: @dealer.errors, status: :unprocessable_entity
+    end
+  end
+
+  def dealers_image_update
+    @dealer = Dealer.find(params[:id])
+     @dealer.remove_image! if @dealer.image
+
+    if @dealer.update(dealer_params)
+      @dealer.image = params[:dealer][:image]
+       @dealer.save
+      render json: @dealer
+      #head :no_content
     else
       render json: @dealer.errors, status: :unprocessable_entity
     end

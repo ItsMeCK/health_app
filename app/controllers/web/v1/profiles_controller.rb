@@ -41,6 +41,18 @@ class Web::V1::ProfilesController < ApplicationController
     end
   end
 
+  def profile_image_update
+    @profile = Profile.find(params[:id])
+    @profile.remove_profile_image! if @profile.profile_image
+    if @profile.update(profile_params)
+     @profile.profile_image = params[:profile][:profile_image]
+     @profile.save
+     render json: @profile, status: :ok
+   else
+    render json: @profile.errors, status: :unprocessable_entity
+  end
+end
+
   # DELETE /profiles/1
   # DELETE /profiles/1.json
   def destroy
@@ -51,11 +63,11 @@ class Web::V1::ProfilesController < ApplicationController
 
   private
 
-    def set_profile
-      @profile = Profile.find(params[:id])
-    end
+  def set_profile
+    @profile = Profile.find(params[:id])
+  end
 
-    def profile_params
-      params.require(:profile).permit(:full_name, :mobile, :dob, :email, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
-    end
+  def profile_params
+    params.require(:profile).permit(:full_name, :mobile, :dob, :email, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
+  end
 end

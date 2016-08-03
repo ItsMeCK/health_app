@@ -41,6 +41,20 @@ class Web::V1::HogRegistrationsController < ApplicationController
     end
   end
 
+  def hog_registration_image_update
+    @hog_registration = HogRegistration.find(params[:id])
+     @hog_registration.remove_profile_image! if @hog_registration.profile_image
+
+    if @hog_registration.update(hog_registration_params)
+      @hog_registration.profile_image = params[:hog_registration][:profile_image]
+       @hog_registration.save
+      render json: @hog_registration
+      #head :no_content
+    else
+      render json: @hog_registration.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /hog_registrations/1
   # DELETE /hog_registrations/1.json
   def destroy

@@ -39,6 +39,19 @@ class Web::V1::AccessoriesController < ApplicationController
     end
   end
 
+  def update_accessory_image
+    @accessory = Accessory.find(params[:id])
+    @accessory.remove_image! if @accessory.image
+    if @accessory.update(accessory_params)
+      @accessory.image = params[:accessory][:image]
+      @accessory.save
+      render json: @accessory
+      #head :no_content
+    else
+      render json: @accessory.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /web/v1/accessories/1
   # DELETE /web/v1/accessories/1.json
   def destroy

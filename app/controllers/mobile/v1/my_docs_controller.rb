@@ -39,6 +39,19 @@ class Mobile::V1::MyDocsController < ApplicationController
     end
   end
 
+  def update_my_docs_image
+    @my_doc = MyDoc.find(params[:id])
+    @my_doc.remove_image! if @my_doc.image
+
+    if @my_doc.update(my_doc_params)
+     @my_doc.image = params[:my_doc][:image]
+     @my_doc.save
+     render json: @my_doc
+   else
+    render json: @my_doc.errors, status: :unprocessable_entity
+  end
+end
+
   # DELETE /web/v1/my_docs/1
   # DELETE /web/v1/my_docs/1.json
   def destroy
@@ -49,11 +62,11 @@ class Mobile::V1::MyDocsController < ApplicationController
 
   private
 
-    def set_my_doc
-      @my_doc = MyDoc.find(params[:id])
-    end
+  def set_my_doc
+    @my_doc = MyDoc.find(params[:id])
+  end
 
-    def my_doc_params
-      params.require(:my_doc).permit(:image, :document_name, :user_id)
-    end
+  def my_doc_params
+    params.require(:my_doc).permit(:image, :document_name, :user_id)
+  end
 end

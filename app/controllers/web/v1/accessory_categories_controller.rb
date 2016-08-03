@@ -39,6 +39,19 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
     end
   end
 
+  def update_accessory_categery_image
+    @accessory_category = AccessoryCategory.find(params[:id])
+    @accessory_category.remove_image! if @accessory_category.image
+    if @accessory_category.update(accessory_category_params)
+     @accessory_category.image = params[:accessory_category][:image]
+     @accessory_category.save
+     render json: @accessory_category
+      #head :no_content
+    else
+      render json: @accessory_category.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /web/v1/accessory_categories/1
   # DELETE /web/v1/accessory_categories/1.json
   def destroy
@@ -49,11 +62,11 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
 
   private
 
-    def set_accessory_category
-      @accessory_category = AccessoryCategory.find(params[:id])
-    end
+  def set_accessory_category
+    @accessory_category = AccessoryCategory.find(params[:id])
+  end
 
-    def accessory_category_params
-      params.require(:accessory_category).permit(:title, :description, :image)
-    end
+  def accessory_category_params
+    params.require(:accessory_category).permit(:title, :description, :image)
+  end
 end

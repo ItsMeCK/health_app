@@ -39,6 +39,20 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     end
   end
 
+  def service_history_image_update
+    @service_history = ServiceHistory.find(params[:id])
+    @service_history.remove_bill_image! if @service_history.bill_image
+
+    if @service_history.update(service_history_params)
+      @service_history.bill_image = params[:service_history][:bill_image]
+       @service_history.save
+      render json: @service_history
+      #head :no_content
+    else
+      render json: @service_history.errors, status: :unprocessable_entity
+    end
+  end
+
   def get_my_bike_service_histories
     @my_bike = MyBike.find(params[:my_bike_id])
     @service_histories = @my_bike.service_histories

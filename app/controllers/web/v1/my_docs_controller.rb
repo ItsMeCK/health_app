@@ -39,6 +39,19 @@ class Web::V1::MyDocsController < ApplicationController
     end
   end
 
+  def my_docs_image_update
+     @my_doc = MyDoc.find(params[:id])
+     @my_doc.remove_image! if @my_doc.image
+
+    if @my_doc.update(my_doc_params)
+       @my_doc.image = params[:my_doc][:image]
+       @my_doc.save
+      render json: @my_doc
+    else
+      render json: @my_doc.errors, status: :unprocessable_entity
+    end
+  end
+
   # DELETE /web/v1/my_docs/1
   # DELETE /web/v1/my_docs/1.json
   def destroy
