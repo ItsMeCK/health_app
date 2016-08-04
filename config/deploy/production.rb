@@ -86,7 +86,7 @@ namespace :deploy do
     task :delayed_job_restart do
       invoke 'delayed_job:restart'
     end
-  end
+ 
 
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
