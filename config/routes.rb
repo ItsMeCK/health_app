@@ -122,6 +122,14 @@ Rails.application.routes.draw do
       post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'
       post '/get_event_status' => 'service_histories#get_event_status'
+      resources :rides
+      post '/user_responce_with_ride' => 'rides#user_responce_with_ride'
+      post '/user_rides_information' => 'rides#user_rides_information'
+      post '/ride_with_user_information' => 'rides#ride_with_user_information'
+      resources :events
+      post '/user_responce_with_event' => 'events#user_responce_with_event'
+      post '/user_events_information' => 'events#user_events_information'
+      post '/event_with_user_information' => 'events#event_with_user_information'
       resources :contact_numbers, only: [:index, :show]
       resources :passwords, only: [:create]
 

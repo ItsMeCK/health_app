@@ -87,6 +87,8 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     render json: @user_ride, root: "events status"
   end
 
+
+
   private
 
     def set_service_history

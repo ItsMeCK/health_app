@@ -10,4 +10,8 @@ class UserMailer < ApplicationMailer
 		 mail :to => user.email, :subject => "New Ride Invitation", :body =>"this is the new ride invitation you should be perticipated on this one please accept invitation"
 	end
 
+	def notification_mail_for_event(user)
+		 mail :to => user.email, :subject => "New Event Invitation", :body =>"this is the new event invitation you should be perticipated on this one please accept invitation"
+	end
+
 end
