@@ -22,7 +22,7 @@ class Web::V1::RidesController < ApplicationController
     users = User.all
     if @ride.save
       users.each do |user|
-       UserMailer.notification_mail_for_ride(user).deliver
+       UserMailer.delay.notification_mail_for_ride(user)
       end
     render json: @ride, status: :created
   else

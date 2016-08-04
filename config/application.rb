@@ -33,6 +33,8 @@ module CoromandelHarleyDavidson
         g.helper = false
       end
 
+      config.active_job.queue_adapter = :delayed_job
+
       # config.time_zone = 'Chennai'
       # config.active_record.default_timezone = 'Chennai'
 

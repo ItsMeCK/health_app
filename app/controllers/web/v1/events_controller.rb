@@ -22,7 +22,7 @@ class Web::V1::EventsController < ApplicationController
      users = User.all
     if @event.save
       users.each do |user|
-       UserMailer.notification_mail_for_event(user).deliver
+       UserMailer.delay.notification_mail_for_event(user)
       end
       render json: @event, status: :created
     else
