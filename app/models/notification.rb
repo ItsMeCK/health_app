@@ -4,8 +4,8 @@ class Notification < ActiveRecord::Base
 	belongs_to :recipient, class_name: "User"
 	belongs_to :actor, class_name: "User"
 	belongs_to :notifiable, polymorphic: true
-	after_create, after_update :send_notification
-
+	after_create :send_notification
+	after_update :send_notification
 
 	# @params user_id, notification_typo
 	def send_notification(recipient = nil, action = nil)
@@ -27,7 +27,7 @@ class Notification < ActiveRecord::Base
 		
 		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
-
+	
 	private
 
 	def android_notification

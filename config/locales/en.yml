@@ -25,7 +25,7 @@ en:
     service_booking: "Service Booking Notification"  
     service_booking_updated: ""
     service_booking_destroyed: ""
-    test_ride_booking: ""
+    test_ride_booking: "Test Drive Notification"
     test_ride_updated: ""
     test_ride_destroyed: ""
     contact_us: ""
