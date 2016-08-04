@@ -21,6 +21,7 @@ class Web::V1::EnquiriesController < ApplicationController
     @enquiry = Enquiry.new(enquiry_params)
 
     if @enquiry.save
+      Notification.create(recipient: current_user, actor: current_user, action: I18n.t('Notification.contact_us'), notifiable: current_user)
       render json: @enquiry, status: :created
     else
       render json: @enquiry.errors, status: :unprocessable_entity
