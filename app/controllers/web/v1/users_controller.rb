@@ -3,8 +3,14 @@ class Web::V1::UsersController < ApplicationController
 	respond_to :json
 
 	def index
-		@users = User.all.order("updated_at DESC").order("created_at DESC")
-		render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
+	  limit = params[:limit].to_i || 50000
+	  offset = params[:offset].to_i
+	  offset = (offset == 1 ? offset : ((offset - 1) * limit) + 1) if params[:offset]
+      offset = offset || 1
+
+	  @users = User.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
+	  
+	  render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
 	end
 
 	def create

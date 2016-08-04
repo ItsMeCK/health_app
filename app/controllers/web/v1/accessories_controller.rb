@@ -4,7 +4,12 @@ class Web::V1::AccessoriesController < ApplicationController
   # GET /web/v1/accessories
   # GET /web/v1/accessories.json
   def index
-    @accessories = Accessory.all.order("updated_at DESC").order("created_at DESC")
+    limit = params[:limit].to_i || 50000
+    offset = params[:offset].to_i
+    offset = (offset == 1 ? offset : ((offset - 1) * limit) + 1) if params[:offset]
+    offset = offset || 1
+
+    @accessory_categories = AccessoryCategory.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC").(limit: limit, offset: offset)    
 
     render json: @accessories
   end
