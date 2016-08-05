@@ -4,7 +4,8 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # GET /web/v1/service_bookings
   # GET /web/v1/service_bookings.json
   def index
-    @service_bookings = ServiceBooking.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @service_bookings = ServiceBooking.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 
     render json: @service_bookings, each_serializer: Web::V1::ServiceBookingSerializer
   end
