@@ -4,7 +4,8 @@ class Web::V1::SpecificationsController < ApplicationController
   # GET /web/v1/specifications
   # GET /web/v1/specifications.json
   def index
-    @specifications = Specification.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @specifications = Specification.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 
     render json: @specifications, each_serializer: Web::V1::SpecificationSerializer
   end

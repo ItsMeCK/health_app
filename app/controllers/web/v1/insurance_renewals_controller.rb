@@ -4,7 +4,8 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
   # GET /web/v1/insurance_renewals
   # GET /web/v1/insurance_renewals.json
   def index
-    @insurance_renewals = InsuranceRenewal.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @insurance_renewals = InsuranceRenewal.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 
     render json: @insurance_renewals
   end
