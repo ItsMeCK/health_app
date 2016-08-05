@@ -15,6 +15,13 @@ class Mobile::V1::ServiceSchedulesController < ApplicationController
     render json: @service_schedule
   end
 
+  def service_schedules_with_bike
+  	bike = Bike.find(params[:bike_id])
+  	@service_schedules = bike.service_schedules
+  	render json: @service_schedules
+  end
+ 
+
   # POST /web/v1/service_schedules
  
 

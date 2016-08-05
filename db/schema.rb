@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804083203) do
+ActiveRecord::Schema.define(version: 20160805110657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -305,6 +305,7 @@ ActiveRecord::Schema.define(version: 20160804083203) do
     t.datetime "updated_at",            null: false
     t.integer  "default_bike_image_id"
     t.string   "my_bike_image_url"
+    t.integer  "bike_id"
   end
 
   create_table "my_docs", force: :cascade do |t|
@@ -382,13 +383,15 @@ ActiveRecord::Schema.define(version: 20160804083203) do
     t.date     "ride_date"
     t.string   "route"
     t.string   "distance"
-    t.datetime "assembly_time"
     t.string   "assembly_location"
-    t.time     "destination_time"
     t.string   "destination_location"
     t.boolean  "notify"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.string   "title"
+    t.text     "assembly_time"
+    t.text     "destination_time"
+    t.text     "check_points"
   end
 
   create_table "rpush_apps", force: :cascade do |t|
@@ -569,6 +572,7 @@ ActiveRecord::Schema.define(version: 20160804083203) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "perticipate_event"
+    t.date     "user_event_date"
   end
 
   create_table "user_rides", force: :cascade do |t|
@@ -577,6 +581,7 @@ ActiveRecord::Schema.define(version: 20160804083203) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "perticipate_ride"
+    t.date     "user_ride_date"
   end
 
   create_table "users", force: :cascade do |t|

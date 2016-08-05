@@ -73,6 +73,6 @@ class Mobile::V1::MyBikesController < ApplicationController
     end
 
     def my_bike_params
-      params.require(:my_bike).permit(:bike, :purchase_date, :default_bike_image_id, :my_bike_image_url, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+      params.require(:my_bike).permit(:bike, :bike_id, :purchase_date, :default_bike_image_id, :my_bike_image_url, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
     end
 end

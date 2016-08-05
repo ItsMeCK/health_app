@@ -19,6 +19,9 @@ class Web::V1::RidesController < ApplicationController
   # POST /web/v1/rides.json
   def create
     @ride = Ride.new(ride_params)
+    @ride.assembly_time = params[:ride][:assembly_time]
+    @ride.destination_time = params[:ride][:destination_time]
+    @ride.check_points = params[:ride][:check_points]
     users = User.all
     if @ride.save
       users.each do |user|
@@ -57,6 +60,6 @@ end
   end
 
   def ride_params
-    params.require(:ride).permit(:ride_date, :route, :distance, :assembly_time, :assembly_location, :destination_time, :destination_location, :notify)
+    params.require(:ride).permit(:ride_date, :title, :check_points, :route, :distance, :assembly_time, :assembly_location, :destination_time, :destination_location, :notify)
   end
 end
