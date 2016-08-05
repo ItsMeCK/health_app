@@ -29,7 +29,7 @@ class Notification < ActiveRecord::Base
 	end
 
 	def self.proactive_insurance_reminder
-		@set_rule = SetRule.where(catagory: 'Insurance renewal').first
+		@set_rule = SetRule.where(category: 'Insurance renewal').first
 		todays_date = Date.today
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
@@ -40,7 +40,7 @@ class Notification < ActiveRecord::Base
 	end	
 
 	def self.proactive_service_booking_reminder
-		@set_rule = SetRule.where(catagory: 'Service booking').first
+		@set_rule = SetRule.where(category: 'Service booking').first
 		todays_date = Date.today
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
@@ -51,7 +51,7 @@ class Notification < ActiveRecord::Base
 	end
 
 	def self.proactive_test_drive_reminder
-		@set_rule = SetRule.where(catagory: 'Re-active test drive reminders').first
+		@set_rule = SetRule.where(category: 'Re-active test drive reminders').first
 		todays_date = Date.today
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
@@ -61,9 +61,9 @@ class Notification < ActiveRecord::Base
 		end	
 	end
 
-	#
+	# based on KM and service interval months
 	def self.proactive_service_interval
-		@set_rule = SetRule.where(catagory: 'Service Interval').first
+		@set_rule = SetRule.where(category: 'Service Interval').first
 		todays_date = Date.today
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
