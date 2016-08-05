@@ -10,10 +10,14 @@ class MyBike < ActiveRecord::Base
 
 	 def service_history
     	self.service_histories
-    end
+     end
+
+     def user_email
+    	self.user.email
+     end
 
 	def as_json(options={})
-		super.as_json(options).merge({:service_histories => service_history})
+		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
 	end
 
 		private
@@ -21,7 +25,11 @@ class MyBike < ActiveRecord::Base
 		def create_bike_id
 			bikes = Bike.all
 			bike_id = bikes.collect { |bike| bike.id if bike.name == self.bike }.compact
-			self.update(bike_id: bike_id[0])
+			if bike_id.present?
+			  self.update(bike_id: bike_id[0])
+		    else
+		      self.update(bike_id: 1)
+		    end
 		end
 
 		def remove_old_image_assign_new

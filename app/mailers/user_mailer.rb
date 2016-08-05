@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
 
 	def send_notification_mail(user, notification_type)
 	  @notification_template = NotificationTemplate.find_by_category(notification_type)
-      mail :to => user.email, :subject => @notification_template.title, :body =>"this is the body"
+      mail :to => user.email, :subject => @notification_template.try(:title), :body =>"this is the body"
 	end
 
 	def notification_mail_for_ride(user)
