@@ -7,9 +7,17 @@ class MyBike < ActiveRecord::Base
 
 	#before_update :remove_old_image_assign_new
 
-	private
+	 def service_history
+    	self.service_histories
+    end
 
-	def remove_old_image_assign_new
-		self.remove_bike_image! if self.bike_image.present?
+	def as_json(options={})
+		super.as_json(options).merge({:service_histories => service_history})
 	end
-end
+
+		private
+
+		def remove_old_image_assign_new
+			self.remove_bike_image! if self.bike_image.present?
+		end
+	end
