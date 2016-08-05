@@ -4,7 +4,8 @@ class Web::V1::TestRidesController < ApplicationController
   # GET /web/v1/test_rides
   # GET /web/v1/test_rides.json
   def index
-    @test_rides = TestRide.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @test_rides = TestRide.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 
     render json: @test_rides, each_serializer: Web::V1::TestRideSerializer
   end
@@ -19,8 +20,8 @@ class Web::V1::TestRidesController < ApplicationController
   # POST /web/v1/test_rides.json
   def create
     @test_ride = TestRide.new(test_ride_params)
-
     if @test_ride.save
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: I18n.t('Notification.test_ride_booking'), notifiable: @test_ride)
       render json: @test_ride, status: :created, serializer: Web::V1::TestRideSerializer
     else
       render json: @test_ride.errors, status: :unprocessable_entity
@@ -31,8 +32,10 @@ class Web::V1::TestRidesController < ApplicationController
   # PATCH/PUT /web/v1/test_rides/1.json
   def update
     @test_ride = TestRide.find(params[:id])
-
     if @test_ride.update(test_ride_params)
+      notification = Notification.where(notifiable: @test_ride).first
+      notification.update_attribute(:action, I18n.t('Notification.test_ride_updated'))
+      #Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_updated'))
       render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
     else
       render json: @test_ride.errors, status: :unprocessable_entity
@@ -42,11 +45,12 @@ class Web::V1::TestRidesController < ApplicationController
   # DELETE /web/v1/test_rides/1
   # DELETE /web/v1/test_rides/1.json
   def destroy
+    notification = Notification.where(notifiable: @test_ride).first
+    notification.destroy
+    Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
     @test_ride.destroy
-
     head :no_content
   end
-
 
   def all_bookings
    service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
@@ -71,17 +75,17 @@ class Web::V1::TestRidesController < ApplicationController
             {contact: bookings }
           end
           }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[k, v.map(&:last)] }  ]  }
+    render json: @all_bookings, :root => "bookings"
+  end
 
-          render json: @all_bookings, :root => "bookings"
-        end
+  private
 
-        private
+  def set_test_ride
+    @test_ride = TestRide.find(params[:id])
+  end
 
-        def set_test_ride
-          @test_ride = TestRide.find(params[:id])
-        end
+  def test_ride_params
+    params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
+  end
 
-        def test_ride_params
-          params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
-        end
-      end
+end

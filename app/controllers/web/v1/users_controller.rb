@@ -3,13 +3,16 @@ class Web::V1::UsersController < ApplicationController
 	respond_to :json
 
 	def index
-		@users = User.all.order("updated_at DESC").order("created_at DESC")
-		render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
+	  limit, offset = Calculator.limit_and_offset(params)
+	  @users = User.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
+	  
+	  render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
 	end
 
 	def create
 		@user = User.new(user_params)
 		if @user.save
+			Notification.create(recipient: @user, actor: current_user, action: I18n.t('Notification.welcome'), notifiable: @user)			
 			render json: @user, status: 201, location: [:web, @user], serializer: Web::V1::UserSerializer
 		else
 			render json: { errors: @user.errors}, status: 422

@@ -4,7 +4,8 @@ class Web::V1::AccessoriesController < ApplicationController
   # GET /web/v1/accessories
   # GET /web/v1/accessories.json
   def index
-    @accessories = Accessory.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @accessories = Accessory.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC").(limit: limit, offset: offset)    
 
     render json: @accessories
   end

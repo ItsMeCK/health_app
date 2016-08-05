@@ -16,7 +16,7 @@ class Mobile::V1::TestRidesController < ApplicationController
     if @test_ride.save
       render json: @test_ride, status: :created
       # Create Notifications
-      Notification.create(recipient: @test_ride.user, actor: current_user, action: "Test Ride Notification", notifiable: @test_ride)
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: I18n.t('Notification.test_ride_booking'), notifiable: @test_ride)
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -28,6 +28,8 @@ class Mobile::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.find(params[:id])
 
     if @test_ride.update(test_ride_params)
+      notification = Notification.where(notifiable: @test_ride).first
+      notification.update_attribute(:action, I18n.t('Notification.test_ride_updated'))
       head :no_content
     else
       render json: @test_ride.errors, status: :unprocessable_entity
@@ -37,6 +39,9 @@ class Mobile::V1::TestRidesController < ApplicationController
   # DELETE /web/v1/test_rides/1
   # DELETE /web/v1/test_rides/1.json
   def destroy
+    notification = Notification.where(notifiable: @test_ride).first
+    Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
+    notification.destroy
     @test_ride.destroy
     head :no_content
   end
