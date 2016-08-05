@@ -16,6 +16,8 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'carrierwave'
 gem 'carrierwave-base64'
 
+#cron scheduling
+gem 'whenever'
 group :development do
 	gem 'spring'
 	gem 'pry-rails'
