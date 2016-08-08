@@ -13,7 +13,7 @@ class MyBike < ActiveRecord::Base
      end
 
      def user_email
-    	self.user.email
+    	self.user.try(:email)
      end
 
 	def as_json(options={})
