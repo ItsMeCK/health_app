@@ -66,10 +66,15 @@ class Notification < ActiveRecord::Base
 		@set_rule = SetRule.where(category: 'Service Interval').first
 		todays_date = Date.today
 		@set_rule.days.each do |day|
-			reminder_date = todays_date - day
-			MyBike.where(purchase_date:  reminder_day).each do |mybike|
-				Notification.create(recipient: mybike.user, actor: mybike.user, action: I18n.t('Notification.insurance_renewal'), notifiable: mybike)
-			end	
+			reminder_date = todays_date - day.months
+			
+			MyBike.each do |mybike|
+				if mybike.km_exceeds_for_months
+					Notification.create(recipient: mybike.user, actor: mybike.user, action: I18n.t('Notification.kms_exceeds'), notifiable: mybike)
+				elsif(mybike.purchase_date == reminder_date)
+					Notification.create(recipient: mybike.user, actor: mybike.user, action: I18n.t('Notification.service_scheduled'), notifiable: mybike)
+				end	
+			end
 		end	
 	end	
 
