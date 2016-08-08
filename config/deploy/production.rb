@@ -66,9 +66,9 @@ namespace :deploy do
 
   desc 'Seed Database'
   task :seed do
-      on roles(:app) do
-        within "#{current_path}" do
-          with rails_env: "#{fetch(:stage)}" do
+    on roles(:app) do
+      within "#{current_path}" do
+        with rails_env: "#{fetch(:stage)}" do
           execute :rake, "db:seed"
         end
       end
@@ -82,9 +82,16 @@ namespace :deploy do
     end
   end
 
+  desc 'Restart Delayed Jobs'
+    task :delayed_job_restart do
+      invoke 'delayed_job:restart'
+    end
+ 
+
   before :starting,     :check_revision
   after  :finishing,    :compile_assets
   after  :finishing,    :cleanup
   after  :finishing,    :restart
+  after  :finishing,    :delayed_job_restart
   after  :initial,      :seed
 end

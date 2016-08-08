@@ -118,15 +118,24 @@ Rails.application.routes.draw do
       post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
       resources :banners, only: [:index, :show]
       resources :service_schedules, only: [:index, :show]
+      post '/service_schedules_with_bike' => 'service_schedules#service_schedules_with_bike'
       post '/get_accessories' => 'accessory_categories#get_accessories'
       post '/accessories_enquiry' => 'accessory_categories#accessories_enquiry'
       resources :service_histories, :except => [:index]
       post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
       post '/service_history_image_update' => 'service_histories#service_history_image_update'
       #getting ride and events based on month and year
-      post '/get_ride_and_events' => 'service_histories#get_ride_and_events'
+      post '/get_ride_and_events' => 'user_rides#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'
       post '/get_event_status' => 'service_histories#get_event_status'
+      resources :rides
+      post '/user_responce_with_ride' => 'rides#user_responce_with_ride'
+      post '/user_rides_information' => 'rides#user_rides_information'
+      post '/ride_with_user_information' => 'rides#ride_with_user_information'
+      resources :events
+      post '/user_responce_with_event' => 'events#user_responce_with_event'
+      post '/user_events_information' => 'events#user_events_information'
+      post '/event_with_user_information' => 'events#event_with_user_information'
       resources :contact_numbers, only: [:index, :show]
       resources :passwords, only: [:create]
 

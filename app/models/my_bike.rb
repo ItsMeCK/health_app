@@ -6,6 +6,7 @@ class MyBike < ActiveRecord::Base
 	mount_base64_uploader :bike_image, ImageUploader, file_name: 'my_bike'
 
 	#before_update :remove_old_image_assign_new
+	after_create :create_bike_id
 
 	def km_exceeds_for_months
 		date1 = Date.today
@@ -18,7 +19,30 @@ class MyBike < ActiveRecord::Base
 
 	private
 
-	def remove_old_image_assign_new
-		self.remove_bike_image! if self.bike_image.present?
-	end
+	 def service_history
+    	self.service_histories
+     end
+
+   def user_email
+  	self.user.email
+   end
+
+		def as_json(options={})
+			super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
+		end
+
+		def create_bike_id
+			bikes = Bike.all
+			bike_id = bikes.collect { |bike| bike.id if bike.name == self.bike }.compact
+			if bike_id.present?
+			  self.update(bike_id: bike_id[0])
+		    else
+		      self.update(bike_id: 1)
+		    end
+		end
+
+		def remove_old_image_assign_new
+			self.remove_bike_image! if self.bike_image.present?
+		end
+
 end

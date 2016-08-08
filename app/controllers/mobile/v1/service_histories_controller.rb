@@ -1,6 +1,6 @@
 class Mobile::V1::ServiceHistoriesController < ApplicationController
   before_action :set_service_history, only: [:show, :update, :destroy]
-
+  
   # GET /web/v1/service_histories
   # GET /web/v1/service_histories.json
   # def index
@@ -67,13 +67,7 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
     head :no_content
   end
 
-  def get_ride_and_events
-     rides = Ride.where('extract(year  from ride_date) = ?', params[:year]).where('extract(month  from ride_date) = ?', params[:month])
-     events = Event.where('extract(year  from event_date) = ?', params[:year]).where('extract(month  from event_date) = ?', params[:month])
-     @ride_events = {rides: rides}.merge({events: events})
-
-     render json: @ride_events
-  end
+  
 
   def get_ride_status
     @user_ride = UserRide.where('ride_id = ? AND perticipate_ride = ?', params[:ride_id], params[:status])
@@ -86,6 +80,8 @@ class Mobile::V1::ServiceHistoriesController < ApplicationController
 
     render json: @user_ride, root: "events status"
   end
+
+
 
   private
 

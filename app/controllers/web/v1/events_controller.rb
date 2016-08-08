@@ -19,8 +19,11 @@ class Web::V1::EventsController < ApplicationController
   # POST /web/v1/events.json
   def create
     @event = Event.new(event_params)
-
+     users = User.all
     if @event.save
+      users.each do |user|
+       UserMailer.delay.notification_mail_for_event(user)
+      end
       render json: @event, status: :created
     else
       render json: @event.errors, status: :unprocessable_entity

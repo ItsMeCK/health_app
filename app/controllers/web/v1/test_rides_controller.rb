@@ -4,7 +4,8 @@ class Web::V1::TestRidesController < ApplicationController
   # GET /web/v1/test_rides
   # GET /web/v1/test_rides.json
   def index
-    @test_rides = TestRide.all.order("updated_at DESC").order("created_at DESC")
+    limit, offset = Calculator.limit_and_offset(params)
+    @test_rides = TestRide.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 
     render json: @test_rides, each_serializer: Web::V1::TestRideSerializer
   end
