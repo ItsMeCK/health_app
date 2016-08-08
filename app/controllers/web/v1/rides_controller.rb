@@ -39,7 +39,11 @@ end
     @ride = Ride.find(params[:id])
 
     if @ride.update(ride_params)
-      head :no_content
+    @ride.update(assembly_time: params[:ride][:assembly_time])
+    @ride.update(destination_time: params[:ride][:destination_time])
+    @ride.update(check_points: params[:ride][:check_points])
+    render json: @ride
+      #head :no_content
     else
       render json: @ride.errors, status: :unprocessable_entity
     end
