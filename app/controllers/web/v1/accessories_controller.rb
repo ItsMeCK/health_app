@@ -5,7 +5,7 @@ class Web::V1::AccessoriesController < ApplicationController
   # GET /web/v1/accessories.json
   def index
     limit, offset = Calculator.limit_and_offset(params)
-    @accessories = Accessory.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC").(limit: limit, offset: offset)    
+    @accessories = Accessory.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")   
 
     render json: @accessories
   end
