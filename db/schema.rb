@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160803071353) do
+ActiveRecord::Schema.define(version: 20160808050124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20160803071353) do
     t.string   "contact_type"
   end
 
-  create_table "dealer_contact_labels ", force: :cascade do |t|
+  create_table "dealer_contact_labels", force: :cascade do |t|
     t.string   "label_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -126,13 +126,6 @@ ActiveRecord::Schema.define(version: 20160803071353) do
     t.integer  "dealer_contact_label_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-  end
-
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "dealer_types", force: :cascade do |t|
@@ -170,6 +163,22 @@ ActiveRecord::Schema.define(version: 20160803071353) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "email_notification_templates", force: :cascade do |t|
     t.text     "content"
@@ -304,6 +313,16 @@ ActiveRecord::Schema.define(version: 20160803071353) do
     t.string   "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notification_counts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "test_drive_count"
+    t.integer  "offer_count"
+    t.integer  "insurance_count"
+    t.integer  "service_count"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "notification_templates", force: :cascade do |t|

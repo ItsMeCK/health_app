@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 	
+  
   devise_for :users
   # API Definition
   #API for password reset common for both web and mob
@@ -8,6 +9,9 @@ Rails.application.routes.draw do
     scope module: :v1 do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy, :index]
+      #Api for user nitification count
+      post '/notification_count' => 'users#notification_count'
+      post '/clear_notification_count' => 'users#clear_notification_count'
       resources :sessions, :only => [:create, :destroy]
       resource :api_token
       resources :profiles
@@ -69,6 +73,7 @@ Rails.application.routes.draw do
       resources :dealer_contact_labels
       resources :dealer_contact_numbers
       resources :contact_types
+      resources :notification_counts
 
     end
   end

@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :events, through: :user_events
   has_many :user_events
   has_many :my_docs
+  has_one :notification_count
 
   # Validations
   validates :authentication_token, :uniqueness => true

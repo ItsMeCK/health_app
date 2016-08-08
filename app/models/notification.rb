@@ -84,7 +84,10 @@ class Notification < ActiveRecord::Base
 		n.content_available = true # Optional
 		n.notification = { body: @notification_template.content, title: @notification_template.title, icon: 'myicon' }
 		n.save!
+		increase_notification_count
 	end	
 
-
+	def increase_notification_count
+		NotificationCount.where(user: @user).first_or_create.increate_notification_count(@notification_type)
+	end	
 end
