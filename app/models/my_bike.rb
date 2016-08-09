@@ -8,19 +8,28 @@ class MyBike < ActiveRecord::Base
 	#before_update :remove_old_image_assign_new
 	after_create :create_bike_id
 
-	 def service_history
+	def km_exceeds_for_months
+		date1 = Date.today
+		date2 = purchase_date
+		purchased_month = (date2.year * 12 + date2.month) - (date1.year * 12 + date1.month)
+		bike = Bike.find_by_name(bike)
+		service_schedule = bike.service_schedules.where("purchased_month <= months").first
+		return true if service_schedule.total_kms <= kms
+	end	
+
+	private
+
+	  def service_history
     	self.service_histories
-     end
+    end
 
      def user_email
     	self.user.try(:email)
      end
 
-	def as_json(options={})
-		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
-	end
-
-		private
+			def as_json(options={})
+				super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
+			end
 
 		def create_bike_id
 			bikes = Bike.all
@@ -35,4 +44,5 @@ class MyBike < ActiveRecord::Base
 		def remove_old_image_assign_new
 			self.remove_bike_image! if self.bike_image.present?
 		end
-	end
+
+end

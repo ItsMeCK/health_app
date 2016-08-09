@@ -56,6 +56,21 @@ class Mobile::V1::UsersController < ApplicationController
 		 render json: @remaining_accessories #,each_serializer: Mobile::V1::User::RemoveWishlistItemsSerializer
 	end
 
+	def notification_count
+  	@user = User.find_by_id(params[:user_id])
+  	@count = @user.notification_count
+  	respond_to do |f|
+  		f.json { render json: @count}
+  	end
+	end
+
+	def clear_notification_count
+		@user = User.find_by_id(params[:user_id])
+  	@count = @user.notification_count.destroy
+  	message = "Your notification has been successfully cleared"
+	  render json: { message: message}, status: 204
+	end	
+
 	private
 
 	def set_user
