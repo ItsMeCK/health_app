@@ -78,6 +78,13 @@ class Notification < ActiveRecord::Base
 		end	
 	end
 
+	def self.send_bulk_notification(users, action)
+		users.each do |user_id|
+			user = User.find user_id
+			Notification.create(recipient: user, actor: user, action: action, notifiable: user)
+		end	
+	end
+	
 	private
 
 	def android_notification

@@ -9,9 +9,7 @@ Rails.application.routes.draw do
     scope module: :v1 do
     # We are going to list our resources here
     	resources :users, :only => [:create, :show, :update, :destroy, :index]
-      #Api for user nitification count
-      post '/notification_count' => 'users#notification_count'
-      post '/clear_notification_count' => 'users#clear_notification_count'
+      
       resources :sessions, :only => [:create, :destroy]
       resource :api_token
       resources :profiles
@@ -74,6 +72,7 @@ Rails.application.routes.draw do
       resources :dealer_contact_numbers
       resources :contact_types
       resources :notification_counts
+      post '/create_bulk_notification' => 'notifications#create_bulk_notification'
 
     end
   end
@@ -138,6 +137,9 @@ Rails.application.routes.draw do
       post '/event_with_user_information' => 'events#event_with_user_information'
       resources :contact_numbers, only: [:index, :show]
       resources :passwords, only: [:create]
+      #Api for user nitification count
+      post '/notification_count' => 'users#notification_count'
+      post '/clear_notification_count' => 'users#clear_notification_count'
 
     end
   end
