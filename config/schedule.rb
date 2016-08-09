@@ -19,8 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 set :output, "#{path}/log/cron.log"
-set :environment, 'development' 
-
 every :day, :at => '06:50am', :roles => [:app] do
   runner "Notification.proactive_insurance_reminder"
   runner "Notification.proactive_service_booking_reminder"
