@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808064607) do
+ActiveRecord::Schema.define(version: 20160809094959) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -321,8 +322,9 @@ ActiveRecord::Schema.define(version: 20160808064607) do
     t.integer  "offer_count"
     t.integer  "insurance_count"
     t.integer  "service_count"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "count",            default: 0
   end
 
   create_table "notification_templates", force: :cascade do |t|
@@ -560,7 +562,7 @@ ActiveRecord::Schema.define(version: 20160808064607) do
     t.boolean  "request_pick_up",     default: false
     t.boolean  "test_ride_done",      default: false
     t.boolean  "test_ride_confirmed", default: false
-    t.string   ""
+    t.string   "bike"
     t.date     "ride_date",                           null: false
     t.datetime "ride_time",                           null: false
     t.string   "location"
