@@ -3,28 +3,28 @@ class UserRide < ActiveRecord::Base
 	belongs_to :ride
 
 	def ride_route
-		self.ride.ride_date
+		self.ride.try(:ride_date)
 	end
 	def ride_distance
-		self.ride.distance
+		self.ride.try(:distance)
 	end
 	def ride_location
-		self.ride.assembly_location
+		self.ride.try(:assembly_location)
 	end
 	def ride_destination_location
-		self.ride.destination_location
+		self.ride.try(:destination_location)
 	end
 	def assembly_time
-		self.ride.assembly_time
+		self.ride.try(:assembly_time)
 	end
 	def title
-		self.ride.title
+		self.ride.try(:title)
 	end
 	def destination_time
-		self.ride.destination_time
+		self.ride.try(:destination_time)
 	end
 	def check_points
-		self.ride.check_points
+		self.ride.try(:check_points)
 	end
 
 
