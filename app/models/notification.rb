@@ -6,12 +6,13 @@ class Notification < ActiveRecord::Base
 	belongs_to :notifiable, polymorphic: true
 	after_create :send_notification
 	after_update :send_notification
-
+	belongs_to :notification_template
 	# @params user_id, notification_typo
 	def send_notification(recipient = nil, action = nil)
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
 		@notification_template = NotificationTemplate.find_by_category(@notification_type).last
+		self.update_attribute(notification_template_id: @notification_template.id)
 			if @user.android_token.present?
 				android_notification
 			end
