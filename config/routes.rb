@@ -73,6 +73,7 @@ Rails.application.routes.draw do
       resources :contact_types
       resources :notification_counts
       post '/create_bulk_notification' => 'notifications#create_bulk_notification'
+      resources :notifications 
 
     end
   end
