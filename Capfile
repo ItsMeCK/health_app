@@ -24,6 +24,7 @@ require 'capistrano/rails'
 require 'capistrano/puma'
 require 'capistrano/rails/console'
 
+require 'whenever/capistrano'
 # require 'capistrano/rvm'
 # require 'capistrano/rbenv'
 # require 'capistrano/chruby'
