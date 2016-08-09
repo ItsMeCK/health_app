@@ -560,7 +560,7 @@ ActiveRecord::Schema.define(version: 20160808064607) do
     t.boolean  "request_pick_up",     default: false
     t.boolean  "test_ride_done",      default: false
     t.boolean  "test_ride_confirmed", default: false
-    t.string   "bike"
+    t.string   ""
     t.date     "ride_date",                           null: false
     t.datetime "ride_time",                           null: false
     t.string   "location"

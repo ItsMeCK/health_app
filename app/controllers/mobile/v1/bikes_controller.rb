@@ -30,13 +30,13 @@ class Mobile::V1::BikesController < ApplicationController
       "No Bikes"
     end  
     begin
-      @bikes_specification_type = Bike.joins(:specifications).where(specifications: {specification_type: SpecificationType.where(name: params[:specification_type])}) if params[:specification_type] 
+      @bikes_specification_type = Bike.joins(:specifications).where(specifications: {specification_type: SpecificationType.where(name: params[:engine])}) if params[:engine] 
     rescue
       "No Bikes"
     end  
     begin
-      if params[:end_specification_value]
-        @bikes_specification =  Bike.joins(:specifications).where("specifications.value >= ? AND specifications.value <= ?", params[:start_specification_value], params[:end_specification_value]) if params[:start_specification_value] 
+      if params[:maximum_cc]
+        @bikes_specification =  Bike.joins(:specifications).where("specifications.value >= ? AND specifications.value <= ?", params[:minimum_cc], params[:maximum_cc]) if params[:minimum_cc] 
       end
     rescue
       "No Bikes"

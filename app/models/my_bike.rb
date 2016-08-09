@@ -19,17 +19,17 @@ class MyBike < ActiveRecord::Base
 
 	private
 
-	 def service_history
+	  def service_history
     	self.service_histories
+    end
+
+     def user_email
+    	self.user.try(:email)
      end
 
-   def user_email
-  	self.user.email
-   end
-
-		def as_json(options={})
-			super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
-		end
+			def as_json(options={})
+				super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
+			end
 
 		def create_bike_id
 			bikes = Bike.all
