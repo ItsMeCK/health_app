@@ -78,6 +78,15 @@ class Notification < ActiveRecord::Base
 		end	
 	end
 
+	def self.proactive_birthday_anniversory_notification
+		day  = Date.today.day
+		month = Date.today.month
+		@profiles = Profile.where('extract(month from dob) = ? and extract(day from dob) = ?', month, day)
+		@profiles.each do |profile|
+			Notification.create(recipient: profile.user, actor: profile.user, action: I18n.t('Notification.birthday'), notifiable: profile)
+		end	
+	end	
+
 	def self.send_bulk_notification(users, action)
 		users.each do |user_id|
 			user = User.find user_id

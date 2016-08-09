@@ -33,4 +33,5 @@ en:
     insurance_renewal: "Insurance renewal notification"
     kms_exceeds: "Service reminder notification based on number of kms"
     service_scheduled: "Service in-app reminder notification"
+    birthday: "Birthday in-app notification template"
 
