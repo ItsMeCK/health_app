@@ -20,9 +20,14 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # POST /web/v1/service_bookings.json
   def create
     @service_booking = ServiceBooking.new(service_booking_params)
-    if @service_booking.save      
+    if @service_booking.save 
+      
+    if User.exists?(@service_booking.user_id)
       user = User.find @service_booking.user_id
       Notification.create(recipient: user, actor: current_user, action: I18n.t('Notification.service_booking'), notifiable: @service_booking)
+    else
+      "N/A"
+    end      
       #Notification.send_notification(@service_booking.user_id, )
       render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else

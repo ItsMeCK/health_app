@@ -1,4 +1,4 @@
-class Mobile::V1::RidesController < ApplicationController
+class Mobile::V1::EventsController < ApplicationController
 
 	def user_responce_with_event
 		@user_ride = UserEvent.find(params[:id])
