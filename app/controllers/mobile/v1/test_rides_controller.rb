@@ -16,7 +16,7 @@ class Mobile::V1::TestRidesController < ApplicationController
     if @test_ride.save
       render json: @test_ride, status: :created
       # Create Notifications
-      #Notification.create(recipient: @test_ride.user, actor: current_user, action: I18n.t('Notification.test_ride_booking'), notifiable: @test_ride)
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: I18n.t('Notification.test_ride_booking'), notifiable: @test_ride)
       #UserMailer.test_ride_booking(@test_ride, "Test drive mail-dealer").deliver
       UserMailer.testride_request_confirm(@test_ride, "Test drive mail-user").deliver
     else
