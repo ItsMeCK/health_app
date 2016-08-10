@@ -16,7 +16,7 @@ class Web::V1::NotificationsController < ApplicationController
 	end
 
 	def show
-		respond_with Notification.find(params[:id])
+		respond_with Notification.find(params[:id]), serializer: Web::V1::NotificationSerializer
 	end
 
 	def destroy
