@@ -11,7 +11,7 @@ class Notification < ActiveRecord::Base
 	def send_notification(recipient = nil, action = nil)
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
-		@notification_template = NotificationTemplate.find_by_category(@notification_type).last
+		@notification_template = NotificationTemplate.where(category: @notification_type).last
 			if @user.android_token.present?
 				android_notification
 			end
@@ -109,6 +109,6 @@ class Notification < ActiveRecord::Base
 	end	
 
 	def increase_notification_count
-		NotificationCount.where(user: @user).first_or_create.increate_notification_count(@notification_type)
+		NotificationCount.where(user: @user).first_or_create.add_notification_count(@notification_type)
 	end	
 end
