@@ -28,6 +28,6 @@ class UserRide < ActiveRecord::Base
 	end
 
 	def as_json(options={})
-		super(:only => [:id, :user_id, :ride_id, :perticipate_ride, :user_ride_date]).merge({:ride_title => title, :ride_route => ride_route, :ride_distance => ride_distance, :assembly_lacation => ride_location, :distination_location => ride_destination_location, :ride_assembly_time => assembly_time, :ride_distination_time => destination_time, :ride_check_points => check_points})
+		super(:only => [:id, :user_id, :ride_id, :perticipate_ride, :user_ride_date]).merge({:ride_title => title, :ride_route => ride_route, :ride_distance => ride_distance, :assembly_location => ride_location, :destination_location => ride_destination_location, :ride_assembly_time => assembly_time, :ride_destination_time => destination_time, :ride_check_points => check_points})
 	end
 end
