@@ -10,9 +10,9 @@ class Web::V1::NotificationSerializer < ActiveModel::Serializer
   	data[:category] = template.try(:category)
   	names = []
   	Notification.where(parent_id: notification.id).each do |notn|
-  		names << notn.recipient.profile.full_name
+  		names << notn.try(:recipient).try(:profile).try(:full_name) || 'NA'
   	end	
-  	data[:user_name] = names.empty? ? notification.try(:recipient).try(:profile).try(:full_name) : names 
+  	data[:user_name] = names.empty? ? notification.try(:recipient).try(:profile).try(:full_name) || 'NA' : names 
     data
   end  
 end
