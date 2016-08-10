@@ -89,11 +89,11 @@ class Notification < ActiveRecord::Base
 
 	def self.send_bulk_notification(users, action, template)
 		Notification.skip_callback(:create, :after, :send_notification) 
-		@parent  = Notification.create(action: action, notification_template_id: template.id)
+		@parent  = Notification.create(action: action)
 		Notification.set_callback(:create, :after, :send_notification)
 		users.each do |user_id|
 			user = User.find user_id
-			Notification.create(recipient: user, actor: user, action: action, notifiable: user, parent_id: @parent.id, notification_template_id: template.id)
+			Notification.create(recipient: user, actor: user, action: action, notifiable: user, parent_id: @parent.id)
 		end	
 	end
 	
