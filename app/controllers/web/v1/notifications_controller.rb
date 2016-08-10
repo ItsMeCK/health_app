@@ -13,7 +13,7 @@ class Web::V1::NotificationsController < ApplicationController
 	  limit, offset = Calculator.limit_and_offset(params)
 	  @notifications = Notification.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 	  
-	  render json: @notifications
+	  render json: @notifications, each_serializer: Web::V1::NotificationSerializer
 	end
 
 	def show
