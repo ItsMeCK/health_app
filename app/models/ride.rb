@@ -8,6 +8,7 @@ class Ride < ActiveRecord::Base
 
 
 	after_create :create_user_ride
+	before_destroy :destroy_user_ride
 
 	private
 
@@ -15,6 +16,14 @@ class Ride < ActiveRecord::Base
 		@users = User.all
 		@users.each do |user|
 			self.user_rides.create(ride_id: self.id, user_id: user.id, perticipate_ride: "Not Replied", user_ride_date: self.ride_date)
+		end
+	end
+
+	def destroy_user_ride
+		binding.pry
+		@user_ride = UserRide.where(ride_id: self.id)
+		@user_ride.each do |ride|
+			ride.delete
 		end
 	end
 end
