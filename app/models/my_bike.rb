@@ -15,34 +15,33 @@ class MyBike < ActiveRecord::Base
 		bike = Bike.find_by_name(bike)
 		service_schedule = bike.service_schedules.where("purchased_month <= months").first
 		return true if service_schedule.total_kms <= kms
+
 	end	
 
-	private
+	def service_history
+		self.service_histories
+	end
 
-	  def service_history
-    	self.service_histories
-    end
+	def user_email
+		self.user.try(:email)
+	end
 
-     def user_email
-    	self.user.try(:email)
-     end
-
-			def as_json(options={})
-				super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
-			end
-
-		def create_bike_id
-			bikes = Bike.all
-			bike_id = bikes.collect { |bike| bike.id if bike.name == self.bike }.compact
-			if bike_id.present?
-			  self.update(bike_id: bike_id[0])
-		    else
-		      self.update(bike_id: 1)
-		    end
+	def as_json(options={})
+		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
+	end
+	
+	def create_bike_id
+		bikes = Bike.all
+		bike_id = bikes.collect { |bike| bike.id if bike.name == self.bike }.compact
+		if bike_id.present?
+			self.update(bike_id: bike_id[0])
+		else
+			self.update(bike_id: 1)
 		end
+	end
 
-		def remove_old_image_assign_new
-			self.remove_bike_image! if self.bike_image.present?
-		end
+	def remove_old_image_assign_new
+		self.remove_bike_image! if self.bike_image.present?
+	end
 
 end

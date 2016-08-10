@@ -11,8 +11,7 @@ class Notification < ActiveRecord::Base
 	def send_notification(recipient = nil, action = nil)
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
-		@notification_template = NotificationTemplate.find_by_category(@notification_type).last
-		self.update_attribute(notification_template_id: @notification_template.id)
+		@notification_template = NotificationTemplate.where(category: @notification_type).last
 			if @user.android_token.present?
 				android_notification
 			end
@@ -24,7 +23,7 @@ class Notification < ActiveRecord::Base
 			# 	n.data = { foo: :bar }
 			# 	n.save!
 			# end
-		# end
+			# end
 		
 		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
@@ -88,10 +87,13 @@ class Notification < ActiveRecord::Base
 		end	
 	end	
 
-	def self.send_bulk_notification(users, action)
+	def self.send_bulk_notification(users, action, template)
+		Notification.skip_callback(:create, :after, :send_notification) 
+		@parent  = Notification.create(action: action)
+		Notification.set_callback(:create, :after, :send_notification)
 		users.each do |user_id|
 			user = User.find user_id
-			Notification.create(recipient: user, actor: user, action: action, notifiable: user)
+			Notification.create(recipient: user, actor: user, action: action, notifiable: user, parent_id: @parent.id)
 		end	
 	end
 	
@@ -110,6 +112,6 @@ class Notification < ActiveRecord::Base
 	end	
 
 	def increase_notification_count
-		NotificationCount.where(user: @user).first_or_create.increate_notification_count(@notification_type)
+		NotificationCount.where(user: @user).first_or_create.add_notification_count(@notification_type)
 	end	
 end

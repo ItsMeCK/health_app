@@ -41,8 +41,9 @@ class Mobile::V1::BikesController < ApplicationController
     rescue
       "No Bikes"
     end  
-    @bikes = @bikes_type.to_a + @bikes_price.to_a + @bikes_specification_type.to_a + @bikes_specification.to_a
-     render json: @bikes
+    bikes = @bikes_type.to_a + @bikes_price.to_a + @bikes_specification_type.to_a + @bikes_specification.to_a
+    @bike = bikes.uniq
+     render json: @bike
   end
 
   private

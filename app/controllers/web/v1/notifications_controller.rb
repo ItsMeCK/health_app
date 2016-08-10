@@ -3,15 +3,15 @@ class Web::V1::NotificationsController < ApplicationController
 	
 	def create_bulk_notification
 		users = params[:users] || User.all.pluck(:id)
-		NotificationTemplate.create(title: params[:name], content: params[:template], category: params[:category])
-		Notification.delay.send_bulk_notification users, params[:category]
+		template = NotificationTemplate.create(title: params[:name], content: params[:template], category: params[:category])
+		Notification.delay.send_bulk_notification users, params[:category], template 
 		
 		head status: 200 
 	end	
 
 	def index
 	  limit, offset = Calculator.limit_and_offset(params)
-	  @notifications = Notification.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
+	  @notifications = Notification.where(parent_id: nil).limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
 	  
 	  render json: @notifications, each_serializer: Web::V1::NotificationSerializer
 	end

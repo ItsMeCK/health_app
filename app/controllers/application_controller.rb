@@ -4,8 +4,8 @@ class ApplicationController < ActionController::API
 	# after_action :set_access_control_headers
 	
 	def default_serializer_options
-    {module_namespace: self.class.name.deconstantize}
-  end
+		{module_namespace: self.class.name.deconstantize}
+	end
 
 # private
 

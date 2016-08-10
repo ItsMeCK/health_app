@@ -5,6 +5,15 @@ Rails.application.routes.draw do
   # API Definition
   #API for password reset common for both web and mob
   post '/update_passwords' => 'devise/passwords#update_password'
+  resource :uploads
+  resource :uploads do
+    collection { 
+      post :import
+      post :import_specifications  
+    }
+  end
+  get '/upload_bikes' => 'uploads#upload_bikes'
+  get '/upload_specifications' => 'uploads#upload_specifications'
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here

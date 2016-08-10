@@ -318,10 +318,10 @@ ActiveRecord::Schema.define(version: 20160809123550) do
 
   create_table "notification_counts", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "test_drive_count"
+    t.integer  "test_drive_count", default: 0
     t.integer  "offer_count"
-    t.integer  "insurance_count"
-    t.integer  "service_count"
+    t.integer  "insurance_count",  default: 0
+    t.integer  "service_count",    default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "count",            default: 0
@@ -346,6 +346,10 @@ ActiveRecord::Schema.define(version: 20160809123550) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "notification_template_id"
+<<<<<<< HEAD
+=======
+    t.integer  "parent_id"
+>>>>>>> master
   end
 
   create_table "price_fields", force: :cascade do |t|
