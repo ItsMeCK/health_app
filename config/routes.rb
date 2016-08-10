@@ -120,7 +120,7 @@ Rails.application.routes.draw do
       resources :dealer_types, :only => [:show]
       resources :dealers, :only => [:show]
       resources :finance_documents, :only => [:show]
-      resources :tenures, :only => [:show]
+      resources :tenures, :only => [:index, :show]
       resources :accessory_categories, only: [:index, :show]
       resources :set_booking_numbers, only: [:index, :show]
       post '/find_by_categopry' => 'set_booking_numbers#find_by_categopry'

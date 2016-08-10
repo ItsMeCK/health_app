@@ -3,11 +3,10 @@ class Mobile::V1::TenuresController < ApplicationController
 
   # GET /web/v1/tenures
   # GET /web/v1/tenures.json
-  # def index
-  #   @tenures = Tenure.all
-
-  #   render json: @tenures
-  # end
+  def index
+    @tenures = Tenure.all
+    render json: @tenures
+  end
 
   # GET /web/v1/tenures/1
   # GET /web/v1/tenures/1.json
