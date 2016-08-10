@@ -109,6 +109,6 @@ class Notification < ActiveRecord::Base
 	end	
 
 	def increase_notification_count
-		NotificationCount.where(user: @user).first_or_create.increate_notification_count(@notification_type)
+		NotificationCount.where(user: @user).first_or_create.add_notification_count(@notification_type)
 	end	
 end
