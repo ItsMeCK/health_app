@@ -23,7 +23,7 @@ class Notification < ActiveRecord::Base
 			# 	n.data = { foo: :bar }
 			# 	n.save!
 			# end
-		# end
+			# end
 		
 		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
@@ -87,10 +87,13 @@ class Notification < ActiveRecord::Base
 		end	
 	end	
 
-	def self.send_bulk_notification(users, action)
+	def self.send_bulk_notification(users, action, template)
+		Notification.skip_callback(:create, :after, :send_notification) 
+		@parent  = Notification.create(action: action, notification_template_id: template.id)
+		Notification.set_callback(:create, :after, :send_notification)
 		users.each do |user_id|
 			user = User.find user_id
-			Notification.create(recipient: user, actor: user, action: action, notifiable: user)
+			Notification.create(recipient: user, actor: user, action: action, notifiable: user, parent_id: @parent.id, notification_template_id: template.id)
 		end	
 	end
 	
