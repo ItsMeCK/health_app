@@ -146,6 +146,7 @@ Rails.application.routes.draw do
       post '/user_events_information' => 'events#user_events_information'
       post '/event_with_user_information' => 'events#event_with_user_information'
       resources :contact_numbers, only: [:index, :show]
+      post '/get_contact_numbers' => 'contact_numbers#get_contact_numbers'
       resources :passwords, only: [:create]
       #Api for user nitification count
       post '/notification_count' => 'users#notification_count'

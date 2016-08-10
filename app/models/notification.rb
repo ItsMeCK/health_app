@@ -12,9 +12,11 @@ class Notification < ActiveRecord::Base
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
 		@notification_template = NotificationTemplate.where(category: @notification_type).last
+		if @user.present?
 			if @user.android_token.present?
 				android_notification
 			end
+		end
 			# if @user.ios_token.present?
 			# 	n = Rpush::Apns::Notification.new
 			# 	n.app = Rpush::Apns::App.find_by_name("coromandal_harley_davidson")

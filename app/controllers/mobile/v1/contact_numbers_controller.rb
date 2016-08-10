@@ -15,6 +15,11 @@ class Mobile::V1::ContactNumbersController < ApplicationController
     render json: @contact_number
   end
 
+  def get_contact_numbers
+    @contact_numbers = ContactNumber.where(category: params[:category])
+     render json: @contact_numbers, each_serializer: Mobile::V1::ContactNumbersSerializer
+  end
+
   # POST /web/v1/contact_numbers
   # POST /web/v1/contact_numbers.json
 
