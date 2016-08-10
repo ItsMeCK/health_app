@@ -20,7 +20,6 @@ class Ride < ActiveRecord::Base
 	end
 
 	def destroy_user_ride
-		binding.pry
 		@user_ride = UserRide.where(ride_id: self.id)
 		@user_ride.each do |ride|
 			ride.delete
