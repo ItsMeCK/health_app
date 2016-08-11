@@ -40,8 +40,10 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # PATCH/PUT /web/v1/service_bookings/1.json
   def update
     if @service_booking.update(service_booking_params)
-      notification = Notification.where(notifiable: @service_booking).first
-      notification.update_attribute(:action, I18n.t('Notification.service_booking_updated'))
+      user = User.find @service_booking.user_id
+      template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_updated')).last
+      Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
+
       render json: @service_booking, status: :ok, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
@@ -52,8 +54,10 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # DELETE /web/v1/service_bookings/1.json
   def destroy
     user = User.find @service_booking.user_id
+    template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_destroyed')).last
+    Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
     @service_booking.destroy
-    Notification.send_notification(@service_booking.user_id, I18n.t('Notification.service_booking_destroyed'))
+
     head :no_content
   end
 

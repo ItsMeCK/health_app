@@ -20,8 +20,10 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
   # POST /web/v1/insurance_renewals.json
   def create
     @insurance_renewal = InsuranceRenewal.new(insurance_renewal_params)
-
     if @insurance_renewal.save
+      template = NotificationTemplate.where(category: I18n.t('Notification.insurance_renewal')).last
+      user = User.find_by_email(@insurance_renewal.email)
+      Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template) if user
       render json: @insurance_renewal, status: :created
     else
       render json: @insurance_renewal.errors, status: :unprocessable_entity

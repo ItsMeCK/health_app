@@ -29,9 +29,10 @@ en:
     test_ride_updated: "Test drive update notification"
     test_ride_destroyed: "Test drive delete notification"
     contact_us: "Contact us notification"
-    welcome: "welcome notification-user"
-    insurance_renewal: "Insurance renewal notification"
+    welcome: "Welcome notification-user"
+    insurance_renewal: "Insurance renewal in-app reminder notification"
     kms_exceeds: "Service reminder notification based on number of kms"
     service_scheduled: "Service in-app reminder notification"
     birthday: "Birthday in-app notification template"
+    accessories: 
 

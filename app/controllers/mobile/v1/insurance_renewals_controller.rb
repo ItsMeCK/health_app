@@ -11,6 +11,8 @@ class Mobile::V1::InsuranceRenewalsController < ApplicationController
     @insurance_renewal = InsuranceRenewal.new(insurance_renewal_params)
 
     if @insurance_renewal.save
+      template = NotificationTemplate.where(category: I18n.t('Notification.insurance_renewal')).last
+      Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
       render json: @insurance_renewal, status: :created
     else
       render json: @insurance_renewal.errors, status: :unprocessable_entity
