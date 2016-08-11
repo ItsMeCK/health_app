@@ -26,9 +26,9 @@ class User < ActiveRecord::Base
   after_create :create_wishlist
 
   def update_device_token(params)
-    logger.info "=====Update TOken========="
-    if params[:session].try(:android_token)
-      logger.info "==================Updated Users Android Token==========="
+    logger.info "=====Update TOken===#{params["session"]["android_token"].inspect}======"
+    if params["session"]["android_token"]
+      logger.info "==================Updated Users ANdroid Token============"
       self.update_attribute(:android_token, params[:session][:android_token])
     else params[:session].has_key?(:ios_token)
       logger.info "==================Updated Users IOS Token============"
