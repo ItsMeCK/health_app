@@ -189,6 +189,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       #Api for user nitification count
       post '/notification_count' => 'users#notification_count'
       post '/clear_notification_count' => 'users#clear_notification_count'
+      post '/notification_by_category' => 'users#notification_by_category'
 
     end
   end

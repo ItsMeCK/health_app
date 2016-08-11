@@ -26,13 +26,11 @@ class User < ActiveRecord::Base
   after_create :create_wishlist
 
   def update_device_token(params)
-    if params[:session].has_key?([:android_token])
-      self.android_token = params[:session][:android_token]
-    else params[:session].has_key?([:ios_token])
-      self.ios_token = params[:session][:ios_token]
-    end 
-    
-    return self  
+    if params["session"]["android_token"]
+      self.update_attribute(:android_token, params[:session][:android_token])
+    else params["session"]["ios_token"]
+      self.update_attribute(:ios_token, params[:session][:ios_token])
+    end
   end  
 
 	private
