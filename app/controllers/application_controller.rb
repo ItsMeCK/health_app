@@ -7,6 +7,11 @@ class ApplicationController < ActionController::API
 		{module_namespace: self.class.name.deconstantize}
 	end
 
+	def current_user 
+		logger.info "=========Current User======="
+		User.find(authentication_token: params["auth_token"])
+	end
+
 # private
 
  # def set_access_control_headers
