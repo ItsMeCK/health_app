@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
 
 	def current_user 
 		logger.info "=========Current User======="
-		User.find(authentication_token: params["auth_token"])
+		User.where(authentication_token: params["auth_token"]).first
 	end
 
 # private
