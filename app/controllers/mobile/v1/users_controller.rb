@@ -57,9 +57,10 @@ class Mobile::V1::UsersController < ApplicationController
 	end
 
 	def notification_count
-		puts "================#{current_user.inspect}"
+		logger.info "================#{current_user.inspect}"
 		current_user = User.first
   	@count = current_user.notification_count
+  	puts "======================================================"
   	render json: @count
 	end
 
