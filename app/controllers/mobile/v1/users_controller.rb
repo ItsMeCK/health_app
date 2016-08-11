@@ -60,9 +60,7 @@ class Mobile::V1::UsersController < ApplicationController
 		puts "================#{current_user.inspect}"
 		current_user = User.first
   	@count = current_user.notification_count
-  	respond_to do |f|
-  		f.json { render json: @count}
-  	end
+  	render json: @count
 	end
 
 	def notification_by_category
