@@ -57,7 +57,7 @@ class Mobile::V1::UsersController < ApplicationController
 	end
 
 	def notification_count
-  	@count = current_user.notification_count.count
+  	@count = current_user.notification_count
   	render json: @count
 	end
 
