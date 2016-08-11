@@ -34,5 +34,6 @@ en:
     kms_exceeds: "Service reminder notification based on number of kms"
     service_scheduled: "Service in-app reminder notification"
     birthday: "Birthday in-app notification template"
-    accessories: 
+    accessories: ""
+    notification_msg: "Tap here to view details"
 
