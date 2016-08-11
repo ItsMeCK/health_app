@@ -21,8 +21,9 @@ class Web::V1::TestRidesController < ApplicationController
   def create
     @test_ride = TestRide.new(test_ride_params)
     if @test_ride.save
-      Notification.create(recipient: @test_ride.user, actor: current_user, action: I18n.t('Notification.test_ride_booking'), notifiable: @test_ride)
-      render json: @test_ride, status: :created, serializer: Web::V1::TestRideSerializer
+      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_booking')).last
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
+      render json: @test_ride, status: 200
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end

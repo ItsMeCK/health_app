@@ -24,7 +24,8 @@ class Web::V1::ServiceBookingsController < ApplicationController
       
     if User.exists?(@service_booking.user_id)
       user = User.find @service_booking.user_id
-      Notification.create(recipient: user, actor: current_user, action: I18n.t('Notification.service_booking'), notifiable: @service_booking)
+      template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
+      Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
     else
       "N/A"
     end      

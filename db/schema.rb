@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810095044) do
+ActiveRecord::Schema.define(version: 20160811095604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,13 +126,6 @@ ActiveRecord::Schema.define(version: 20160810095044) do
     t.integer  "dealer_contact_label_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-  end
-
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "dealer_types", force: :cascade do |t|
@@ -325,13 +318,13 @@ ActiveRecord::Schema.define(version: 20160810095044) do
 
   create_table "notification_counts", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "test_drive_count", default: 0
-    t.integer  "offer_count"
-    t.integer  "insurance_count",  default: 0
-    t.integer  "service_count",    default: 0
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "count",            default: 0
+    t.integer  "bookings",    default: 0
+    t.integer  "offer"
+    t.integer  "events",      default: 0
+    t.integer  "accessories", default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "count",       default: 0
   end
 
   create_table "notification_templates", force: :cascade do |t|
@@ -352,8 +345,8 @@ ActiveRecord::Schema.define(version: 20160810095044) do
     t.string   "notifiable_type"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "parent_id"
     t.integer  "notification_template_id"
+    t.integer  "parent_id"
   end
 
   create_table "price_fields", force: :cascade do |t|
