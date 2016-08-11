@@ -27,10 +27,10 @@ class User < ActiveRecord::Base
 
   def update_device_token(params)
     logger.info "=====Update TOken========="
-    if params[:session].has_key?([:android_token])
+    if params[:session].try(:android_token)
       logger.info "==================Updated Users Android Token==========="
       self.update_attribute(:android_token, params[:session][:android_token])
-    else params[:session].has_key?([:ios_token])
+    else params[:session].has_key?(:ios_token)
       logger.info "==================Updated Users IOS Token============"
       self.update_attribute(:ios_token, params[:session][:ios_token])
     end
