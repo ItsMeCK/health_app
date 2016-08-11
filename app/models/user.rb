@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
       self.update_attribute(:android_token, params[:session][:android_token])
     else params[:session].has_key?([:ios_token])
       logger.info "==================Updated Users IOS Token============"
-      self.update_attribute(:ios_token, params[:session][:ios_token]
+      self.update_attribute(:ios_token, params[:session][:ios_token])
     end
   end  
 
