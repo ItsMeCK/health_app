@@ -22,7 +22,8 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
 
     if @service_booking.save
       user = User.find @service_booking.user_id
-      Notification.create(recipient: user, actor: current_user, action: I18n.t('Notification.service_booking'), notifiable: @service_booking)
+      template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
+      Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
       render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity

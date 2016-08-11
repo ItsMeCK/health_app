@@ -11,8 +11,8 @@ class Notification < ActiveRecord::Base
 	def send_notification(recipient = nil, action = nil)
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
-		@notification_template = NotificationTemplate.where(category: @notification_type).last
-		self.update_attribute(:notification_template, @notification_template) unless self.notification_template_id
+		@notification_template = self.notification_template
+		#self.update_attribute(:notification_template, @notification_template) unless self.notification_template_id
 		if @user.present?
 			if @user.android_token.present?
 				android_notification
@@ -27,16 +27,18 @@ class Notification < ActiveRecord::Base
 			# 	n.save!
 			# end
 			# end
+
 		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
 
 	def self.proactive_insurance_reminder
 		@set_rule = SetRule.where(category: 'Insurance renewal').first
 		todays_date = Date.today
+		template = NotificationTemplate.where(category: I18n.t('Notification.insurance_renewal')).last
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
 			MyBike.where(expiry_date:  reminder_day).each do |mybike|
-				Notification.create(recipient: mybike.user, actor: mybike.user, action: I18n.t('Notification.insurance_renewal'), notifiable: mybike)
+				Notification.create(recipient: mybike.user, actor: mybike.user, action: 'Bookings', notifiable: mybike, notification_template: template)
 			end	
 		end	
 	end	
@@ -44,10 +46,11 @@ class Notification < ActiveRecord::Base
 	def self.proactive_service_booking_reminder
 		@set_rule = SetRule.where(category: 'Service booking').first
 		todays_date = Date.today
+		template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
 		@set_rule.days.each do |day|
 			reminder_date = todays_date - day
 			ServiceBooking.where(date:  reminder_day).each do |service_booking|
-				Notification.create(recipient: service_booking.my_bike.user, actor: service_booking.my_bike.user, action: I18n.t('Notification.service_booking'), notifiable: service_booking)
+				Notification.create(recipient: service_booking.my_bike.user, actor: service_booking.my_bike.user, action: 'Bookings', notifiable: service_booking, notification_template: template)
 			end	
 		end	
 	end
@@ -98,6 +101,10 @@ class Notification < ActiveRecord::Base
 			Notification.create(recipient: user, actor: user, action: action, notifiable: user, parent_id: @parent.id, notification_template: template)
 		end	
 	end
+
+	def get_notification_tempalte
+
+	end	
 	
 	private
 
@@ -114,6 +121,6 @@ class Notification < ActiveRecord::Base
 	end	
 
 	def increase_notification_count
-		NotificationCount.where(user: @user).first_or_create.add_notification_count(@notification_type)
+		NotificationCount.where(user: @user).first_or_create.add_notification_count(self.action)
 	end	
 end
