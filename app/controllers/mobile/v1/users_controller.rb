@@ -57,11 +57,8 @@ class Mobile::V1::UsersController < ApplicationController
 	end
 
 	def notification_count
-  	@user = User.find_by_id(params[:user_id])
-  	@count = @user.notification_count
-  	respond_to do |f|
-  		f.json { render json: @count}
-  	end
+  	@count = current_user.notification_count.count
+  	render json: @count
 	end
 
 	def notification_by_category
