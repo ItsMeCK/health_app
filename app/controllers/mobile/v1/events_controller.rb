@@ -3,11 +3,11 @@ class Mobile::V1::EventsController < ApplicationController
 	def user_responce_with_event
 		@user_ride = UserEvent.find(params[:id])
 		if params[:status] == "Yes"
-			@user_ride.update(perticipate_ride: "yes")
+			@user_ride.update(perticipate_event: "yes")
 		elsif params[:status] == "No"
-			@user_ride.update(perticipate_ride: "No")
+			@user_ride.update(perticipate_event: "No")
 		elsif params[:status] == "May Be"
-			@user_ride.update(perticipate_ride: "May Be")
+			@user_ride.update(perticipate_event: "May Be")
 		else
 			@user_ride
 		end

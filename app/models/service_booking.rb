@@ -5,14 +5,14 @@ class ServiceBooking < ActiveRecord::Base
 		if MyBike.exists?(self.my_bike_id)
 			MyBike.find(self.my_bike_id).bike
 		else
-			"N/A"
+			"null"
 		end 
 	end
 	def user_mail
 		if MyBike.exists?(self.my_bike_id)
 			MyBike.find(self.my_bike_id).user.email
 		else
-			"N/A"
+			"null"
 		end 
 	end
 	
