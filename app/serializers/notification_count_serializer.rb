@@ -7,4 +7,5 @@ class NotificationCountSerializer < ActiveModel::Serializer
   	data[:Events] = data[:events]
   	data[:Accessories] = data[:accessories]
   	data
+  end	
 end
