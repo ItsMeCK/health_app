@@ -47,13 +47,20 @@ class Web::V1::TenuresController < ApplicationController
     head :no_content
   end
 
+  def delete_tenures
+    @tenures = params[:tenure_ids]
+    @tenures.each do |tenure|
+      Tenure.find(tenure).delete
+    end
+  end
+
   private
 
-    def set_tenure
-      @tenure = Tenure.find(params[:id])
-    end
+  def set_tenure
+    @tenure = Tenure.find(params[:id])
+  end
 
-    def tenure_params
-      params.require(:tenure).permit(:month)
-    end
+  def tenure_params
+    params.require(:tenure).permit(:month)
+  end
 end

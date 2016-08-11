@@ -47,6 +47,13 @@ class Web::V1::BookingTimeControlsController < ApplicationController
     head :no_content
   end
 
+  def delete_booking_time_controls
+    @booking_time_controls = params[:booking_time_control_ids]
+    @booking_time_controls.each do |booking_time_control|
+      BookingTimeControl.find(booking_time_control).delete
+    end
+  end
+
   private
 
     def set_booking_time_control

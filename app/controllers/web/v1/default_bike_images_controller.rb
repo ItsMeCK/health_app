@@ -47,6 +47,13 @@ class Web::V1::DefaultBikeImagesController < ApplicationController
     head :no_content
   end
 
+  def delete_default_bike_images
+     @default_bike_images = params[:default_bike_image_ids]
+    @default_bike_images.each do |default_bike_image|
+      DefaultBikeImage.find(default_bike_image).delete
+    end
+  end
+
   private
 
     def set_default_bike_image

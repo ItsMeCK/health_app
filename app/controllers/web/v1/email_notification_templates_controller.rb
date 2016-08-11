@@ -47,6 +47,13 @@ class Web::V1::EmailNotificationTemplatesController < ApplicationController
     head :no_content
   end
 
+  def delete_email_notification_templates
+    @email_notification_templates = params[:email_notification_template_ids]
+    @email_notification_templates.each do |email_notification_template|
+      EmailNotificationTemplate.find(email_notification_template).delete
+    end
+  end
+
   # def email_template_category
   #   @email_notification_template = EmailNotificationTemplate.pluck(:category)
   #   render json: @email_notification_template

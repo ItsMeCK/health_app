@@ -47,13 +47,20 @@ class Web::V1::PriceFieldsController < ApplicationController
     head :no_content
   end
 
+  def delete_price_fields
+    @price_fields = params[:price_field_ids]
+    @price_fields.each do |price_field|
+      PriceField.find(price_field).delete
+    end
+  end
+
   private
 
-    def set_price_field
-      @price_field = PriceField.find(params[:id])
-    end
+  def set_price_field
+    @price_field = PriceField.find(params[:id])
+  end
 
-    def price_field_params
-      params.require(:price_field).permit(:name, :display_order, :active)
-    end
+  def price_field_params
+    params.require(:price_field).permit(:name, :display_order, :active)
+  end
 end

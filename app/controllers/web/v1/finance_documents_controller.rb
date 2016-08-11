@@ -47,13 +47,20 @@ class Web::V1::FinanceDocumentsController < ApplicationController
     head :no_content
   end
 
+  def delete_finance_documents
+    @finance_documents = params[:finance_document_ids]
+    @finance_documents.each do |finance_document|
+      FinanceDocument.find(finance_document).delete
+    end
+  end
+
   private
 
-    def set_finance_document
-      @finance_document = FinanceDocument.find(params[:id])
-    end
+  def set_finance_document
+    @finance_document = FinanceDocument.find(params[:id])
+  end
 
-    def finance_document_params
-      params.require(:finance_document).permit(:category, :document_list)
-    end
+  def finance_document_params
+    params.require(:finance_document).permit(:category, :document_list)
+  end
 end

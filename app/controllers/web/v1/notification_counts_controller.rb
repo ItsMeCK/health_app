@@ -47,13 +47,20 @@ class Web::V1::NotificationCountsController < ApplicationController
     head :no_content
   end
 
+  def delete_notification_counts
+    @notification_counts = params[:notification_count_ids]
+    @notification_counts.each do |notification_count|
+      NotificationCount.find(notification_count).delete
+    end
+  end
+
   private
 
-    def set_notification_count
-      @notification_count = NotificationCount.find(params[:id])
-    end
+  def set_notification_count
+    @notification_count = NotificationCount.find(params[:id])
+  end
 
-    def notification_count_params
-      params.require(:notification_count).permit(:user_id, :test_drive_count, :offer_count, :insurance_count, :service_count)
-    end
+  def notification_count_params
+    params.require(:notification_count).permit(:user_id, :test_drive_count, :offer_count, :insurance_count, :service_count)
+  end
 end

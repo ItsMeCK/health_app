@@ -47,6 +47,13 @@ class Web::V1::ContactTypesController < ApplicationController
     head :no_content
   end
 
+  def delete_contact_types
+    @contact_types = params[:contact_type_ids]
+    @contact_types.each do |contact_type|
+      ContactType.find(contact_type).delete
+    end
+  end
+
   private
 
     def set_contact_type

@@ -47,13 +47,20 @@ class Web::V1::SetMailsController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_set_mails
+   @set_mails = params[:set_mail_ids]
+   @set_mails.each do |set_mail|
+    SetMail.find(set_mail).delete
+  end
+end
 
-    def set_set_mail
-      @set_mail = SetMail.find(params[:id])
-    end
+private
 
-    def set_mail_params
-      params.require(:set_mail).permit(:email, :category)
-    end
+def set_set_mail
+  @set_mail = SetMail.find(params[:id])
+end
+
+def set_mail_params
+  params.require(:set_mail).permit(:email, :category)
+end
 end

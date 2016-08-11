@@ -48,6 +48,15 @@ class Web::V1::KeyFeaturesController < ApplicationController
     head :no_content
   end
 
+  def delete_key_features
+    @key_features = params[:key_feature_ids]
+    @key_features.each do |key_feature|
+      KeyFeature.find(key_feature).delete
+    end
+  end
+
+ 
+
   private
 
     def set_key_feature

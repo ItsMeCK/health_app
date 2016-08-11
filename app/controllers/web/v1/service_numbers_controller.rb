@@ -47,13 +47,20 @@ class Web::V1::ServiceNumbersController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_service_numbers
+   @service_numbers = params[:service_number_ids]
+   @service_numbers.each do |service_number|
+    ServiceNumber.find(service_number).delete
+  end
+end
 
-    def set_service_number
-      @service_number = ServiceNumber.find(params[:id])
-    end
+private
 
-    def service_number_params
-      params.require(:service_number).permit(:contact_name, :contact_number)
-    end
+def set_service_number
+  @service_number = ServiceNumber.find(params[:id])
+end
+
+def service_number_params
+  params.require(:service_number).permit(:contact_name, :contact_number)
+end
 end

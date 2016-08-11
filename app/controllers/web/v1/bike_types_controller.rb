@@ -48,6 +48,13 @@ class Web::V1::BikeTypesController < ApplicationController
     head :no_content
   end
 
+  def delete_bike_types
+    @bike_types = params[:bike_type_ids]
+    @bike_types.each do |bike_type_id|
+      BikeType.find(bike_type_id).delete
+    end
+  end
+
   private
 
     def set_bike_type

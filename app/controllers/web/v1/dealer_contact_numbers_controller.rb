@@ -47,13 +47,20 @@ class Web::V1::DealerContactNumbersController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_dealer_contact_numbers
+   @dealer_contact_numbers = params[:dealer_contact_number_ids]
+   @dealer_contact_numbers.each do |dealer_contact_number|
+    DealerContactNumber.find(dealer_contact_number).delete
+  end
+end
 
-    def set_dealer_contact_number
-      @dealer_contact_number = DealerContactNumber.find(params[:id])
-    end
+private
 
-    def dealer_contact_number_params
-      params.require(:dealer_contact_number).permit(:number, :dealer_id, :dealer_contact_label_id)
-    end
+def set_dealer_contact_number
+  @dealer_contact_number = DealerContactNumber.find(params[:id])
+end
+
+def dealer_contact_number_params
+  params.require(:dealer_contact_number).permit(:number, :dealer_id, :dealer_contact_label_id)
+end
 end

@@ -47,13 +47,20 @@ class Web::V1::KeyFeatureTypesController < ApplicationController
     head :no_content
   end
 
+  def delete_key_feature_types
+    @key_feature_types = params[:key_feature_type_ids]
+    @key_feature_types.each do |key_feature_type|
+      KeyFeatureType.find(key_feature_type).delete
+    end
+  end
+
   private
 
-    def set_key_feature_type
-      @key_feature_type = KeyFeatureType.find(params[:id])
-    end
+  def set_key_feature_type
+    @key_feature_type = KeyFeatureType.find(params[:id])
+  end
 
-    def key_feature_type_params
-      params.require(:key_feature_type).permit(:feature_type_name, :active)
-    end
+  def key_feature_type_params
+    params.require(:key_feature_type).permit(:feature_type_name, :active)
+  end
 end

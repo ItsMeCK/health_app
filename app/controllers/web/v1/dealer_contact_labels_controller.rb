@@ -47,6 +47,13 @@ class Web::V1::DealerContactLabelsController < ApplicationController
     head :no_content
   end
 
+  def delete_dealer_contact_labels
+    @dealer_contact_labels = params[:dealer_contact_label_ids]
+    @dealer_contact_labels.each do |dealer_contact_label|
+      DealerContactLabel.find(dealer_contact_label).delete
+    end
+  end
+
   private
 
     def set_dealer_contact_label

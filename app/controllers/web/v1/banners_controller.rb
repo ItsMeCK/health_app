@@ -60,6 +60,13 @@ class Web::V1::BannersController < ApplicationController
     head :no_content
   end
 
+  def delete_banners
+    @banners = params[:banner_ids]
+    @banners.each do |banner|
+      Banner.find(banner).delete
+    end
+  end
+
   private
 
   def set_banner

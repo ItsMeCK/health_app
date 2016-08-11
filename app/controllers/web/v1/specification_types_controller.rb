@@ -47,6 +47,13 @@ class Web::V1::SpecificationTypesController < ApplicationController
     head :no_content
   end
 
+  def delete_specification_types
+    @specification_types = params[:specification_type_ids]
+    @specification_types.each do |specification_type|
+      SpecificationType.find(specification_type).delete
+    end
+  end
+
   private
 
     def set_specification_type

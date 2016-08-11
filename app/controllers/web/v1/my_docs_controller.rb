@@ -60,6 +60,13 @@ class Web::V1::MyDocsController < ApplicationController
     head :no_content
   end
 
+  def delete_my_docs
+    @my_docs = params[:my_doc_ids]
+    @my_docs.each do |my_doc|
+      MyDoc.find(my_doc).delete
+    end
+  end
+
   private
 
     def set_my_doc

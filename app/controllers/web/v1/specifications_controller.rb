@@ -1,4 +1,4 @@
-class Web::V1::SpecificationsController < ApplicationController
+ class Web::V1::SpecificationsController < ApplicationController
   before_action :set_specification, only: [:show, :update, :destroy]
 
   # GET /web/v1/specifications
@@ -44,6 +44,13 @@ class Web::V1::SpecificationsController < ApplicationController
     @specification.destroy
 
     head :no_content
+  end
+
+  def delete_specifications
+    @specifications = params[:specification_ids]
+    @specifications.each do |specification|
+      Specification.find(specification).delete
+    end
   end
 
   private
