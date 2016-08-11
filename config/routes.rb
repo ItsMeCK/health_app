@@ -9,11 +9,21 @@ Rails.application.routes.draw do
   resource :uploads do
     collection { 
       post :import
-      post :import_specifications  
+      post :import_users
+      post :import_service_history 
+      post :import_prices 
+      post :import_specifications
+      post :import_key_features 
+      post :import_colors
     }
   end
   get '/upload_bikes' => 'uploads#upload_bikes'
   get '/upload_specifications' => 'uploads#upload_specifications'
+  get '/upload_users' => 'uploads#upload_users'
+  get '/upload_service_history' => 'uploads#upload_service_history'
+  get '/upload_prices' => 'uploads#upload_prices'
+  get '/upload_key_features' => 'uploads#upload_key_features'
+  get '/upload_colors' => 'uploads#upload_colors'
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here

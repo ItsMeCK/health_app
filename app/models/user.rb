@@ -33,6 +33,14 @@ class User < ActiveRecord::Base
     end
   end  
 
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+      users = find_by_id(row["id"]) || new
+      users.attributes = row.to_hash
+      users.save!
+    end
+  end
+
 	private
 
   def create_profile_hog

@@ -14,4 +14,13 @@ class KeyFeature < ActiveRecord::Base
 	def as_json(options={})
 		super.as_json(options).merge({ :bike_name => bike_type, :key_feature_type => key_feature_type })
 	end
+
+	def self.import(file)
+		CSV.foreach(file.path, headers: true) do |row|
+			key_features = find_by_id(row["id"]) || new
+			key_features.attributes = row.to_hash
+			key_features.save!
+		end
+	end
+
 end
