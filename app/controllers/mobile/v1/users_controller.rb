@@ -64,6 +64,11 @@ class Mobile::V1::UsersController < ApplicationController
   	end
 	end
 
+	def notification_by_category
+		@notifications = current_user.notifications.where(action: params[:category])
+		render json: @notifications
+	end	
+
 	def clear_notification_count
 		@user = User.find_by_id(params[:user_id])
   	@count = @user.notification_count.destroy
