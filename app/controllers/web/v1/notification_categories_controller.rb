@@ -47,13 +47,20 @@ class Web::V1::NotificationCategoriesController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_notification_categories
+   @notification_categories = params[:notification_categories_ids]
+   @notification_categories.each do |notification_categories|
+    NotificationCategory.find(notification_categories).delete
+  end
+end
 
-    def set_notification_category
-      @notification_category = NotificationCategory.find(params[:id])
-    end
+private
 
-    def notification_category_params
-      params.require(:notification_category).permit(:name, :category)
-    end
+def set_notification_category
+  @notification_category = NotificationCategory.find(params[:id])
+end
+
+def notification_category_params
+  params.require(:notification_category).permit(:name, :category)
+end
 end

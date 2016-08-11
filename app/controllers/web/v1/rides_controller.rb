@@ -26,9 +26,9 @@ class Web::V1::RidesController < ApplicationController
     if @ride.save
       users.each do |user|
        UserMailer.delay.notification_mail_for_ride(user)
-      end
-    render json: @ride, status: :created
-  else
+     end
+     render json: @ride, status: :created
+   else
     render json: @ride.errors, status: :unprocessable_entity
   end
 end
@@ -39,10 +39,10 @@ end
     @ride = Ride.find(params[:id])
 
     if @ride.update(ride_params)
-    @ride.update(assembly_time: params[:ride][:assembly_time])
-    @ride.update(destination_time: params[:ride][:destination_time])
-    @ride.update(check_points: params[:ride][:check_points])
-    render json: @ride
+      @ride.update(assembly_time: params[:ride][:assembly_time])
+      @ride.update(destination_time: params[:ride][:destination_time])
+      @ride.update(check_points: params[:ride][:check_points])
+      render json: @ride
       #head :no_content
     else
       render json: @ride.errors, status: :unprocessable_entity
@@ -55,6 +55,13 @@ end
     @ride.destroy
 
     head :no_content
+  end
+
+  def delete_rides
+    @rides = params[:ride_ids]
+    @rides.each do |ride|
+      Ride.find(ride).delete
+    end
   end
 
   private

@@ -78,6 +78,13 @@ class Web::V1::TestRidesController < ApplicationController
     render json: @all_bookings, :root => "bookings"
   end
 
+  def delete_test_rides
+    @test_rides = params[:test_ride_ids]
+    @test_rides.each do |test_ride|
+      TestRide.find(test_ride).delete
+    end
+  end
+
   private
 
   def set_test_ride

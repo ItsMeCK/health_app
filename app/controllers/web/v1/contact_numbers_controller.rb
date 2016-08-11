@@ -47,13 +47,20 @@ class Web::V1::ContactNumbersController < ApplicationController
     head :no_content
   end
 
+  def delete_contact_numbers
+    @contact_numbers = params[:contact_number_ids]
+    @contact_numbers.each do |contact_number|
+      ContactNumber.find(contact_number).delete
+    end
+  end
+
   private
 
-    def set_contact_number
-      @contact_number = ContactNumber.find(params[:id])
-    end
+  def set_contact_number
+    @contact_number = ContactNumber.find(params[:id])
+  end
 
-    def contact_number_params
-      params.require(:contact_number).permit(:category, :number, :label, :contact_type_id)
-    end
+  def contact_number_params
+    params.require(:contact_number).permit(:category, :number, :label, :contact_type_id)
+  end
 end

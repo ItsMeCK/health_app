@@ -61,6 +61,13 @@ end
     head :no_content
   end
 
+  def delete_profiles
+    @profiles = params[:profile_ids]
+    @profiles.each do |profile_id|
+      Profile.find(profile_id).delete
+    end
+  end
+
   private
 
   def set_profile

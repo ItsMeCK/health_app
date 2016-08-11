@@ -66,13 +66,20 @@ class Web::V1::AccessoriesController < ApplicationController
     render json: @accessory_enquiries
   end
 
-  private
+  def delete_accessories
+    @accessories = params[:accessories_ids]
+   @accessories.each do |accessories|
+    Accessory.find(accessories).delete
+  end
+end
 
-    def set_accessory
-      @accessory = Accessory.find(params[:id])
-    end
+private
 
-    def accessory_params
-      params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
-    end
+def set_accessory
+  @accessory = Accessory.find(params[:id])
+end
+
+def accessory_params
+  params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
+end
 end

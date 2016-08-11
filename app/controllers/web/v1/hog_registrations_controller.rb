@@ -63,6 +63,13 @@ class Web::V1::HogRegistrationsController < ApplicationController
     head :no_content
   end
 
+  def delete_hog_registrations
+    @hog_registrations = params[:hog_registration_ids]
+    @hog_registrations.each do |hog_registration|
+      HogRegistration.find(hog_registration).delete
+    end
+  end
+
   private
 
     def set_hog_registration

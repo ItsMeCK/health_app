@@ -47,13 +47,20 @@ class Web::V1::PricingsController < ApplicationController
     head :no_content
   end
 
+  def delete_pricings
+    @pricings = params[:pricing_ids]
+    @pricings.each do |pricing|
+      Pricing.find(pricing).delete
+    end
+  end
+
   private
 
-    def set_pricing
-      @pricing = Pricing.find(params[:id])
-    end
+  def set_pricing
+    @pricing = Pricing.find(params[:id])
+  end
 
-    def pricing_params
-      params.require(:pricing).permit(:value, :price_field_id, :bike_id, :active)
-    end
+  def pricing_params
+    params.require(:pricing).permit(:value, :price_field_id, :bike_id, :active)
+  end
 end

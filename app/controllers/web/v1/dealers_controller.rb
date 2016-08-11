@@ -45,11 +45,11 @@ class Web::V1::DealersController < ApplicationController
 
   def dealers_image_update
     @dealer = Dealer.find(params[:id])
-     @dealer.remove_image! if @dealer.image
+    @dealer.remove_image! if @dealer.image
 
     if @dealer.update(dealer_params)
       @dealer.image = params[:dealer][:image]
-       @dealer.save
+      @dealer.save
       render json: @dealer
       #head :no_content
     else
@@ -63,6 +63,13 @@ class Web::V1::DealersController < ApplicationController
     @dealer.destroy
 
     head :no_content
+  end
+
+  def delete_dealers
+    @dealers = params[:dealer_ids]
+    @dealers.each do |dealer|
+      Dealer.find(dealer).delete
+    end
   end
 
   private

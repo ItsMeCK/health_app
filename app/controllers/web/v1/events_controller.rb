@@ -19,16 +19,16 @@ class Web::V1::EventsController < ApplicationController
   # POST /web/v1/events.json
   def create
     @event = Event.new(event_params)
-     users = User.all
+    users = User.all
     if @event.save
       users.each do |user|
        UserMailer.delay.notification_mail_for_event(user)
-      end
-      render json: @event, status: :created
-    else
-      render json: @event.errors, status: :unprocessable_entity
-    end
+     end
+     render json: @event, status: :created
+   else
+    render json: @event.errors, status: :unprocessable_entity
   end
+end
 
   # PATCH/PUT /web/v1/events/1
   # PATCH/PUT /web/v1/events/1.json
@@ -50,13 +50,20 @@ class Web::V1::EventsController < ApplicationController
     head :no_content
   end
 
+  def delete_events
+    @events = params[:event_ids]
+    @events.each do |event|
+      Event.find(event).delete
+    end
+  end
+
   private
 
-    def set_event
-      @event = Event.find(params[:id])
-    end
+  def set_event
+    @event = Event.find(params[:id])
+  end
 
-    def event_params
-      params.require(:event).permit(:event_date, :event_time, :location, :title, :description)
-    end
+  def event_params
+    params.require(:event).permit(:event_date, :event_time, :location, :title, :description)
+  end
 end

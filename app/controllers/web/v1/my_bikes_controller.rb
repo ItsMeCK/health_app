@@ -61,6 +61,13 @@ class Web::V1::MyBikesController < ApplicationController
     head :no_content
   end
 
+  def delete_my_bikes
+    @my_bikes = params[:my_bike_ids]
+    @my_bikes.each do |my_bike|
+      MyBike.find(my_bike).delete
+    end
+  end
+
   private
 
   def set_my_bike

@@ -48,13 +48,20 @@ class Web::V1::SetRulesController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_set_rules
+   @set_rules = params[:set_rule_ids]
+   @set_rules.each do |set_rule|
+    SetRule.find(set_rule).delete
+  end
+end
 
-    def set_set_rule
-      @set_rule = SetRule.find(params[:id])
-    end
+private
 
-    def set_rule_params
-      params.require(:set_rule).permit(:days, :category, :active)
-    end
+def set_set_rule
+  @set_rule = SetRule.find(params[:id])
+end
+
+def set_rule_params
+  params.require(:set_rule).permit(:days, :category, :active)
+end
 end

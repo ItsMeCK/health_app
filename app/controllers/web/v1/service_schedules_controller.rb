@@ -47,6 +47,13 @@ class Web::V1::ServiceSchedulesController < ApplicationController
     head :no_content
   end
 
+  def delete_service_schedules
+     @service_schedules = params[:service_schedule_ids]
+    @service_schedules.each do |service_schedule|
+      ServiceSchedule.find(service_schedule).delete
+    end
+  end
+
   private
 
     def set_service_schedule

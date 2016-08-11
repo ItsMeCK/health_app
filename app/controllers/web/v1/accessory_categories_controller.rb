@@ -60,13 +60,20 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
     head :no_content
   end
 
-  private
-
-  def set_accessory_category
-    @accessory_category = AccessoryCategory.find(params[:id])
+  def delete_accessory_categories
+   @accessory_categories = params[:accessory_categories_ids]
+   @accessory_categories.each do |accessory_categories|
+    AccessoryCategory.find(accessory_categories).delete
   end
+end
 
-  def accessory_category_params
-    params.require(:accessory_category).permit(:title, :description, :image)
-  end
+private
+
+def set_accessory_category
+  @accessory_category = AccessoryCategory.find(params[:id])
+end
+
+def accessory_category_params
+  params.require(:accessory_category).permit(:title, :description, :image)
+end
 end

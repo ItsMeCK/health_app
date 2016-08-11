@@ -47,6 +47,13 @@ class Web::V1::NotificationTemplatesController < ApplicationController
     head :no_content
   end
 
+  def delete_notification_templates
+     @notification_templates = params[:notification_template_ids]
+    @notification_templates.each do |notification_template|
+      NotificationTemplate.find(notification_template).delete
+    end
+  end
+
   private
 
     def set_notification_template

@@ -47,13 +47,20 @@ class Web::V1::BikeColorsController < ApplicationController
     head :no_content
   end
 
+  def delete_bike_colors
+    @bike_colors = params[:bike_color_ids]
+    @bike_colors.each do |bike_color|
+      BikeColor.find(bike_color).delete
+    end
+  end
+
   private
 
-    def set_bike_color
-      @bike_color = BikeColor.find(params[:id])
-    end
+  def set_bike_color
+    @bike_color = BikeColor.find(params[:id])
+  end
 
-    def bike_color_params
-      params.require(:bike_color).permit(:label, :color, :bike_id, :image)
-    end
+  def bike_color_params
+    params.require(:bike_color).permit(:label, :color, :bike_id, :image)
+  end
 end

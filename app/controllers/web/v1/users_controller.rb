@@ -3,10 +3,10 @@ class Web::V1::UsersController < ApplicationController
 	respond_to :json
 
 	def index
-	  limit, offset = Calculator.limit_and_offset(params)
-	  @users = User.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
-	  
-	  render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
+		limit, offset = Calculator.limit_and_offset(params)
+		@users = User.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")
+
+		render json: @users.includes(:profile), status: 200, each_serializer: Web::V1::UserSerializer
 	end
 
 	def create
@@ -24,18 +24,25 @@ class Web::V1::UsersController < ApplicationController
 	end
 
 	def update
-	  @user = User.find(params[:id])
-	  if @user.update(user_params)
-	    render json: @user, status: 200, location: [:web, @user], serializer: Web::V1::UserSerializer
-	  else
-	    render json: { errors: @user.errors }, status: 422
-	  end
+		@user = User.find(params[:id])
+		if @user.update(user_params)
+			render json: @user, status: 200, location: [:web, @user], serializer: Web::V1::UserSerializer
+		else
+			render json: { errors: @user.errors }, status: 422
+		end
 	end
 
 	def destroy
-	  @user = User.find(params[:id]).destroy
-	  message = "Your account has been successfully deleted"
-	  render json: { message: message}, status: 204
+		@user = User.find(params[:id]).destroy
+		message = "Your account has been successfully deleted"
+		render json: { message: message}, status: 204
+	end
+
+	def delete_users
+		@users = params[:user_ids]
+		@users.each do |user|
+			User.find(user).delete
+		end
 	end
 
 	private
