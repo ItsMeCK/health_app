@@ -12,6 +12,7 @@ class Notification < ActiveRecord::Base
 		@user = self.recipient || recipient
 		@notification_type = self.action || action 
 		@notification_template = NotificationTemplate.where(category: @notification_type).last
+		self.update_attribute(:notification_template, @notification_template) unless self.notification_template_id
 		if @user.present?
 			if @user.android_token.present?
 				android_notification
@@ -26,8 +27,7 @@ class Notification < ActiveRecord::Base
 			# 	n.save!
 			# end
 			# end
-		
-		#UserMailer.send_notification_mail(@user, @notification_type).deliver
+		UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
 
 	def self.proactive_insurance_reminder
