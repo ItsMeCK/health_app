@@ -112,7 +112,7 @@ class Notification < ActiveRecord::Base
 		n = Rpush::Gcm::Notification.new
 		n.app = Rpush::Gcm::App.find_by_name("coromandal_harley_davidson")
 		n.registration_ids = [@user.android_token]
-		n.data = { title: @notification_template.title, message: "Tap here to view details", body: @notification_template.fill_up_service_booking_template(@user, self.notifiable) }
+		n.data = { title: @notification_template.title, message: "Tap here to view details", body: @notification_template.content }
 		n.priority = 'high'        # Optional, can be either 'normal' or 'high'
 		n.content_available = true # Optional
 		n.notification = { body: @notification_template.content, title: @notification_template.title, icon: 'myicon' }
