@@ -24,16 +24,20 @@ class NotificationCount < ActiveRecord::Base
 		when 'Bookings'
 			self.count -= self.bookings
 			self.bookings = 0
+			self.save
 		when 'Offer'
 			self.count -= self.offer
 			self.offer = 0
+			self.save
 		when 'Accessories'
 			self.count -= self.accessories
 			self.accessories = 0
+			self.save
 		when 'Events'
 			self.count -= self.events	
 			self.events = 0
+			self.save
 		end
-		self.save	
+			
 	end	
 end
