@@ -16,7 +16,8 @@ class NotificationCount < ActiveRecord::Base
 			self.events +=1
 			self.count +=1	
 		end
-		self.save		
+		self.save	
+		self.reload	
 	end
 
 	def reset_count_for_category(action)
@@ -38,6 +39,6 @@ class NotificationCount < ActiveRecord::Base
 			self.update_attribute(:count, c)
 			self.update_attribute(:events, 0)
 		end
-			
+		self.reload
 	end	
 end
