@@ -4,10 +4,11 @@ class MyBike < ActiveRecord::Base
 	has_many :service_bookings
 	has_many :service_histories
 	mount_base64_uploader :bike_image, ImageUploader, file_name: 'my_bike'
-
+    
+    #call backs
 	#before_update :remove_old_image_assign_new
 	after_create :create_bike_id
-
+	
 	def km_exceeds_for_months
 		date1 = Date.today
 		date2 = purchase_date
@@ -30,15 +31,32 @@ class MyBike < ActiveRecord::Base
 		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
 	end
 	
+	private
+
 	def create_bike_id
 		bikes = Bike.all
-		bike_id = bikes.collect { |bike| bike.id if bike.name == self.bike }.compact
-		if bike_id.present?
-			self.update(bike_id: bike_id[0])
+		#bike_id = bikes.collect { |bike| bike if bike.name == self.bike }
+		bike = Bike.find_by_name(self.bike)
+		bike_image = bike.default_bike_image.image_url
+		default_image = DefaultBikeImage.last.image_url
+		if bike.present?
+			self.update(bike_id: bike.id, my_bike_image_url: bike_image)
 		else
-			self.update(bike_id: 1)
+			self.update(bike_id: 1, my_bike_image_url: default_image)
 		end
 	end
+
+	# def create_my_bike_image_url
+	# 	binding.pry
+	# 	bike_images = DefaultBikeImage.all
+	# 	bike_id = bike_images.collect { |bike_image| bike_image.image_url if bike_image.bike.name == self.bike }
+	# 	binding.pry
+	# 	if bike_id.present?
+	# 		self.update(my_bike_image_url: bike_id)
+	# 	else
+	# 		self.update(bike_id: 1)
+	# 	end
+	# end
 
 	def remove_old_image_assign_new
 		self.remove_bike_image! if self.bike_image.present?

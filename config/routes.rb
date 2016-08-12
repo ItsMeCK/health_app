@@ -168,6 +168,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     resources :my_docs
     post '/update_my_docs_image' => 'my_docs#update_my_docs_image'
     resources :dealer_types, :only => [:show]
+    get '/get_dealers_with_contact_numbers' => 'dealers#dealer_contact_numbers'
     resources :dealers, :only => [:show]
     resources :finance_documents, :only => [:show]
     resources :tenures, :only => [:index, :show]

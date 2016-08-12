@@ -15,6 +15,17 @@ class Mobile::V1::DealersController < ApplicationController
     render json: @dealer
   end
 
+  def dealer_contact_numbers
+    @dealer = Dealer.all
+    @dealer_contact_number = []
+    @dealer.each do |dealer|
+      dealer_contact = dealer.dealer_contact_numbers
+      @dealer_contact_number << {dealer: dealer, dealer_contact_number: dealer_contact}
+    end
+    @dealer_contact_number
+    render json: @dealer_contact_number
+  end
+
   # POST /web/v1/dealers
  
 
