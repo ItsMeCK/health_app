@@ -20,7 +20,6 @@ class NotificationCount < ActiveRecord::Base
 	end
 
 	def reset_count_for_category(action)
-		logger.info "===============#{self.inspect}============="
 		case action
 		when 'Bookings'
 			self.count -= self.bookings
@@ -29,7 +28,6 @@ class NotificationCount < ActiveRecord::Base
 			self.count -= self.offer
 			self.offer = 0
 		when 'Accessories'
-			logger.info "======="
 			self.count -= self.accessories
 			self.accessories = 0
 		when 'Events'
@@ -37,6 +35,5 @@ class NotificationCount < ActiveRecord::Base
 			self.events = 0
 		end
 		self.save	
-		logger.info "===========#{self.inspect}"
 	end	
 end
