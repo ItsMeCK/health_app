@@ -62,7 +62,7 @@ class Mobile::V1::UsersController < ApplicationController
 	end
 
 	def notification_by_category
-		@notifications = current_user.notifications.where(action: params[:category])
+		@notifications = current_user.notifications.where(action: params[:category]).order("updated_at DESC").order("created_at DESC") 
 		render json: @notifications
 	end	
 
