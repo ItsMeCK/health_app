@@ -20,6 +20,10 @@ class UserEvent < ActiveRecord::Base
 	
 
 	def as_json(options={})
-		super(:only => [:id, :user_id, :event_id, :perticipate_event, :user_event_date]).merge({:title => title, :event_date => event_date, :event_time => event_time, :assembly_location => location, :description => description})
+		if Event.exists?(self.event_id)
+		  super(:only => [:id, :user_id, :event_id, :perticipate_event, :user_event_date]).merge({:title => title, :event_date => event_date, :event_time => event_time, :assembly_location => location, :description => description})
+		else
+			super(:only => [:id, :user_id, :event_id, :perticipate_event, :user_event_date])
+		end
 	end
 end
