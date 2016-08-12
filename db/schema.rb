@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811095604) do
+ActiveRecord::Schema.define(version: 20160812053244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,7 +319,7 @@ ActiveRecord::Schema.define(version: 20160811095604) do
   create_table "notification_counts", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "bookings",    default: 0
-    t.integer  "offer"
+    t.integer  "offer",       default: 0
     t.integer  "events",      default: 0
     t.integer  "accessories", default: 0
     t.datetime "created_at",              null: false
@@ -378,11 +378,12 @@ ActiveRecord::Schema.define(version: 20160811095604) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy",   default: false
+    t.boolean  "hog_privacy",               default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.date     "marriage_anniversary_date", default: '1900-01-01'
   end
 
   create_table "rides", force: :cascade do |t|
