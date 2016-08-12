@@ -3,8 +3,7 @@ class ContactNumber < ActiveRecord::Base
 
 
 	def contact_type_name
-			ContactType.find_by_id(self.contact_type_id).try(:label) || "abc"
-		
+		ContactType.find_by_id(self.contact_type_id).try(:label) || "abc"
 	end
 	
 	def as_json(options={})
