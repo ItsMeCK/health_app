@@ -16,11 +16,11 @@ class NotificationCount < ActiveRecord::Base
 			self.events +=1
 			self.count +=1	
 		end
-		self.save!		
+		self.save		
 	end
 
 	def reset_count_for_category(action)
-		puts "===============#{self.inspect}============="
+		logger.info "===============#{self.inspect}============="
 		case action
 		when 'Bookings'
 			self.count -= self.bookings
@@ -29,14 +29,14 @@ class NotificationCount < ActiveRecord::Base
 			self.count -= self.offer
 			self.offer = 0
 		when 'Accessories'
-			puts "======="
+			logger.info "======="
 			self.count -= self.accessories
 			self.accessories = 0
 		when 'Events'
 			self.count -= self.events	
 			self.events = 0
 		end
-		self.save!	
-		puts "===========#{self.inspect}"
+		self.save	
+		logger.info "===========#{self.inspect}"
 	end	
 end
