@@ -28,7 +28,11 @@ class Web::V1::ServiceBookingsController < ApplicationController
       Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
     else
       "N/A"
-    end      
+    end  
+     #mail to admin
+        UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer")
+        #mail to confirm user
+        UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user")    
       #Notification.send_notification(@service_booking.user_id, )
       render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else

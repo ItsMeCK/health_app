@@ -28,7 +28,7 @@ class Notification < ActiveRecord::Base
 			# end
 			# end
 
-		UserMailer.send_notification_mail(@user, @notification_type).deliver
+		#UserMailer.send_notification_mail(@user, @notification_type).deliver
 	end
 
 	def self.proactive_insurance_reminder
