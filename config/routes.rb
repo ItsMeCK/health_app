@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       #api for the all bookings
       post '/get_all_bookings' => 'test_rides#all_bookings'
       resources :service_bookings
+      post '/delete_service_bookings' => 'service_bookings#delete_service_bookings'
       resources :my_bikes
       post '/delete_my_bikes' => 'my_bikes#delete_my_bikes'
       post '/my_bike_image_update' => 'my_bikes#my_bike_image_update'

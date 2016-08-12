@@ -25,10 +25,14 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
       Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
       render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
-    else
-      render json: @service_booking.errors, status: :unprocessable_entity
+        #mail to admin
+        UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer")
+        #mail to confirm user
+        UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user")
+      else
+        render json: @service_booking.errors, status: :unprocessable_entity
+      end
     end
-  end
 
   # PATCH/PUT /web/v1/service_bookings/1
   # PATCH/PUT /web/v1/service_bookings/1.json
@@ -62,13 +66,20 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     render json: @bookings_all
   end
 
+  def delete_service_bookings
+    @service_bookings = params[:service_booking_ids]
+    @service_bookings.each do |service_booking|
+      ServiceBooking.find(service_booking).delete
+    end
+  end
+
   private
 
-    def set_service_booking
-      @service_booking = ServiceBooking.find(params[:id])
-    end
+  def set_service_booking
+    @service_booking = ServiceBooking.find(params[:id])
+  end
 
-    def service_booking_params
-      params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status)
-    end
+  def service_booking_params
+    params.require(:service_booking).permit(:service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status)
+  end
 end

@@ -59,39 +59,43 @@ class UserMailer < ApplicationMailer
 		mail :to => testride.email, :subject => @subject
 	end
 
-	def service_booking(service, booking_type)
-		@vehicle_model = service.model
-		@pickup_request = service.request_pick_up
-		if @pickup_request == true
-			@pickup_req = "Yes"
-		else
-			@pickup_req = "No"
-		end
-		@service_center = @@dealer.find_by_dealer_name(service.service_station)
-		@mail_list = @@setmail.find_by_category("Service booking")
+  #admin service booking mail
+  def service_booking(service, booking_type)
+  	@vehicle_model = service.my_bike.bike
+  	@pickup_request = service.request_pick_up
+  	if @pickup_request == true
+  		@pickup_req = "Yes"
+  	else
+  		@pickup_req = "No"
+  	end
+  	@service_center = @@dealer.find_by_dealer_name(service.service_station)
+  	@mail_list = @@setmail.find_by_category("Service booking")
 		#ServiceBooking_Customer_Address, ServiceBooking_Customer_number
 		@n_template = EmailNotificationTemplate.find_by_category(booking_type)
-		@service_confirm_dealer = @n_template.template % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") }
-		@subject = @n_template.title % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") }
+		@service_confirm_dealer = @n_template.content % { ServiceBooking_Customer_Name:service.my_bike.user.profile.full_name, ServiceBooking_Customer_Email:service.my_bike.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") }
+		@subject = @n_template.title % { ServiceBooking_Customer_Name:service.my_bike.user.profile.full_name, ServiceBooking_Customer_Email:service.my_bike.user.email, ServiceBooking_Car_Model:@vehicle_model }
+
 		mail :to => @mail_list.email, :subject => @subject
 	end
 
-	def service_request_confirm(service, booking_type)
-		@vehicle_model = service.my_bike.bike
-		@service_center = @@dealer.find_by_dealer_name(service.service_station)
-		@pickup_request = service.request_pick_up
-		if @pickup_request == true
-			@pickup_req = "You have selected for the vehicle to be picked up for the Service Booking at the time specified above.<br/>Address:<br/>#{@service_center.try(:address)}</br>"
-		else
-			@pickup_req = "You have indicated that you will bring the vehicle to our #{@service_center.try(:dealer_name)} showroom for the Service booking.<br/>
-			Our #{@service_center.try(:dealer_name)} service center is located at<br/>#{@service_center.try(:address)}<br/>"
-		end
+#mail for user service booking confirmation
+def service_request_confirm(service, booking_type)
+	@vehicle_model = service.my_bike.bike
+	@service_center = @@dealer.find_by_dealer_name(service.service_station)
+	@pickup_request = service.request_pick_up
+	if @pickup_request == true
+		@pickup_req = "You have selected for the vehicle to be picked up for the Service Booking at the time specified above.<br/>Address:<br/>#{@service_center.try(:address)}</br>"
+	else
+		@pickup_req = "You have indicated that you will bring the vehicle to our #{@service_center.try(:dealer_name)} showroom for the Service booking.<br/>
+		Our #{@service_center.try(:dealer_name)} service center is located at<br/>#{@service_center.try(:address)}<br/>"
+	end
     #keywords for service booking
     #customer_number:service.try(:mobile), customer_address:service.try(:address),
     @n_template = EmailNotificationTemplate.find_by_category(booking_type)
-    @service_confirm_user = @n_template.template % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A")}  
-    @subject = @n_template.title % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") } 
-    mail :to => @service_request_confirm.email, :subject => @subject
+    @service_confirm_user = @n_template.template % { ServiceBooking_Customer_Name:service.my_bike.user.profile.full_name, ServiceBooking_Customer_Email:service.my_bike.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Yea:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") }  
+
+    @subject = @n_template.title % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.user.email, ServiceBooking_Car_Model:@vehicle_model } 
+    mail :to => service.user.email, :subject => @subject
 end
 
 def insurance_renewal(insurance)
