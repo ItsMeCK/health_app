@@ -1,0 +1,10 @@
+class Mobile::V1::NotificationsController < ApplicationController
+	respond_to :json
+
+	def destroy
+		Notification.find(params[:id]).destroy
+		message = "Notification has been successfully deleted"
+		render json: { message: message}, status: 204
+	end
+	
+end

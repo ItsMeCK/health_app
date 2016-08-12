@@ -16,24 +16,29 @@ class NotificationCount < ActiveRecord::Base
 			self.events +=1
 			self.count +=1	
 		end
-		self.save		
+		self.save	
+		self.reload	
 	end
 
 	def reset_count_for_category(action)
 		case action
 		when 'Bookings'
-			self.count -= self.bookings
-			self.bookings = 0
+			c = self.count - self.bookings
+			self.update_attribute(:count, c)
+			self.update_attribute(:bookings, 0)
 		when 'Offer'
-			self.count -= self.offer
-			self.offer = 0
+			c = self.count - self.offer
+			self.update_attribute(:count, c)
+			self.update_attribute(:offer, 0)
 		when 'Accessories'
-			self.count -= self.accessories
-			self.accessories = 0
+			c = self.count - self.accessories
+			self.update_attribute(:count, c)
+			self.update_attribute(:accessories, 0)
 		when 'Events'
-			self.count -= self.events	
-			self.events = 0
+			c = self.count - self.events
+			self.update_attribute(:count, c)
+			self.update_attribute(:events, 0)
 		end
-		self.save	
+		self.reload
 	end	
 end
