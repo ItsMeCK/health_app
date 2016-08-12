@@ -45,6 +45,11 @@ class Web::V1::UsersController < ApplicationController
 		end
 	end
 
+	def get_my_bikes
+		@my_bikes = MyBike.where(user_id: params[:user_id])
+		render json: @my_bikes
+	end
+
 	private
 
 	def user_params

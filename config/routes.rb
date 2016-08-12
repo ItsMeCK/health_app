@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     # We are going to list our resources here
     resources :users, :only => [:create, :show, :update, :destroy, :index]
     post '/delete_users' => 'users#delete_users'
+    post '/get_my_bikes' => 'users#get_my_bikes'
     resources :sessions, :only => [:create, :destroy]
     resource :api_token
     resources :profiles
