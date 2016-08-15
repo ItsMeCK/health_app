@@ -1,5 +1,5 @@
 set :stage, :production
-server '136.243.172.92', roles: [:web, :app, :db], primary: true
+server '138.201.19.209', roles: [:web, :app, :db], primary: true
 
 set :puma_threads,    [4, 16]
 set :puma_workers,    1
