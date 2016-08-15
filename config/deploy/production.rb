@@ -64,16 +64,16 @@ namespace :deploy do
     end
   end
 
-  desc 'Seed Database'
-  task :seed do
-    on roles(:app) do
-      within "#{current_path}" do
-        with rails_env: "#{fetch(:stage)}" do
-          execute :rake, "db:seed"
-        end
-      end
-    end
-  end
+  # desc 'Seed Database'
+  # task :seed do
+  #   on roles(:app) do
+  #     within "#{current_path}" do
+  #       with rails_env: "#{fetch(:stage)}" do
+  #         execute :rake, "db:seed"
+  #       end
+  #     end
+  #   end
+  # end
 
   desc 'Restart application'
   task :restart do
