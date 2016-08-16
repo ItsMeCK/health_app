@@ -23,7 +23,6 @@ class Web::V1::BannersController < ApplicationController
     if @banner.save
       @banner.update(image_host_url: set_host + @banner.image.url)
       render json: @banner, status: :created
-      binding.pry
     else
       render json: @banner.errors, status: :unprocessable_entity
     end
