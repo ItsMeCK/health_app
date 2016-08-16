@@ -37,7 +37,7 @@ class MyBike < ActiveRecord::Base
 		bikes = Bike.all
 		#bike_id = bikes.collect { |bike| bike if bike.name == self.bike }
 		bike = Bike.find_by_name(self.bike)
-		bike_image = bike.default_bike_image.image_url
+		bike_image = bike.default_bike_image.try(:image_url)
 		default_image = DefaultBikeImage.last.image_url
 		if bike.present?
 			self.update(bike_id: bike.id, my_bike_image_url: bike_image)

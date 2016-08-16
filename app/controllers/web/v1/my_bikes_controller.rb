@@ -21,6 +21,7 @@ class Web::V1::MyBikesController < ApplicationController
     @my_bike = MyBike.new(my_bike_params)
 
     if @my_bike.save
+       @my_bike.update(image_host_url: set_host + @my_bike.bike_image.url)
       render json: @my_bike, status: :created
     else
       render json: @my_bike.errors, status: :unprocessable_entity
@@ -46,6 +47,7 @@ class Web::V1::MyBikesController < ApplicationController
     if @my_bike.update(my_bike_params)
      @my_bike.bike_image = params[:my_bike][:bike_image]
      @my_bike.save
+     @my_bike.update(image_host_url: set_host + @my_bike.bike_image.url)
      render json: @my_bike
       #head :no_content
     else
@@ -75,6 +77,6 @@ class Web::V1::MyBikesController < ApplicationController
   end
 
   def my_bike_params
-    params.require(:my_bike).permit(:bike, :bike_id, :purchase_date, :my_bike_image_url, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+    params.require(:my_bike).permit(:bike, :image_host_url,:bike_id, :purchase_date, :my_bike_image_url, :default_bike_image_id, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
   end
 end
