@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
 	end
 
 	def destroy_user_event
-		@user_event = UserEvent.where(ride_id: self.id)
+		@user_event = UserEvent.where(event_id: self.id)
 		@user_event.each do |event|
 			event.delete
 		end

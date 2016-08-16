@@ -47,8 +47,10 @@ class Web::V1::TestRidesController < ApplicationController
   # DELETE /web/v1/test_rides/1.json
   def destroy
     notification = Notification.where(notifiable: @test_ride).first
-    notification.destroy
-    Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
+    if notification
+       notification.destroy
+       Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
+    end
     @test_ride.destroy
     head :no_content
   end
