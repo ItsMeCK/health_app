@@ -25,11 +25,12 @@ class NotificationTemplate < ActiveRecord::Base
 			contact_us_notification(notifiable)
 		when I18n.t('Notification.welcome')	
 			welcome_notification(notifiable)
+		when I18n.t('Notification.feedback')
+			feedback_notification(notifiable)	
 		end	
 	end	
 
   def service_booking(service)
-  	logger.info "======================here===="
   	@vehicle_model = service.my_bike.bike
   	@pickup_request = service.request_pick_up
   	@service_center = @@dealer.find_by_dealer_name(service.service_station)
@@ -105,6 +106,12 @@ class NotificationTemplate < ActiveRecord::Base
 		welcome_content = self.content % {Welcome_Customer_Name:user.email}
 		welcome_title = self.title 
 		[welcome_content, welcome_title]
-	end	
+	end
+
+	def feedback_notification(feedback)
+		feedback_content = self.content || 'N/A'
+		feedback_title = self.title || 'N/A'
+		[feedback_content, feedback_title]
+	end
 
 end
