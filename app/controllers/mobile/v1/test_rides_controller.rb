@@ -33,8 +33,8 @@ class Mobile::V1::TestRidesController < ApplicationController
     if @test_ride.update(test_ride_params)
       template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_updated')).last
       Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
-      UserMailer.test_ride_booking(@test_ride, "Test drive mail-dealer").deliver
-      UserMailer.testride_request_confirm(@test_ride, "Test drive mail-user").deliver
+      UserMailer.test_ride_booking(@test_ride, "Test drive update mail-dealer").deliver
+      UserMailer.testride_request_confirm(@test_ride, "Test drive update mail-user").deliver
       render json: @test_ride, status: :ok
     else
       render json: @test_ride.errors, status: :unprocessable_entity
