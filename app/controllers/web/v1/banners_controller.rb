@@ -21,10 +21,12 @@ class Web::V1::BannersController < ApplicationController
     @banner = Banner.new(banner_params)
 
     if @banner.save
+      @banner.update(image_host_url: set_host + @banner.image.url)
       render json: @banner, status: :created
     else
       render json: @banner.errors, status: :unprocessable_entity
     end
+   
   end
 
   # PATCH/PUT /web/v1/banners/1
@@ -33,7 +35,8 @@ class Web::V1::BannersController < ApplicationController
     @banner = Banner.find(params[:id])
 
     if @banner.update(banner_params)
-      head :no_content
+      render json: @banner
+      #head :no_content
     else
       render json: @banner.errors, status: :unprocessable_entity
     end
@@ -45,6 +48,7 @@ class Web::V1::BannersController < ApplicationController
     if @banner.update(banner_params)
       @banner.image = params[:banner][:image]
       @banner.save
+      @banner.update(image_host_url: set_host + @banner.image.url)
       render json: @banner
       #head :no_content
     else
@@ -74,6 +78,6 @@ class Web::V1::BannersController < ApplicationController
   end
 
   def banner_params
-    params.require(:banner).permit(:image, :active)
+    params.require(:banner).permit(:image, :active, :image_host_url)
   end
 end

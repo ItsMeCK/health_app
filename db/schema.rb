@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812053244) do
+ActiveRecord::Schema.define(version: 20160816085644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(version: 20160812053244) do
 
   create_table "banners", force: :cascade do |t|
     t.string   "image"
-    t.boolean  "active",     default: true
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.boolean  "active",         default: true
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "image_host_url"
   end
 
   create_table "bike_colors", force: :cascade do |t|
@@ -306,6 +307,7 @@ ActiveRecord::Schema.define(version: 20160812053244) do
     t.integer  "default_bike_image_id"
     t.string   "my_bike_image_url"
     t.integer  "bike_id"
+    t.string   "image_host_url"
   end
 
   create_table "my_docs", force: :cascade do |t|
