@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   #API for password reset common for both web and mob
   post '/update_passwords' => 'devise/passwords#update_password'
   resource :uploads
-  root 'uploads#upload_bikes'
+  #root 'uploads#upload_bikes'
   resource :uploads do
     collection { 
       post :import
