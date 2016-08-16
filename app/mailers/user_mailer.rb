@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
 	def test_ride_booking(testride, notification_type)
 		@vehicle_model = testride.bike
 		@showroom = @@dealer.find_by_dealer_name("harley davison")
-		@mail_list = @@setmail.find_by_category("Test Ride booking")
+		@mail_list = @@setmail.find_by_category("Test drive booking")
 		@pickup_request = testride.request_pick_up
 		if @pickup_request == true
 			@pickup_req = "Yes"
