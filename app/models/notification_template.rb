@@ -19,6 +19,8 @@ class NotificationTemplate < ActiveRecord::Base
 			service_booking_delete(notifiable)
 		when I18n.t('Notification.test_ride_booking'), I18n.t('Notification.test_ride_updated')
 			test_ride_booking(notifiable)
+		when I18n.t('Notification.insurance_renewal')
+			insurance_renewal_booking(notifiable)	
 		end	
 	end	
 
@@ -79,5 +81,14 @@ class NotificationTemplate < ActiveRecord::Base
 		[test_ride_content, test_ride_title]
 	end
 
+	def insurance_renewal_booking(insurance)
+		@vehicle_model = insurance.bike
+		@insurance_renewal = insurance
+		#InsuranceRenewal_Car_ManufactureYear
+		ex_date = Date.parse(insurance.expiry_date)
+		ins_content = self.content % { InsuranceRenewal_Customer_Name:insurance.name, InsuranceRenewal_Car_Model:insurance.bike, InsuranceRenewal_Car_RegistrationNumber:insurance.registration_number, InsuranceRenewal_Customer_Address:insurance.address, InsuranceRenewal_Customer_Number:insurance.mobile, InsuranceRenewal_Customer_Email:insurance.email, InsuranceRenewal_Policy_Number:insurance.policy_number, InsuranceRenewal_Policy_Company:insurance.insurance_company, vehicle_year:insurance.purchase_date.strftime("%Y"), InsuranceRenewal_Policy_ExpiryDate:insurance.expiry_date, day:ex_date.strftime("%d").to_i.ordinalize, month:ex_date.strftime("%B"), year:ex_date.strftime("%Y"), weekday:ex_date.strftime("%A"), vehicle_kms:insurance.kms }
+		ins_title = self..title  % { InsuranceRenewal_Customer_Name:insurance.name, InsuranceRenewal_Car_Model:insurance.bike, InsuranceRenewal_Car_RegistrationNumber:insurance.registration_number, InsuranceRenewal_Customer_Address:insurance.address, InsuranceRenewal_Customer_Number:insurance.mobile, InsuranceRenewal_Customer_Email:insurance.email, InsuranceRenewal_Policy_Number:insurance.policy_number, InsuranceRenewal_Policy_Company:insurance.insurance_company, vehicle_year:insurance.purchase_date.strftime("%Y"), InsuranceRenewal_Policy_ExpiryDate:insurance.expiry_date, day:ex_date.strftime("%d").to_i.ordinalize, month:ex_date.strftime("%B"), year:ex_date.strftime("%Y"), weekday:ex_date.strftime("%A"), vehicle_kms:insurance.kms }
+		[ins_content, ins_title]
+	end
 
 end
