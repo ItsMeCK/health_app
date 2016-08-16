@@ -6,6 +6,7 @@ class Mobile::V1::FeedbacksController < ApplicationController
     @feedback = Feedback.new(feedback_params)
 
     if @feedback.save
+      Notification.create(recipient: current_user, actor: current_user, action: I18n.t('Notification.contact_us'), notifiable: @feedback)
       render json: @feedback, status: :created
     else
       render json: @feedback.errors, status: :unprocessable_entity

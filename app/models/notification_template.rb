@@ -21,6 +21,8 @@ class NotificationTemplate < ActiveRecord::Base
 			test_ride_booking(notifiable)
 		when I18n.t('Notification.insurance_renewal')
 			insurance_renewal_booking(notifiable)	
+		when I18n.t('Notification.contact_us')	
+			contact_us_notification(notifiable)
 		end	
 	end	
 
@@ -90,5 +92,11 @@ class NotificationTemplate < ActiveRecord::Base
 		ins_title = self.title  % { InsuranceRenewal_Customer_Name:insurance.name, InsuranceRenewal_Car_Model:insurance.bike, InsuranceRenewal_Car_RegistrationNumber:insurance.registration_number, InsuranceRenewal_Customer_Address:insurance.address, InsuranceRenewal_Customer_Number:insurance.mobile, InsuranceRenewal_Customer_Email:insurance.email, InsuranceRenewal_Policy_Number:insurance.policy_number, InsuranceRenewal_Policy_Company:insurance.insurance_company, vehicle_year:insurance.purchase_date.strftime("%Y"), InsuranceRenewal_Policy_ExpiryDate:insurance.expiry_date, day:ex_date.strftime("%d").to_i.ordinalize, month:ex_date.strftime("%B"), year:ex_date.strftime("%Y"), weekday:ex_date.strftime("%A"), vehicle_kms:insurance.kms }
 		[ins_content, ins_title]
 	end
+
+	def contact_us_notification(contact)
+		contact_content = self.content % {ContactUs_AreaOfEnquiry:contact.category, ContactUs_Comment: contact.message}
+		contact_tittle = self.title % { ContactUs_AreaOfEnquiry:contact.category }
+		[contact_content, contact_tittle]
+	end	
 
 end
