@@ -53,7 +53,7 @@ end
   def delete_events
     @events = params[:event_ids]
     @events.each do |event|
-      Event.find(event).delete
+      Event.find(event).destroy
     end
   end
 

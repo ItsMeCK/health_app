@@ -60,7 +60,7 @@ end
   def delete_rides
     @rides = params[:ride_ids]
     @rides.each do |ride|
-      Ride.find(ride).delete
+      Ride.find(ride).destroy
     end
   end
 
