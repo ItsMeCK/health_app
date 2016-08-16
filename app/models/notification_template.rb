@@ -61,7 +61,7 @@ class NotificationTemplate < ActiveRecord::Base
 
 	def test_ride_booking(test_ride)
 		@vehicle_model = test_ride.bike
-		@showroom = @@dealer.find_by_dealer_name("abc")
+		@showroom = @@dealer.find_by_dealer_name("harley davison")
 		@pickup_request = test_ride.request_pick_up
 		if @pickup_request == true
 			@pickup_request = "Yes"
