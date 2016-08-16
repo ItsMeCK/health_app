@@ -10,4 +10,5 @@ class Mobile::V1::NotificationSerializer < ActiveModel::Serializer
   	data[:description] = content || "N/A"
     data
   end  
+
 end
