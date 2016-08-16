@@ -48,12 +48,12 @@ class Web::V1::TestRidesController < ApplicationController
   def destroy
     notification = Notification.where(notifiable: @test_ride).first
     if notification
-       notification.destroy
-       Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
-    end
-    @test_ride.destroy
-    head :no_content
-  end
+     notification.destroy
+     Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
+   end
+   @test_ride.destroy
+   head :no_content
+ end
 
   def all_bookings
    service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
@@ -67,7 +67,7 @@ class Web::V1::TestRidesController < ApplicationController
         Hash[date, insurance_booking] }
         all_bookings_array = service + test_ride + insurance_renewal
         bookings = all_bookings_array.flat_map(&:entries).group_by(&:first)
-        @all_bookings = bookings.map{|k,v| Hash[date: k, all_bookings: v.map(&:last).collect{ |bookings| 
+        @all_bookings = bookings.map{|k,v| Hash[date: k, count: v.map(&:last).count, all_bookings: v.map(&:last).collect{ |bookings| 
           if bookings.try(:service_date) 
             { service_bookings: bookings }
           elsif bookings.try(:ride_date)
@@ -78,24 +78,33 @@ class Web::V1::TestRidesController < ApplicationController
             {contact: bookings }
           end
           }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[k, v.map(&:last)] }  ]  }
-    render json: @all_bookings, :root => "bookings"
-  end
-
-  def delete_test_rides
-    @test_rides = params[:test_ride_ids]
-    @test_rides.each do |test_ride|
-      TestRide.find(test_ride).delete
+          render json: @all_bookings, :root => "bookings"
     end
-  end
 
-  private
+    def bookings_with_day
+      service_bookings = ServiceBooking.where('extract(day  from service_date) = ? AND extract(month  from service_date) = ? AND extract(year  from service_date) = ?', params[:day], params[:month], params[:year])
+      test_ride_bookings = TestRide.where('extract(day  from ride_date) = ? AND extract(month  from ride_date) = ? AND extract(year  from ride_date) = ?', params[:day], params[:month], params[:year])
+      insurance_bookings = InsuranceRenewal.where('extract(day  from purchase_date) = ? AND extract(month  from purchase_date) = ? AND extract(year  from purchase_date) = ?', params[:day], params[:month], params[:year])
+      
+      @bookings = {service_bookings: service_bookings, test_drive_bookings: test_ride_bookings, insurence_renewal_bookings: insurance_bookings }
+      render json: @bookings.to_json, :root => "bookings"
+    end
 
-  def set_test_ride
-    @test_ride = TestRide.find(params[:id])
-  end
+        def delete_test_rides
+          @test_rides = params[:test_ride_ids]
+          @test_rides.each do |test_ride|
+            TestRide.find(test_ride).delete
+          end
+        end
 
-  def test_ride_params
-    params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
-  end
+        private
 
-end
+        def set_test_ride
+          @test_ride = TestRide.find(params[:id])
+        end
+
+        def test_ride_params
+          params.require(:test_ride).permit(:user_id, :address, :name, :mobile, :email, :request_pick_up, :test_ride_done, :test_ride_confirmed, :bike, :ride_date, :ride_time, :location)
+        end
+
+      end

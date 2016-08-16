@@ -49,8 +49,9 @@ Rails.application.routes.draw do
     post '/delete_specification_types' => 'specification_types#delete_specification_types'
     resources :test_rides
     post '/delete_test_rides' => 'test_rides#delete_test_rides'
-      #api for the all bookings
+      #api for the admin dashboard all bookings
       post '/get_all_bookings' => 'test_rides#all_bookings'
+      post '/bookings_with_day' => 'test_rides#bookings_with_day'
       resources :service_bookings
       post '/delete_service_bookings' => 'service_bookings#delete_service_bookings'
       resources :my_bikes
