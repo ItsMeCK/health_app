@@ -23,6 +23,8 @@ class NotificationTemplate < ActiveRecord::Base
 			insurance_renewal_booking(notifiable)	
 		when I18n.t('Notification.contact_us')	
 			contact_us_notification(notifiable)
+		when I18n.t('Notification.welcome')	
+			welcome_notification(notifiable)
 		end	
 	end	
 
@@ -97,6 +99,12 @@ class NotificationTemplate < ActiveRecord::Base
 		contact_content = self.content % {ContactUs_AreaOfEnquiry:contact.category, ContactUs_Comment: contact.message}
 		contact_tittle = self.title % { ContactUs_AreaOfEnquiry:contact.category }
 		[contact_content, contact_tittle]
+	end	
+
+	def welcome_notification(user)
+		welcome_content = self.content % {Welcome_Customer_Name:user.email}
+		welcome_title = self.title 
+		[welcome_content, welcome_title]
 	end	
 
 end

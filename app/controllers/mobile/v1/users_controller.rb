@@ -6,7 +6,8 @@ class Mobile::V1::UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
-			Notification.create(recipient: @user, actor: current_user, action: I18n.t('Notification.welcome'), notifiable: @user)
+			template = NotificationTemplate.where(category: I18n.t('Notification.welcome')).last
+			Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
 			render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
 		else
 			render json: { errors: @user.errors}, status: 422
