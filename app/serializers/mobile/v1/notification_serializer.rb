@@ -1,4 +1,4 @@
-class mobile::V1::NotificationSerializer < ActiveModel::Serializer
+class Mobile::V1::NotificationSerializer < ActiveModel::Serializer
   attributes :id, :action
 
   def attributes
