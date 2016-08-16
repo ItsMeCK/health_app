@@ -1,5 +1,5 @@
 set :stage, :production
-server '136.243.172.92', roles: [:web, :app, :db], primary: true
+server '138.201.19.209', roles: [:web, :app, :db], primary: true
 
 set :puma_threads,    [4, 16]
 set :puma_workers,    1
@@ -64,16 +64,16 @@ namespace :deploy do
     end
   end
 
-  desc 'Seed Database'
-  task :seed do
-    on roles(:app) do
-      within "#{current_path}" do
-        with rails_env: "#{fetch(:stage)}" do
-          execute :rake, "db:seed"
-        end
-      end
-    end
-  end
+  # desc 'Seed Database'
+  # task :seed do
+  #   on roles(:app) do
+  #     within "#{current_path}" do
+  #       with rails_env: "#{fetch(:stage)}" do
+  #         execute :rake, "db:seed"
+  #       end
+  #     end
+  #   end
+  # end
 
   desc 'Restart application'
   task :restart do
