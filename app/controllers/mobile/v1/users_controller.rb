@@ -64,7 +64,7 @@ class Mobile::V1::UsersController < ApplicationController
 
 	def notification_by_category
 		@notifications = current_user.notifications.where(action: params[:category]).order("updated_at DESC").order("created_at DESC") 
-		render json: @notifications
+		render json: @notifications, each_serializer: Mobile::V1::NotificationSerializer
 	end	
 
 	def clear_notification_count
