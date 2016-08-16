@@ -129,13 +129,6 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.datetime "updated_at",              null: false
   end
 
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-  end
-
   create_table "dealer_types", force: :cascade do |t|
     t.string   "dealer_type"
     t.datetime "created_at",  null: false
@@ -354,8 +347,8 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.string   "notifiable_type"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "parent_id"
     t.integer  "notification_template_id"
+    t.integer  "parent_id"
   end
 
   create_table "price_fields", force: :cascade do |t|
@@ -387,11 +380,12 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy",   default: false
+    t.boolean  "hog_privacy",               default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.date     "marriage_anniversary_date", default: '1900-01-01'
   end
 
   create_table "rides", force: :cascade do |t|

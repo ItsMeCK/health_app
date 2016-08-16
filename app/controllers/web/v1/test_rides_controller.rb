@@ -34,9 +34,9 @@ class Web::V1::TestRidesController < ApplicationController
   def update
     @test_ride = TestRide.find(params[:id])
     if @test_ride.update(test_ride_params)
-      notification = Notification.where(notifiable: @test_ride).first
-      notification.update_attribute(:action, I18n.t('Notification.test_ride_updated'))
-      #Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_updated'))
+      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_updated')).last
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
+      
       render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
     else
       render json: @test_ride.errors, status: :unprocessable_entity

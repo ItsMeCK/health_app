@@ -48,7 +48,7 @@ class UserMailer < ApplicationMailer
 			Address:</br>
 			#{testride.try(:address)}<br/>"
 		else
-			@pickup_req = "You have indicated that you will come to our #{testdrive.try(:sales_center)} showroom for the Test Drive<br/>Our #{@showroom.try(:dealer_name)} showroom is located at <br/>
+			@pickup_req = "You have indicated that you will come to our #{testride.try(:sales_center)} showroom for the Test Drive<br/>Our #{@showroom.try(:dealer_name)} showroom is located at <br/>
 			#{@showroom.try(:address)}<br/>"
 			@pickup_request = "No"
 		end
