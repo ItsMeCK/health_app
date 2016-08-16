@@ -12,7 +12,10 @@ class Mobile::V1::InsuranceRenewalsController < ApplicationController
 
     if @insurance_renewal.save
       template = NotificationTemplate.where(category: I18n.t('Notification.insurance_renewal')).last
-      Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
+      user = User.find_by_email(@insurance_renewal.email)
+      Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @insurance_renewal, notification_template: template) if user
+      UserMailer.insurance_renewal(@insurance_renewal).deliver
+      UserMailer.insurance_renewal_confirm(@insurance_renewal).deliver
       render json: @insurance_renewal, status: :created
     else
       render json: @insurance_renewal.errors, status: :unprocessable_entity
