@@ -31,9 +31,11 @@ class Mobile::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.find(params[:id])
 
     if @test_ride.update(test_ride_params)
-      notification = Notification.where(notifiable: @test_ride).first
-      notification.update_attribute(:action, I18n.t('Notification.test_ride_updated'))
-      head :no_content
+      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_updated')).last
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
+      UserMailer.test_ride_booking(@test_ride, "Test drive mail-dealer").deliver
+      UserMailer.testride_request_confirm(@test_ride, "Test drive mail-user").deliver
+      render json: @test_ride, status: :ok
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
