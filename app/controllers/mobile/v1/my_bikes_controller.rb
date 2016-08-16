@@ -22,42 +22,50 @@ class Mobile::V1::MyBikesController < ApplicationController
     @my_bike = MyBike.new(my_bike_params)
 
     if @my_bike.save
-      @my_bike.update(image_host_url: set_host + @my_bike.bike_image.url)
-      render json: @my_bike, status: :created
-    else
-      render json: @my_bike.errors, status: :unprocessable_entity
-    end
+      if set_host == "localhost:3000"
+       @my_bike.update(image_host_url: "http://" + set_host + @my_bike.bike_image.url)
+     else
+       @my_bike.update(image_host_url: "https://" + set_host + @my_bike.bike_image.url)
+     end
+     render json: @my_bike, status: :created
+   else
+    render json: @my_bike.errors, status: :unprocessable_entity
   end
+end
 
   # PATCH/PUT /web/v1/my_bikes/1
   # PATCH/PUT /web/v1/my_bikes/1.json
   def update
-     @my_bike = MyBike.find(params[:id])
+   @my_bike = MyBike.find(params[:id])
      #@my_bike.remove_bike_image! if @my_bike.bike_image
-    if @my_bike.update(my_bike_params)
+     if @my_bike.update(my_bike_params)
 
        #@my_bike.bike_image.store!
-      render json: @my_bike
+       render json: @my_bike
       #head :no_content
     else
       render json: @my_bike.errors, status: :unprocessable_entity
     end
-   
+    
   end
 
   def update_my_bike_image
-     @my_bike = MyBike.find(params[:id])
-     @my_bike.remove_bike_image! if @my_bike.bike_image
-    if @my_bike.update(my_bike_params)
-       @my_bike.bike_image = params[:my_bike][:bike_image]
-       @my_bike.save
-       @my_bike.update(image_host_url: set_host + @my_bike.bike_image.url)
-      render json: @my_bike
+   @my_bike = MyBike.find(params[:id])
+   @my_bike.remove_bike_image! if @my_bike.bike_image
+   if @my_bike.update(my_bike_params)
+     @my_bike.bike_image = params[:my_bike][:bike_image]
+     @my_bike.save
+     if set_host == "localhost:3000"
+       @my_bike.update(image_host_url: "http://" + set_host + @my_bike.bike_image.url)
+     else
+       @my_bike.update(image_host_url: "https://" + set_host + @my_bike.bike_image.url)
+     end
+     render json: @my_bike
       #head :no_content
     else
       render json: @my_bike.errors, status: :unprocessable_entity
     end
-   
+    
   end
 
   # DELETE /web/v1/my_bikes/1
@@ -70,11 +78,11 @@ class Mobile::V1::MyBikesController < ApplicationController
 
   private
 
-    def set_my_bike
-      @my_bike = MyBike.find(params[:id])
-    end
+  def set_my_bike
+    @my_bike = MyBike.find(params[:id])
+  end
 
-    def my_bike_params
-      params.require(:my_bike).permit(:bike, :bike_id, :image_host_url, :purchase_date, :default_bike_image_id, :my_bike_image_url, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
-    end
+  def my_bike_params
+    params.require(:my_bike).permit(:bike, :bike_id, :image_host_url, :purchase_date, :default_bike_image_id, :my_bike_image_url, :registration_number, :insurance_provider, :insurance_number, :insurance_expiry_date, :engine_number, :last_service_date, :user_id, :bike_image, :kms)
+  end
 end
