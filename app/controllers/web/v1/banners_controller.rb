@@ -21,7 +21,11 @@ class Web::V1::BannersController < ApplicationController
     @banner = Banner.new(banner_params)
 
     if @banner.save
-      @banner.update(image_host_url: set_host + @banner.image.url)
+     if set_host == "localhost:3000"
+        @banner.update(image_host_url: "http://" + set_host + @banner.image.url)
+      else
+        @banner.update(image_host_url: "https://" + set_host + @banner.image.url)
+      end
       render json: @banner, status: :created
     else
       render json: @banner.errors, status: :unprocessable_entity
@@ -48,7 +52,11 @@ class Web::V1::BannersController < ApplicationController
     if @banner.update(banner_params)
       @banner.image = params[:banner][:image]
       @banner.save
-      @banner.update(image_host_url: set_host + @banner.image.url)
+      if set_host == "localhost:3000"
+        @banner.update(image_host_url: "http://" + set_host + @banner.image.url)
+      else
+        @banner.update(image_host_url: "https://" + set_host + @banner.image.url)
+      end
       render json: @banner
       #head :no_content
     else
