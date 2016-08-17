@@ -8,6 +8,7 @@ class Mobile::V1::FeedbacksController < ApplicationController
     if @feedback.save
       template = NotificationTemplate.where(category: I18n.t('Notification.feedback')).last
       Notification.create(recipient: current_user, actor: current_user, action: 'Offer', notifiable: @feedback, notification_template: template)
+      UserMailer.feedback(@feedback).deliver
       render json: @feedback, status: :created
     else
       render json: @feedback.errors, status: :unprocessable_entity

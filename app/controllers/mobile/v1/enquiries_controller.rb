@@ -8,6 +8,7 @@ class Mobile::V1::EnquiriesController < ApplicationController
     if @enquiry.save
       template = NotificationTemplate.where(category: I18n.t('Notification.contact_us')).last
       Notification.create(recipient: current_user, actor: current_user, action: 'Offer', notifiable: @enquiry, notification_template: template)
+      UserMailer.contact_us(@enquiry).deliver
       render json: @enquiry, status: :created
     else
       render json: @enquiry.errors, status: :unprocessable_entity
