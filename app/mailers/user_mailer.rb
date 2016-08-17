@@ -162,4 +162,13 @@ def feedback(feedback)
 	mail :to => @mail_list.email, :subject => @subject
 end
 
+def contact_us(enquiry)
+	@mail_list = @@setmail.find_by_category("Enquiry")
+	@showroom = @@dealer.find_by_dealer_name("harley davison")
+
+	@n_template = EmailNotificationTemplate.find_by_category("Contact us mail-dealer")
+	enq_content = @n_template.content % {ContactUs_Customer_Name: enquiry.name, ContactUs_Customer_Number: enquiry.phone, ContactUs_Customer_Email: enquiry.email, ContactUs_Dealerership_Name: @showroom.name, ContactUs_AreaOfEnquiry: enquiry.category, ContactUs_Comment: enquiry.message}
+	enq_title = @n_template.title % {ContactUs_AreaOfEnquiry: enquiry.category}
+end	
+
 end
