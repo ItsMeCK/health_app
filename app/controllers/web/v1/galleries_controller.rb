@@ -34,6 +34,7 @@ class Web::V1::GalleriesController < ApplicationController
     @gallery = Gallery.find(params[:id])
 
     if @gallery.update(gallery_params)
+      @gallery.update(image: params[:gallery][:image])
       head :no_content
     else
       render json: @gallery.errors, status: :unprocessable_entity

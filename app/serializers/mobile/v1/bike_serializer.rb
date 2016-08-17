@@ -6,7 +6,7 @@ class Mobile::V1::BikeSerializer < ActiveModel::Serializer
   end 
 
   def pricing
-  	  object.pricings.minimum(:value)
+  	  object.pricings.collect { |price| price.price_field }.map! { |price_field| price_field if price_field.name == "Ex-Showroom"}.compact
   end
 
 end
