@@ -29,7 +29,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
         #mail to admin
          UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer").deliver
         #mail to confirm user
-        #UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user").deliver
+        UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user").deliver
       else
         render json: @service_booking.errors, status: :unprocessable_entity
       end
