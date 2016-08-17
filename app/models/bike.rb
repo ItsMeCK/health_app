@@ -5,6 +5,7 @@ class Bike < ActiveRecord::Base
 	has_many :key_features
 	has_many :pricings
 	has_many :bike_colors
+	has_many :galleries
 	has_many :service_schedules
 
 
@@ -47,8 +48,12 @@ class Bike < ActiveRecord::Base
 		self.bike_colors
 	end
 
+	def gallery
+		self.galleries
+	end
+
 	def as_json(options={})
-		super.as_json(options).merge({:bike_type_name => bike_type_name, :bike_image_url => bike_image_url, :specifications => bike_specifications, :key_features => key_feature, :price => pricing, :bike_colors => bike_color })
+		super.as_json(options).merge({:bike_type_name => bike_type_name, :bike_image_url => bike_image_url, :specifications => bike_specifications, :key_features => key_feature, :price => pricing, :bike_colors => bike_color, :bike_gallery => gallery })
 	end
 
 	def self.import(file)

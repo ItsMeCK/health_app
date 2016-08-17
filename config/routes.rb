@@ -135,6 +135,8 @@ Rails.application.routes.draw do
       post '/create_bulk_notification' => 'notifications#create_bulk_notification'
       resources :notifications 
       post '/delete_notifications' => 'notifications#delete_notifications'
+      #bike gallery
+      resources :galleries
 
     end
   end

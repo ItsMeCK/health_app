@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816085644) do
+ActiveRecord::Schema.define(version: 20160817072111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,13 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "dealer_dealer_types", force: :cascade do |t|
+    t.integer  "dealer_id"
+    t.integer  "dealer_type_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "dealer_types", force: :cascade do |t|
     t.string   "dealer_type"
     t.datetime "created_at",  null: false
@@ -226,6 +233,13 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.text     "document_list"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+  end
+
+  create_table "galleries", force: :cascade do |t|
+    t.integer  "bike_id"
+    t.text     "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "hog_registrations", force: :cascade do |t|
@@ -347,8 +361,8 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.string   "notifiable_type"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "notification_template_id"
     t.integer  "parent_id"
+    t.integer  "notification_template_id"
   end
 
   create_table "price_fields", force: :cascade do |t|
@@ -380,12 +394,11 @@ ActiveRecord::Schema.define(version: 20160816085644) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy",               default: false
+    t.boolean  "hog_privacy",   default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",                                       null: false
-    t.datetime "updated_at",                                       null: false
-    t.date     "marriage_anniversary_date", default: '1900-01-01'
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "rides", force: :cascade do |t|
