@@ -157,7 +157,7 @@ def feedback(feedback)
 	@feedback = feedback
 	@mail_list = @@setmail.find_by_category("Feedback")
 	@n_template = EmailNotificationTemplate.find_by_category("Feedback mail-dealer")
-	@feedback_confirm_dealer = @n_template.template % { Feedback_Customer_Name:feedback.name, Feedback_Customer_Number:feedback.mobile, Feedback_Customer_Email:feedback.email, Feedback_Title:feedback.feedback_type, Feedback_Description:feedback.comment  }
+	@feedback_confirm_dealer = @n_template.content % { Feedback_Customer_Name:feedback.name, Feedback_Customer_Number:feedback.mobile, Feedback_Customer_Email:feedback.email, Feedback_Title:feedback.feedback_type, Feedback_Description:feedback.comment  }
 	@subject = @n_template.title % { Feedback_Customer_Name:feedback.name, Feedback_Customer_Number:feedback.mobile, Feedback_Customer_Email:feedback.email, Feedback_Title:feedback.feedback_type, Feedback_Description:feedback.comment }
 	mail :to => @mail_list.email, :subject => @subject
 end
