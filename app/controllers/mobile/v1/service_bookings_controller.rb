@@ -43,6 +43,8 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     if @service_booking.update(service_booking_params)
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_updated')).last
       Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
+      UserMailer.service_booking(@service_booking, "Service confirmation update mail-dealer").deliver
+      UserMailer.service_request_confirm(@service_booking, "Service confirmation update mail-user").deliver
       render json: @service_booking, status: :ok, serializer: Mobile::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
