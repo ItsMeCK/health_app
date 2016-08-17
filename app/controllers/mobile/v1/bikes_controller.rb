@@ -23,25 +23,29 @@ class Mobile::V1::BikesController < ApplicationController
       "No Bikes"
     end
     begin
-      if params[:start_price_value] 
-        @bikes_price = Bike.joins(:pricings).where("pricings.value >= ? AND pricings.value <= ?", params[:start_price_value], params[:end_price_value]) if params[:end_price_value]
+      if params[:start_price_value]
+        @bikes_price =  @bikes.where('start_price >= ? AND end_price <= ?', params[:start_price_value], params[:end_price_value]) if params[:end_price_value]
+        #@bikes_price = Bike.joins(:pricings).where("cast(pricings.value as int) >= ? AND cast(pricings.value as int) <= ?", params[:start_price_value], params[:end_price_value]) if params[:end_price_value]
       end
     rescue
       "No Bikes"
     end  
     begin
-      @bikes_specification_type = Bike.joins(:specifications).where(specifications: {specification_type: SpecificationType.where(name: params[:engine])}) if params[:engine] 
+      # binding.pry
+      # @bikes_specification_type = @bikes.
+      #@bikes_specification_type = Bike.joins(:specifications).where("specifications.name = ?", "Engine") if params[:engine] 
     rescue
       "No Bikes"
     end  
     begin
       if params[:maximum_cc]
-        @bikes_specification =  Bike.joins(:specifications).where("specifications.value >= ? AND specifications.value <= ?", params[:minimum_cc], params[:maximum_cc]) if params[:minimum_cc] 
+        @bikes_specification = @bikes.where(bike_cc: (params[:minimum_cc])..(params[:maximum_cc]))if params[:minimum_cc] 
+        #Bike.joins(:specifications).where("specifications.value >= ? AND specifications.value <= ?", params[:minimum_cc], params[:maximum_cc]) if params[:minimum_cc] 
       end
     rescue
       "No Bikes"
     end  
-    bikes = @bikes_type.to_a + @bikes_price.to_a + @bikes_specification_type.to_a + @bikes_specification.to_a
+    bikes = @bikes_type + @bikes_price + @bikes_specification # + @bikes_specification.to_a
     @bike = bikes.uniq
      render json: @bike
   end
