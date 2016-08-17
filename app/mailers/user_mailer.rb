@@ -112,7 +112,7 @@ def insurance_renewal(insurance)
 end
 
 def insurance_renewal_confirm(insurance)
-	@vehicle_model = insurance.model
+	@vehicle_model = insurance.bike
 	@n_template = EmailNotificationTemplate.find_by_category("Insurance renewal mail-user")
 	ex_date = Date.parse(insurance.expiry_date)
 
