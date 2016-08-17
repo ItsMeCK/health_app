@@ -1,5 +1,5 @@
 class Mobile::V1::NotificationSerializer < ActiveModel::Serializer
-  attributes :id, :action
+  attributes :id, :action, :created_at
 
   def attributes
   	data = super
