@@ -27,6 +27,7 @@ class Mobile::V1::ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
+      current_user.hog_registration.update(profile_params)
       render json: @profile, status: :ok
     else
       render json: @profile.errors, status: :unprocessable_entity
