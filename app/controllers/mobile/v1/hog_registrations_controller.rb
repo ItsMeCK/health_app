@@ -27,7 +27,7 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
     @hog_registration = HogRegistration.find(params[:id])
 
     if @hog_registration.update(hog_registration_params)
-      current_user.profile.update(hog_registration_params)
+      current_user.profile.update(hog_registration_params.except(:show_hog))
       head :no_content
     else
       render json: @hog_registration.errors, status: :unprocessable_entity
