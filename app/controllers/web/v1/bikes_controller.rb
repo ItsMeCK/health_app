@@ -21,7 +21,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.new(bike_params)
 
     if @bike.save
-      render json: @bike, status: :created, serializer: Web::V1::BikeSerializer
+      render json: @bike, status: :created #serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
     end
@@ -61,6 +61,6 @@ class Web::V1::BikesController < ApplicationController
   end
 
   def bike_params
-    params.require(:bike).permit(:id, :name, :description, :bike_type_id, :available, :tagline, :display_order, :service_schedule_url)
+    params.require(:bike).permit(:id, :start_price, :end_price, :engine, :bike_cc, :name, :description, :bike_type_id, :available, :tagline, :display_order, :service_schedule_url)
   end
 end
