@@ -77,7 +77,7 @@ class Web::V1::TestRidesController < ApplicationController
           else
             {contact: bookings }
           end
-          }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash[k, v.map(&:last)] }  ]  }
+          }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash["#{k}_count": v.map(&:last).count, "#{k}": v.map(&:last)  ] }  ]  }
           render json: @all_bookings, :root => "bookings"
     end
 
