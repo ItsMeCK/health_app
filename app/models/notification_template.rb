@@ -17,7 +17,7 @@ class NotificationTemplate < ActiveRecord::Base
 			service_booking_update(notifiable)
 		when I18n.t('Notification.service_booking_destroyed')
 			service_booking_delete(notifiable)
-		when I18n.t('Notification.test_ride_booking'), I18n.t('Notification.test_ride_updated')
+		when I18n.t('Notification.test_ride_booking'), I18n.t('Notification.test_ride_updated'), I18n.t('Notification.test_ride_destroyed')
 			test_ride_booking(notifiable)
 		when I18n.t('Notification.insurance_renewal')
 			insurance_renewal_booking(notifiable)	
