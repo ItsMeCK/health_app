@@ -56,8 +56,8 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
   def destroy
     template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_destroyed')).last
     Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
-    UserMailer.service_booking(@service_booking, "Service confirmation delete mail-dealer").deliver
-    UserMailer.service_request_confirm(@service_booking, "Service confirmation delete mail-user").deliver
+    UserMailer.service_booking(@service_booking, "Service booking delete mail-dealer").deliver
+    UserMailer.service_request_confirm(@service_booking, "Service booking delete mail-user").deliver
     @service_booking.update_attribute(:status, 'Canceled')
     head :no_content
   end
