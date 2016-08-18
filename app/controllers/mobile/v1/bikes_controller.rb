@@ -24,14 +24,13 @@ class Mobile::V1::BikesController < ApplicationController
     end
     begin
       if params[:start_price_value]
-        @bikes_price =  @bikes.where('start_price >= ? AND end_price <= ?', params[:start_price_value], params[:end_price_value]) if params[:end_price_value]
+        @bikes_price =  @bikes.where(start_price: (params[:start_price_value])..(params[:end_price_value])) if params[:end_price_value]
         #@bikes_price = Bike.joins(:pricings).where("cast(pricings.value as int) >= ? AND cast(pricings.value as int) <= ?", params[:start_price_value], params[:end_price_value]) if params[:end_price_value]
       end
     rescue
       "No Bikes"
     end  
     begin
-      binding.pry
       @bikes_specification_type = @bikes.where("engine in (?)", params[:engine])
       #@bikes_specification_type = Bike.joins(:specifications).where("specifications.name = ?", "Engine") if params[:engine] 
     rescue
