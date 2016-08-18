@@ -31,8 +31,8 @@ class Mobile::V1::BikesController < ApplicationController
       "No Bikes"
     end  
     begin
-      # binding.pry
-      # @bikes_specification_type = @bikes.
+      binding.pry
+      @bikes_specification_type = @bikes.where("engine in (?)", params[:engine])
       #@bikes_specification_type = Bike.joins(:specifications).where("specifications.name = ?", "Engine") if params[:engine] 
     rescue
       "No Bikes"
@@ -45,9 +45,9 @@ class Mobile::V1::BikesController < ApplicationController
     rescue
       "No Bikes"
     end  
-    bikes = @bikes_type + @bikes_price + @bikes_specification # + @bikes_specification.to_a
+    bikes = @bikes_type + @bikes_price + @bikes_specification  + @bikes_specification_type
     @bike = bikes.uniq
-     render json: @bike
+    render json: @bike
   end
 
   private
