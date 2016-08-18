@@ -81,8 +81,10 @@ Rails.application.routes.draw do
       post '/update_accessory_categery_image' => 'accessories#update_accessory_categery_image'
       resources :events
       post '/delete_events' => 'events#delete_events'
+      post '/user_with_event_information' => 'events#user_event_inforamtion'
       resources :rides
       post '/delete_rides' => 'rides#delete_rides'
+      post '/user_with_ride_information' => 'rides#user_inforamtion'
       resources :my_docs
       post '/delete_my_docs' => 'my_docs#delete_my_docs'
       post '/my_docs_image_update' => 'my_docs#my_docs_image_update'

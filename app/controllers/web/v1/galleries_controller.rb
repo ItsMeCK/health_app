@@ -6,13 +6,13 @@ class Web::V1::GalleriesController < ApplicationController
   def index
     @galleries = Gallery.all
 
-    render json: @galleries
+    render json: @galleries, each_serializer: Web::V1::GallerySerializer
   end
 
   # GET /web/v1/galleries/1
   # GET /web/v1/galleries/1.json
   def show
-    render json: @gallery
+    render json: @gallery, serializer: Web::V1::GallerySerializer
   end
 
   # POST /web/v1/galleries
@@ -22,7 +22,7 @@ class Web::V1::GalleriesController < ApplicationController
      @gallery.image = params[:gallery][:image]
 
     if @gallery.save
-      render json: @gallery, status: :created
+      render json: @gallery, status: :created, serializer: Web::V1::GallerySerializer
     else
       render json: @gallery.errors, status: :unprocessable_entity
     end
@@ -35,6 +35,7 @@ class Web::V1::GalleriesController < ApplicationController
 
     if @gallery.update(gallery_params)
       @gallery.update(image: params[:gallery][:image])
+      #render json: @gallery
       head :no_content
     else
       render json: @gallery.errors, status: :unprocessable_entity

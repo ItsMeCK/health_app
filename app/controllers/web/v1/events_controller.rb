@@ -56,6 +56,12 @@ end
       Event.find(event).destroy
     end
   end
+  #user with event information
+  def user_event_inforamtion
+     @user_events = UserEvent.where(event_id: params[:event_id])
+
+     render json: @user_events, root: "user_event_information", each_serializer: Web::V1::UserEventInformationSerializer
+  end
 
   private
 

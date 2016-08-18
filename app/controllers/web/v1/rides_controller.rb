@@ -64,6 +64,12 @@ end
     end
   end
 
+  def user_inforamtion
+    @user_rides = UserRide.where(ride_id: params[:ride_id])
+
+    render json: @user_rides, root: "user_ride_information", each_serializer: Web::V1::UserInformationSerializer
+  end
+
   private
 
   def set_ride
