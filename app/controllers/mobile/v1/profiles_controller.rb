@@ -27,7 +27,7 @@ class Mobile::V1::ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
-      current_user.hog_registration.update(profile_params)
+      current_user.hog_registration.update(profile_params.except(:marriage_anniversary_date))
       render json: @profile, status: :ok
     else
       render json: @profile.errors, status: :unprocessable_entity
@@ -63,6 +63,6 @@ end
   end
 
   def profile_params
-    params.require(:profile).permit(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id)
+    params.require(:profile).permit(:full_name, :mobile, :email, :dob, :gender, :bike_owned, :riding_since, :address, :location, :profession, :bio, :hog_privacy, :profile_image, :user_id, :marriage_anniversary_date)
   end
 end
