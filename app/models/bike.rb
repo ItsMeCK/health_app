@@ -97,6 +97,17 @@ class Bike < ActiveRecord::Base
        	"No Bikes"
        end
 
+       begin
+       	   if params[:bike_type].nil? && params[:Engine].nil?
+			  if params[:start_price_value] && params[:end_price_value] && params[:minimum_cc] && params[:maximum_cc]	  
+				@bikes_price = @bikes.where(start_price: (params[:start_price_value])..(params[:end_price_value]))
+				@bikes_price_cc = @bikes_price.where(bike_cc: (params[:minimum_cc])..(params[:maximum_cc]))
+              end 
+           end
+       rescue
+       	"No Bikes"
+       end
+
          #bikes = @bikes_type + @bikes_price + @bikes_specification  + @bikes_specification_type
      end
 

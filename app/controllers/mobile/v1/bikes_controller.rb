@@ -16,9 +16,9 @@ class Mobile::V1::BikesController < ApplicationController
   end
 
   def bike_filter
-   bikes = Bike.filter(params)
-    @bike = bikes.uniq
-    render json: @bike
+   @bikes = Bike.filter(params)
+    #@bike = bikes.uniq
+    render json: @bikes
   end
 
   private
