@@ -63,7 +63,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
   end
 
   def my_bookings
-    @old_bookings = (ServiceBooking.where('user_id = ? AND service_date < ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order)
+    @old_bookings = (ServiceBooking.where('(user_id = ? AND service_date < ?) OR status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order + TestRide.where('(user_id = ? AND ride_date < ?) OR status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order)
     @new_bookings = (ServiceBooking.where('user_id = ? AND service_date > ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order)
     @bookings_all = Hash.new
     @bookings_all = {:old_bookings => @old_bookings, :new_bookings =>  @new_bookings}
