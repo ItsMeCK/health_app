@@ -7,6 +7,10 @@ class Mobile::V1::UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
 			template = NotificationTemplate.where(category: I18n.t('Notification.welcome')).last
+			mobile = params[:user][:mobile] || 0
+			name = params[:user][:name]
+			Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
+  		HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile)
 			Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
 			UserMailer.welcome_user(@user).deliver
 			render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer

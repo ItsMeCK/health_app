@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   # Callbacks
   before_save :ensure_authentication_token
-  after_create :create_profile_hog
+  #after_create :create_profile_hog
   accepts_nested_attributes_for :profile
   after_create :create_wishlist
 
@@ -43,10 +43,9 @@ class User < ActiveRecord::Base
 
 	private
 
-  def create_profile_hog
-  	Profile.create( user_id: self.id, email: self.email )
-  	HogRegistration.create( user_id: self.id, email: self.email )
-  end
+  # moved the code inside controller#create
+  # def create_profile_hog
+  # end
 
   def create_wishlist
     Wishlist.create(user_id: self.id)
