@@ -58,13 +58,13 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
     UserMailer.service_booking(@service_booking, "Service confirmation delete mail-dealer").deliver
     UserMailer.service_request_confirm(@service_booking, "Service confirmation delete mail-user").deliver
-    @service_booking.update_attribute(:status, 'Deleted')
+    @service_booking.update_attribute(:status, 'Canceled')
     head :no_content
   end
 
   def my_bookings
-    @old_bookings = (ServiceBooking.where('user_id = ? AND service_date < ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order)
-    @new_bookings = (ServiceBooking.where('user_id = ? AND service_date > ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order)
+    @old_bookings = (ServiceBooking.where('user_id = ? AND service_date < ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date < ? AND status = ?', params[:user_id], Date.today, 'Canceled').order(:updated_at).reverse_order)
+    @new_bookings = (ServiceBooking.where('user_id = ? AND service_date > ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order + TestRide.where('user_id = ? AND ride_date > ? AND status = ?', params[:user_id], Date.today, 'Active').order(:updated_at).reverse_order)
     @bookings_all = Hash.new
     @bookings_all = {:old_bookings => @old_bookings, :new_bookings =>  @new_bookings}
     render json: @bookings_all
