@@ -22,10 +22,12 @@ class Mobile::V1::MyBikesController < ApplicationController
     @my_bike = MyBike.new(my_bike_params)
 
     if @my_bike.save
-      if set_host == "localhost:3000"
-       @my_bike.update(image_host_url: "http://" + set_host + @my_bike.bike_image.url)
-     else
-       @my_bike.update(image_host_url: "https://" + set_host + @my_bike.bike_image.url)
+      if @my_bike.bike_image.present?
+        if set_host == "localhost:3000"
+         @my_bike.update(image_host_url: "http://" + set_host + @my_bike.bike_image.url)
+       else
+         @my_bike.update(image_host_url: "https://" + set_host + @my_bike.bike_image.url)
+       end
      end
      render json: @my_bike, status: :created
    else
