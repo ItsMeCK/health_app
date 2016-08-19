@@ -21,19 +21,18 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.new(service_booking_params)
 
     if @service_booking.save
- 
       user = User.find @service_booking.user_id
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
       Notification.create(recipient: current_user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
       render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
-        #mail to admin
-         UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer").deliver
-        #mail to confirm user
-        UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user").deliver
-      else
+      #mail to admin
+      UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer").deliver
+      #mail to confirm user
+      UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user").deliver
+    else
         render json: @service_booking.errors, status: :unprocessable_entity
-      end
     end
+  end
 
   # PATCH/PUT /web/v1/service_bookings/1
   # PATCH/PUT /web/v1/service_bookings/1.json

@@ -21,19 +21,13 @@ class Web::V1::ServiceBookingsController < ApplicationController
   def create
     @service_booking = ServiceBooking.new(service_booking_params)
     if @service_booking.save 
-      
-    if User.exists?(@service_booking.user_id)
       user = User.find @service_booking.user_id
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
       Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
-    else
-      "N/A"
-    end  
      #mail to admin
-        UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer")
+      UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer")
         #mail to confirm user
-        UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user")    
-      #Notification.send_notification(@service_booking.user_id, )
+      UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user")    
       render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
@@ -47,7 +41,8 @@ class Web::V1::ServiceBookingsController < ApplicationController
       user = User.find @service_booking.user_id
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_updated')).last
       Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
-
+      UserMailer.service_booking(@service_booking, "Service confirmation update mail-dealer").deliver
+      UserMailer.service_request_confirm(@service_booking, "Service confirmation update mail-user").deliver
       render json: @service_booking, status: :ok, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
@@ -60,8 +55,9 @@ class Web::V1::ServiceBookingsController < ApplicationController
     user = User.find @service_booking.user_id
     template = NotificationTemplate.where(category: I18n.t('Notification.service_booking_destroyed')).last
     Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
-    @service_booking.destroy
-
+    UserMailer.service_booking(@service_booking, "Service booking delete mail-dealer").deliver
+    UserMailer.service_request_confirm(@service_booking, "Service booking delete mail-user").deliver
+    @service_booking.delay(run_at: 5.seconds.from_now).destroy
     head :no_content
   end
 

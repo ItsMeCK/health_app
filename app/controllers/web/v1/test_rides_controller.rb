@@ -21,9 +21,13 @@ class Web::V1::TestRidesController < ApplicationController
   def create
     @test_ride = TestRide.new(test_ride_params)
     if @test_ride.save
-      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_booking')).last
-      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
       render json: @test_ride, status: 200
+
+      # Create Notifications
+      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_booking')).last
+      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)
+      UserMailer.test_ride_booking(@test_ride, "Test drive mail-dealer").deliver
+      UserMailer.testride_request_confirm(@test_ride, "Test drive mail-user").deliver
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -34,10 +38,12 @@ class Web::V1::TestRidesController < ApplicationController
   def update
     @test_ride = TestRide.find(params[:id])
     if @test_ride.update(test_ride_params)
+      render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
+
       template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_updated')).last
       Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
-      
-      render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
+      UserMailer.test_ride_booking(@test_ride, "Test drive update mail-dealer").deliver
+      UserMailer.testride_request_confirm(@test_ride, "Test drive update mail-user").deliver
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -46,13 +52,11 @@ class Web::V1::TestRidesController < ApplicationController
   # DELETE /web/v1/test_rides/1
   # DELETE /web/v1/test_rides/1.json
   def destroy
-    notification = Notification.where(notifiable: @test_ride).first
-    if notification
-     notification.destroy
-     Notification.send_notification(@test_ride.user, I18n.t('Notification.test_ride_destroyed'))
-   end
-   @test_ride.destroy
-   head :no_content
+    template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_destroyed')).last
+    Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
+    UserMailer.test_ride_booking(@test_ride, "Test drive delete mail-dealer").deliver
+    UserMailer.testride_request_confirm(@test_ride, "Test drive delete mail-user").deliver
+    @test_ride.delay(run_at: 5.seconds.from_now).destroy
  end
 
   def all_bookings
