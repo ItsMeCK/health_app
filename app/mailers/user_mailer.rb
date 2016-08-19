@@ -174,7 +174,7 @@ end
 
 def welcome_user(user)
 	@n_template = EmailNotificationTemplate.find_by_category("Welcome mail-user")
-	@content = @n_template.content % {Welcome_Customer_Name:user.email, Welcome_Customer_Email:user.email}
+	@content = @n_template.content % {Welcome_Customer_Name:user.profile.full_name, Welcome_Customer_Email:user.email}
 	title = @n_template.title
 	mail :to => user.email, :subject => title
 end

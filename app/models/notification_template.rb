@@ -103,7 +103,7 @@ class NotificationTemplate < ActiveRecord::Base
 	end	
 
 	def welcome_notification(user)
-		welcome_content = self.content % {Welcome_Customer_Name:user.email}
+		welcome_content = self.content % {Welcome_Customer_Name:user.profile.full_name}
 		welcome_title = self.title 
 		[welcome_content, welcome_title]
 	end
