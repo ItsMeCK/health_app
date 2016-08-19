@@ -5,9 +5,13 @@ class Web::V1::ServiceBookingSerializer < ActiveModel::Serializer
   def attributes
   	data = super
   	data[:service_time] = (data[:service_time]).strftime("%H:%M:%S %p")
-  	data[:my_bike_name] = MyBike.find(data[:my_bike_id]).bike if MyBike.exists?(data[:my_bike_id])
-  	data[:user_email] = MyBike.find(data[:my_bike_id]).user.try(:email) if MyBike.exists?(data[:my_bike_id])
-  	data
+  	if MyBike.exists?(data[:my_bike_id])
+	  	data[:my_bike_name] = MyBike.find(data[:my_bike_id]).bike if MyBike.exists?(data[:my_bike_id]) || "null"
+	  	data[:user_email] = MyBike.find(data[:my_bike_id]).user.try(:email) if MyBike.exists?(data[:my_bike_id]) || "null"
+	  	data[:user_name] = MyBike.find(data[:my_bike_id]).user.profile.try(:full_name) if MyBike.exists?(data[:my_bike_id]) || "null"
+	  	data[:user_mobile] = MyBike.find(data[:my_bike_id]).user.try(:mobile) if MyBike.exists?(data[:my_bike_id]) || "null"
+	  	data
+	end
   end
 
 end
