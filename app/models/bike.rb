@@ -70,12 +70,12 @@ class Bike < ActiveRecord::Base
 		begin
 			if params[:bike_type] && params[:start_price_value] && params[:end_price_value] && params[:minimum_cc] && params[:maximum_cc]
 				@bikes_type =  Bike.joins(:bike_type).where(bike_types: { name: params[:bike_type]})
-				@bikes_type_with_price = @bikes_type.where(bike_price: (params[:start_price_value])..(params[:end_price_value]))
-				@bikes_type_with_price_cc = @bikes_type_with_price.where(bike_cc: (params[:minimum_cc])..(params[:maximum_cc]))
+				@bikes_type_with_price = @bikes_type.where(bike_price: (params[:start_price_value].to_i)..(params[:end_price_value].to_i))
+				@bikes_type_with_price_cc = @bikes_type_with_price.where(bike_cc: (params[:minimum_cc].to_i)..(params[:maximum_cc].to_i))
 				if params[:Engine].nil?
-					@bikes_type_with_price_cc
+					@bike = @bikes_type_with_price_cc
 				else
-					@bikes_type_engine = @bikes_type_with_price_cc.where("engine in (?)", params[:Engine])          
+					@bike = @bikes_type_with_price_cc.where("engine in (?)", params[:Engine])          
 				end 	 
 			end 
 		rescue
@@ -85,13 +85,13 @@ class Bike < ActiveRecord::Base
 		begin
 			if params[:Engine] && params[:start_price_value] && params[:end_price_value] && params[:minimum_cc] && params[:maximum_cc]
 				@bike_engine = @bikes.where("engine in (?)", params[:Engine])	  
-				@bikes_engine_with_price = @bike_engine.where(bike_price: (params[:start_price_value])..(params[:end_price_value]))
-				@bikes_engine_with_price_cc = @bikes_engine_with_price.where(bike_cc: (params[:minimum_cc])..(params[:maximum_cc]))
+				@bikes_engine_with_price = @bike_engine.where(bike_price: (params[:start_price_value].to_i)..(params[:end_price_value].to_i))
+				@bikes_engine_with_price_cc = @bikes_engine_with_price.where(bike_cc: (params[:minimum_cc].to_i)..(params[:maximum_cc].to_i))
 				if params[:bike_type].nil?
-					@bikes_engine_with_price_cc
+				  @bike = @bikes_engine_with_price_cc
 				else
                	#@bikes_type =  Bike.joins(:bike_type).where(bike_types: { name: params[:bike_type]})
-               	@bikes_engine_type = @bikes_engine_with_price_cc.joins(:bike_type).where(bike_types: { name: params[:bike_type]})         
+               	  @bike = @bikes_engine_with_price_cc.joins(:bike_type).where(bike_types: { name: params[:bike_type]})         
                end 	 
            end 
        rescue
@@ -101,14 +101,14 @@ class Bike < ActiveRecord::Base
        begin
        	   if params[:bike_type].nil? && params[:Engine].nil?
 			  if params[:start_price_value] && params[:end_price_value] && params[:minimum_cc] && params[:maximum_cc]	  
-				@bikes_price = @bikes.where(bike_price: (params[:start_price_value])..(params[:end_price_value]))
-				@bikes_price_cc = @bikes_price.where(bike_cc: (params[:minimum_cc])..(params[:maximum_cc]))
+				@bikes_price = @bikes.where(bike_price: (params[:start_price_value].to_i)..(params[:end_price_value].to_i))
+				@bike = @bikes_price.where(bike_cc: (params[:minimum_cc].to_i)..(params[:maximum_cc].to_i))
               end 
            end
        rescue
        	"No Bikes"
        end
-
+       return @bike
          #bikes = @bikes_type + @bikes_price + @bikes_specification  + @bikes_specification_type
      end
 
