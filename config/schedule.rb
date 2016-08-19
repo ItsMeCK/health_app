@@ -1,3 +1,4 @@
+env :PATH, ENV['PATH']
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -19,7 +20,7 @@
 
 # Learn more: http://github.com/javan/whenever
 set :output, "#{path}/log/cron.log"
-every :day, :at => '06:50am', :roles => [:app] do
+every :day, :at => '01:00pm', :roles => [:app] do
   runner "Notification.proactive_insurance_reminder"
   runner "Notification.proactive_service_booking_reminder"
   runner "Notification.proactive_test_drive_reminder"

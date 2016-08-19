@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818131936) do
+ActiveRecord::Schema.define(version: 20160819060804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20160818131936) do
     t.datetime "updated_at",                          null: false
     t.integer  "display_order"
     t.string   "service_schedule_url"
+    t.integer  "end_price"
     t.string   "engine"
     t.integer  "bike_price"
     t.integer  "bike_cc"
@@ -130,13 +131,6 @@ ActiveRecord::Schema.define(version: 20160818131936) do
     t.integer  "dealer_contact_label_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-  end
-
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "dealer_types", force: :cascade do |t|
@@ -312,12 +306,13 @@ ActiveRecord::Schema.define(version: 20160818131936) do
     t.integer  "user_id"
     t.string   "bike_image"
     t.integer  "kms"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "default_bike_image_id"
     t.string   "my_bike_image_url"
     t.integer  "bike_id"
     t.string   "image_host_url"
+    t.string   "status",                default: "Active"
   end
 
   create_table "my_docs", force: :cascade do |t|
@@ -364,8 +359,8 @@ ActiveRecord::Schema.define(version: 20160818131936) do
     t.string   "notifiable_type"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "parent_id"
     t.integer  "notification_template_id"
+    t.integer  "parent_id"
   end
 
   create_table "price_fields", force: :cascade do |t|
@@ -397,11 +392,12 @@ ActiveRecord::Schema.define(version: 20160818131936) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy",   default: false
+    t.boolean  "hog_privacy",               default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.date     "marriage_anniversary_date", default: '1900-01-01'
   end
 
   create_table "rides", force: :cascade do |t|
