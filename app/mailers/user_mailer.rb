@@ -20,7 +20,7 @@ class UserMailer < ApplicationMailer
 
 	def test_ride_booking(testride, notification_type)
 		@vehicle_model = testride.bike
-		@showroom = @@dealer.find_by_dealer_name("harley davison")
+		@showroom = @@dealer.find_by_dealer_name(I18n.t('Dealer.name'))
 		@mail_list = @@setmail.find_by_category("Test drive booking")
 		@pickup_request = testride.request_pick_up
 		if @pickup_request == true
@@ -40,7 +40,7 @@ class UserMailer < ApplicationMailer
 
 	def testride_request_confirm(testride, notification_type)
 		@vehicle_model = testride.bike
-		@showroom = @@dealer.find_by_dealer_name("harley davison")
+		@showroom = @@dealer.find_by_dealer_name(I18n.t('Dealer.name'))
 		@pickup_request = testride.request_pick_up
 		if @pickup_request == true
 			@pickup_request = "Yes"
@@ -165,7 +165,7 @@ end
 
 def contact_us(enquiry)
 	@mail_list = @@setmail.find_by_category("Enquiry")
-	@showroom = @@dealer.find_by_dealer_name("harley davison")
+	@showroom = @@dealer.find_by_dealer_name(I18n.t('Dealer.name'))
 
 	@n_template = EmailNotificationTemplate.find_by_category("Contact us mail-dealer")
 	@enq_content = @n_template.content % {ContactUs_Customer_Name: enquiry.name, ContactUs_Customer_Number: enquiry.phone, ContactUs_Customer_Email: enquiry.email, ContactUs_Dealerership_Name: @showroom.name, ContactUs_AreaOfEnquiry: enquiry.category, ContactUs_Comment: enquiry.message}

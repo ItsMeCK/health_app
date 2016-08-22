@@ -21,6 +21,8 @@
 
 en:
   hello: "Hello world"
+  Dealer: 
+    name: "Coromandel Harley - Davidson"
   Notification:
     service_booking: "Service booking notification"  
     service_booking_updated: "Service booking update notification"
