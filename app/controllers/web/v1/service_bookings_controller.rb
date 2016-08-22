@@ -59,6 +59,8 @@ class Web::V1::ServiceBookingsController < ApplicationController
     UserMailer.service_request_confirm(@service_booking, "Service booking delete mail-user").deliver
     @service_booking.destroy
     head :no_content
+  rescue StandardError => e
+    head :please_try_again!
   end
 
   private

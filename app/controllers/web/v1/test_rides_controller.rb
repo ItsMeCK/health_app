@@ -57,7 +57,10 @@ class Web::V1::TestRidesController < ApplicationController
     UserMailer.test_ride_booking(@test_ride, "Test drive delete mail-dealer").deliver
     UserMailer.testride_request_confirm(@test_ride, "Test drive delete mail-user").deliver
     @test_ride.destroy
- end
+    head :no_content
+  rescue StandardError => e
+    head :please_try_again!
+  end
 
   def all_bookings
    service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
