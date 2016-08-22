@@ -23,11 +23,11 @@ class Web::V1::ServiceBookingsController < ApplicationController
     if @service_booking.save 
       user = User.find @service_booking.user_id
       template = NotificationTemplate.where(category: I18n.t('Notification.service_booking')).last
+      #mail to admin
+      UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer").deliver
+      #mail to confirm user
+      UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user").deliver
       Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)
-     #mail to admin
-      UserMailer.service_booking(@service_booking, "Service confirmation mail-dealer")
-        #mail to confirm user
-      UserMailer.service_request_confirm(@service_booking, "Service confirmation mail-user")    
       render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else
       render json: @service_booking.errors, status: :unprocessable_entity
