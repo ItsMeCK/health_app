@@ -24,7 +24,6 @@ class Mobile::V1::ProfilesController < ApplicationController
   # PATCH/PUT /profiles/1
   # PATCH/PUT /profiles/1.json
   def update
-    @profile = Profile.find(params[:id])
 
     if @profile.update(profile_params)
       current_user.hog_registration.update(profile_params.except(:marriage_anniversary_date))
@@ -35,7 +34,6 @@ class Mobile::V1::ProfilesController < ApplicationController
   end
 
   def update_profile_image
-   @profile = Profile.find(params[:id])
    @profile.remove_profile_image! if @profile.profile_image
    if @profile.update(profile_params)
      @profile.profile_image = params[:profile][:profile_image]
@@ -59,7 +57,7 @@ end
   private
 
   def set_profile
-    @profile = Profile.find(params[:id])
+    @profile = current_user.profile
   end
 
   def profile_params
