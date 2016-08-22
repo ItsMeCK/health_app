@@ -57,7 +57,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
     Notification.create(recipient: user, actor: current_user, action: 'Bookings', notifiable: @service_booking, notification_template: template)      
     UserMailer.service_booking(@service_booking, "Service booking delete mail-dealer").deliver
     UserMailer.service_request_confirm(@service_booking, "Service booking delete mail-user").deliver
-    @service_booking.delay(run_at: 5.seconds.from_now).destroy
+    @service_booking.destroy
     head :no_content
   end
 

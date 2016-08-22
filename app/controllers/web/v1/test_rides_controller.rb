@@ -56,7 +56,7 @@ class Web::V1::TestRidesController < ApplicationController
     Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
     UserMailer.test_ride_booking(@test_ride, "Test drive delete mail-dealer").deliver
     UserMailer.testride_request_confirm(@test_ride, "Test drive delete mail-user").deliver
-    @test_ride.delay(run_at: 5.seconds.from_now).destroy
+    @test_ride.destroy
  end
 
   def all_bookings
