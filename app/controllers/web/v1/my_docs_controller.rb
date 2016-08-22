@@ -74,6 +74,6 @@ class Web::V1::MyDocsController < ApplicationController
     end
 
     def my_doc_params
-      params.require(:my_doc).permit(:image, :document_name, :user_id)
+      params.require(:my_doc).permit(:image, :document_name, :user_id, :file_type)
     end
 end
