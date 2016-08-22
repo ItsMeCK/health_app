@@ -52,6 +52,7 @@ Rails.application.routes.draw do
       #api for the admin dashboard all bookings
       post '/get_all_bookings' => 'test_rides#all_bookings'
       post '/bookings_with_day' => 'test_rides#bookings_with_day'
+      post '/bookings_with_count' => 'test_rides#bookings_with_count'
       resources :service_bookings
       post '/delete_service_bookings' => 'service_bookings#delete_service_bookings'
       resources :my_bikes
@@ -180,7 +181,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     resources :tenures, :only => [:index, :show]
     resources :accessory_categories, only: [:index, :show]
     resources :set_booking_numbers, only: [:index, :show]
-    post '/find_by_categopry' => 'set_booking_numbers#find_by_categopry'
+    post '/booking_numbers_with_category' => 'set_booking_numbers#find_by_category'
     post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
     resources :banners, only: [:index, :show]
     resources :service_schedules, only: [:index, :show]

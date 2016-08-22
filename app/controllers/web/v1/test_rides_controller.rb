@@ -55,7 +55,7 @@ class Web::V1::TestRidesController < ApplicationController
    head :no_content
  end
 
-  def all_bookings
+ def all_bookings
    service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
    test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?',  params[:year]).where('extract(month  from ride_date) = ?',  params[:month]) 
    insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?',  params[:year]).where('extract(month  from purchase_date) = ?',  params[:month]) 
@@ -79,22 +79,45 @@ class Web::V1::TestRidesController < ApplicationController
           end
           }.flat_map(&:entries).group_by(&:first).map{|k,v| Hash["#{k}_count": v.map(&:last).count, "#{k}": v.map(&:last)  ] }  ]  }
           render json: @all_bookings, :root => "bookings"
-    end
+        end
 
-    def bookings_with_day
-      service_bookings = ServiceBooking.where('extract(day  from service_date) = ? AND extract(month  from service_date) = ? AND extract(year  from service_date) = ?', params[:day], params[:month], params[:year])
-      test_ride_bookings = TestRide.where('extract(day  from ride_date) = ? AND extract(month  from ride_date) = ? AND extract(year  from ride_date) = ?', params[:day], params[:month], params[:year])
-      insurance_bookings = InsuranceRenewal.where('extract(day  from purchase_date) = ? AND extract(month  from purchase_date) = ? AND extract(year  from purchase_date) = ?', params[:day], params[:month], params[:year])
-      
-      @bookings = {service_bookings: service_bookings, test_drive_bookings: test_ride_bookings, insurence_renewal_bookings: insurance_bookings }
-      render json: @bookings.to_json, :root => "bookings"
-    end
+        def bookings_with_day
+          service_bookings = ServiceBooking.where('extract(day  from service_date) = ? AND extract(month  from service_date) = ? AND extract(year  from service_date) = ?', params[:day], params[:month], params[:year])
+          test_ride_bookings = TestRide.where('extract(day  from ride_date) = ? AND extract(month  from ride_date) = ? AND extract(year  from ride_date) = ?', params[:day], params[:month], params[:year])
+          insurance_bookings = InsuranceRenewal.where('extract(day  from purchase_date) = ? AND extract(month  from purchase_date) = ? AND extract(year  from purchase_date) = ?', params[:day], params[:month], params[:year])
+
+          @bookings = {service_bookings: service_bookings, test_drive_bookings: test_ride_bookings, insurence_renewal_bookings: insurance_bookings }
+          render json: @bookings.to_json, :root => "bookings"
+        end
 
         def delete_test_rides
           @test_rides = params[:test_ride_ids]
           @test_rides.each do |test_ride|
             TestRide.find(test_ride).delete
           end
+        end
+
+        def bookings_with_count
+          service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
+          test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?',  params[:year]).where('extract(month  from ride_date) = ?',  params[:month]) 
+          insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?',  params[:year]).where('extract(month  from purchase_date) = ?',  params[:month]) 
+          service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
+            Hash[date, service_booking] }
+          test_ride = test_ride_bookings.collect { |test_ride| date = test_ride.ride_date.strftime("%d/%m/%Y")
+              Hash[date, test_ride] }
+          insurance_renewal = insurance_bookings.collect { |insurance_booking| date = insurance_booking.purchase_date.strftime("%d/%m/%Y") 
+                Hash[date, insurance_booking] }
+          all_bookings_array = service + test_ride + insurance_renewal
+          bookings = all_bookings_array.flat_map(&:entries).group_by(&:first)
+          counts = Hash.new(0)
+          @all_bookings = bookings.map{|k,v| Hash[date: k, count: v.map(&:last).count, all_bookings: v.map(&:last).collect{ |bookings| 
+                binding.pry
+                  }#.flat_map(&:entries).group_by(&:first).map{|k,v| Hash["#{k}_count": v.map(&:last).count ] }  
+                  ] 
+                  
+                   }
+                 
+                  render json: @all_bookings, :root => "bookings"
         end
 
         private
