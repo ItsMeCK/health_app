@@ -1,6 +1,6 @@
 class Mobile::V1::HogRegistrationsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_hog_registration, only: [:show, :update, :destroy]
+  before_action :set_hog_registration, only: [:show, :update, :destroy, :update_hog_registration_image]
 
 
   # GET /hog_registrations/1
