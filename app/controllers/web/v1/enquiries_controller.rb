@@ -40,6 +40,12 @@ class Web::V1::EnquiriesController < ApplicationController
     end
   end
 
+  def destroy
+    @enquiry.destroy
+
+    head :no_content
+  end
+
 
   private
 

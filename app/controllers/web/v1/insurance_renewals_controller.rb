@@ -58,13 +58,20 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
     head :no_content
   end
 
+  def delete_insurance_renewals
+    @insurance_renewals = params[:insurance_renewal_ids]
+    @insurance_renewals.each do |insurance_renewal|
+      InsuranceRenewal.find(insurance_renewal).destroy
+    end
+  end
+
   private
 
-    def set_insurance_renewal
-      @insurance_renewal = InsuranceRenewal.find(params[:id])
-    end
+  def set_insurance_renewal
+    @insurance_renewal = InsuranceRenewal.find(params[:id])
+  end
 
-    def insurance_renewal_params
-      params.require(:insurance_renewal).permit(:name, :email, :mobile, :address, :bike, :purchase_date, :registration_number, :insurance_company, :policy_number, :expiry_date, :kms, :status)
-    end
+  def insurance_renewal_params
+    params.require(:insurance_renewal).permit(:name, :email, :mobile, :address, :bike, :purchase_date, :registration_number, :insurance_company, :policy_number, :expiry_date, :kms, :status)
+  end
 end

@@ -19,7 +19,7 @@ class Web::V1::GalleriesController < ApplicationController
   # POST /web/v1/galleries.json
   def create
     @gallery = Gallery.new(gallery_params)
-     @gallery.image = params[:gallery][:image]
+    @gallery.image = params[:gallery][:image]
 
     if @gallery.save
       render json: @gallery, status: :created, serializer: Web::V1::GallerySerializer
@@ -50,13 +50,20 @@ class Web::V1::GalleriesController < ApplicationController
     head :no_content
   end
 
-  private
+  def delete_galleries
+   @galleries = params[:gallary_ids]
+   @galleries.each do |gallery|
+    Gallery.find(gallery).destroy
+  end
+end
 
-    def set_gallery
-      @gallery = Gallery.find(params[:id])
-    end
+private
 
-    def gallery_params
-      params.require(:gallery).permit(:bike_id, :image)
-    end
+def set_gallery
+  @gallery = Gallery.find(params[:id])
+end
+
+def gallery_params
+  params.require(:gallery).permit(:bike_id, :image)
+end
 end

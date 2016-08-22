@@ -60,6 +60,7 @@ Rails.application.routes.draw do
       post '/my_bike_image_update' => 'my_bikes#my_bike_image_update'
       resources :feedbacks, only: [:index, :show, :create]
       resources :insurance_renewals, except: [:delete]
+      post '/delete_insurance_renewals' => 'insurance_renewals#delete_insurance_renewals'
       resources :enquiries, except: [:delete]
       resources :booking_time_controls
       post '/delete_booking_time_controls' => 'booking_time_controls#delete_booking_time_controls'
@@ -140,6 +141,7 @@ Rails.application.routes.draw do
       post '/delete_notifications' => 'notifications#delete_notifications'
       #bike gallery
       resources :galleries
+      post '/delete_galleries' => 'galleries#delete_galleries'
 
     end
   end
