@@ -1,6 +1,6 @@
 class Mobile::V1::HogRegistrationsController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_hog_registration, only: [:show, :update, :destroy]
+  before_action :set_hog_registration, only: [:show, :update, :destroy, :update_hog_registration_image]
 
 
   # GET /hog_registrations/1
@@ -24,8 +24,6 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
   # PATCH/PUT /hog_registrations/1
   # PATCH/PUT /hog_registrations/1.json
   def update
-    @hog_registration = HogRegistration.find(params[:id])
-
     if @hog_registration.update(hog_registration_params)
       current_user.profile.update(hog_registration_params.except(:show_hog))
       head :no_content
@@ -35,7 +33,7 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
   end
 
   def update_hog_registration_image
-     @hog_registration = HogRegistration.find(params[:id])
+     @hog_registration = current_user.hog_registration
      @hog_registration.remove_profile_image! if @hog_registration.profile_image
 
     if @hog_registration.update(hog_registration_params)
@@ -59,7 +57,7 @@ class Mobile::V1::HogRegistrationsController < ApplicationController
   private
 
     def set_hog_registration
-      @hog_registration = HogRegistration.find(params[:id])
+      @hog_registration = current_user.hog_registration
     end
 
     def hog_registration_params

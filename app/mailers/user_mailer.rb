@@ -61,6 +61,7 @@ class UserMailer < ApplicationMailer
 
   #admin service booking mail
   def service_booking(service, booking_type)
+  	logger.info "=======Dealer Service Booking Email Notification========"
   	@vehicle_model = service.my_bike.bike
   	@pickup_request = service.request_pick_up
   	if @pickup_request == true

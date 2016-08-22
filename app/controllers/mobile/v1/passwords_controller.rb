@@ -1,4 +1,4 @@
-class Web::V1::PasswordsController < ApplicationController
+class Mobile::V1::PasswordsController < ApplicationController
   
   def create
 		@user = User.find_by_email(params[:email])
