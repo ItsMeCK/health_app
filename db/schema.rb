@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822122912) do
+ActiveRecord::Schema.define(version: 20160823115322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,13 +130,6 @@ ActiveRecord::Schema.define(version: 20160822122912) do
     t.integer  "dealer_contact_label_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-  end
-
-  create_table "dealer_dealer_types", force: :cascade do |t|
-    t.integer  "dealer_id"
-    t.integer  "dealer_type_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
   end
 
   create_table "dealer_types", force: :cascade do |t|
@@ -365,8 +358,8 @@ ActiveRecord::Schema.define(version: 20160822122912) do
     t.string   "notifiable_type"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "parent_id"
     t.integer  "notification_template_id"
+    t.integer  "parent_id"
   end
 
   create_table "price_fields", force: :cascade do |t|
@@ -630,6 +623,7 @@ ActiveRecord::Schema.define(version: 20160822122912) do
     t.string   "role",                            default: "guest"
     t.string   "ios_token"
     t.string   "android_token"
+    t.boolean  "social_login",                    default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
