@@ -7,7 +7,15 @@ class Mobile::V1::UsersController < ApplicationController
 		@user = User.new(user_params)
 
 		if params[:user][:social_login] == 1 
-			if @user.save(validate: false)
+			user_email = params[:user][:email]
+			user = user_email.present? && User.find_by(email: user_email)
+			if user.present?
+				sign_in user, store: false
+				user.update_device_token_with_social(params)
+				user.save
+			   render json: user, status: 200
+			else
+				@user.save(validate: false)
 				render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
 				users_creation(params)
 				users_social_login(params)
@@ -37,7 +45,8 @@ class Mobile::V1::UsersController < ApplicationController
 		if user.present?
 			if params[:user][:social_login] == 1
 				sign_in user, store: false
-				#user.update_device_token(params)
+				binding.pry
+				user.update_device_token_with_social(params)
 				user.save
 			else
 				render json: { errors: "Invalid Registration" }, status: 422

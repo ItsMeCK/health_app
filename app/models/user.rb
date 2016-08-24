@@ -33,7 +33,15 @@ class User < ActiveRecord::Base
     else params["session"]["ios_token"]
       self.update_attribute(:ios_token, params[:session][:ios_token])
     end
-  end  
+  end 
+
+   def update_device_token_with_social(params)
+    if params["user"]["android_token"]
+      self.update_attribute(:android_token, params[:user][:android_token])
+    else params["user"]["ios_token"]
+      self.update_attribute(:ios_token, params[:user][:ios_token])
+    end
+  end 
 
   def self.import(file)
     CSV.foreach(file.path, headers: true) do |row|

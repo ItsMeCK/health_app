@@ -108,10 +108,9 @@ class Web::V1::TestRidesController < ApplicationController
           service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
           test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?',  params[:year]).where('extract(month  from ride_date) = ?',  params[:month]) 
           insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?',  params[:year]).where('extract(month  from purchase_date) = ?',  params[:month]) 
-          service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
-            Hash[date, service_booking] }
-            test_ride = test_ride_bookings.collect { |test_ride| date = test_ride.ride_date.strftime("%d/%m/%Y")
-              Hash[date, test_ride] }
+          service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") Hash[date, service_booking] }
+          test_ride = test_ride_bookings.collect { |test_ride| date = test_ride.ride_date.strftime("%d/%m/%Y")
+            Hash[date, test_ride] }
               insurance_renewal = insurance_bookings.collect { |insurance_booking| date = insurance_booking.purchase_date.strftime("%d/%m/%Y") 
                 Hash[date, insurance_booking] }
                 all_bookings_array = service + test_ride + insurance_renewal
