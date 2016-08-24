@@ -63,27 +63,33 @@ class Web::V1::TestRidesController < ApplicationController
   end
 
   def all_bookings
-   service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
-   test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?',  params[:year]).where('extract(month  from ride_date) = ?',  params[:month]) 
-   insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?',  params[:year]).where('extract(month  from purchase_date) = ?',  params[:month]) 
-   service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
-    Hash[date, service_booking] }
+   if params[:month] && params[:year]
+      service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
+      test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?', params[:year]).where('extract(month  from ride_date) = ?', params[:month])
+      insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?', params[:year]).where('extract(month  from purchase_date) = ?', params[:month])
+    else
+      service_bookings = ServiceBooking.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
+      test_ride_bookings = TestRide.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
+      insurance_bookings = InsuranceRenewal.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
+    end
+    service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
+      Hash[date, service_booking] }
     test_ride = test_ride_bookings.collect { |test_ride| date = test_ride.ride_date.strftime("%d/%m/%Y")
       Hash[date, test_ride] }
-      insurance_renewal = insurance_bookings.collect { |insurance_booking| date = insurance_booking.purchase_date.strftime("%d/%m/%Y") 
+    insurance_renewal = insurance_bookings.collect { |insurance_booking| date = insurance_booking.purchase_date.strftime("%d/%m/%Y") 
         Hash[date, insurance_booking] }
-        all_bookings_array = service + test_ride + insurance_renewal
-        bookings = all_bookings_array.flat_map(&:entries).group_by(&:first)
-        @all_bookings = bookings.map{|k,v| Hash[date: k, count: v.map(&:last).count, all_bookings: v.map(&:last).collect{ |bookings| 
-          if bookings.try(:service_date) 
-            { service_bookings: bookings }
-          elsif bookings.try(:ride_date)
-            { test_ride_bookings: bookings }
-          elsif bookings.try(:purchase_date)
-            { insurence_renewal_bookings: bookings }
-          else
-            {contact: bookings }
-          end
+    all_bookings_array = service + test_ride + insurance_renewal
+    bookings = all_bookings_array.flat_map(&:entries).group_by(&:first)
+    @all_bookings = bookings.map{|k,v| Hash[date: k, count: v.map(&:last).count, all_bookings: v.map(&:last).collect{ |bookings| 
+      if bookings.try(:service_date) 
+        { service_bookings: bookings }
+      elsif bookings.try(:ride_date)
+        { test_ride_bookings: bookings }
+      elsif bookings.try(:purchase_date)
+        { insurence_renewal_bookings: bookings }
+      else
+        {contact: bookings }
+      end
           }.flat_map(&:entries).group_by(&:first).map{ |k,v| Hash["#{k}_count": v.map(&:last).count, "#{k}": v.map(&:last)  ] }  ]  }
           render json: @all_bookings, :root => "bookings"
         end
@@ -109,10 +115,12 @@ class Web::V1::TestRidesController < ApplicationController
             service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
             test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?', params[:year]).where('extract(month  from ride_date) = ?', params[:month])
             insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?', params[:year]).where('extract(month  from purchase_date) = ?', params[:month])
+            user = User.where('extract(year  from created_at) = ?', params[:year]).where('extract(month  from created_at) = ?', params[:month])
           else
             service_bookings = ServiceBooking.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
             test_ride_bookings = TestRide.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
             insurance_bookings = InsuranceRenewal.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
+            user = User.where("created_at > ? AND created_at < ? AND role = ? ", params[:start_date].to_date, params[:end_date].to_date, "guest").count
           end
           service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
             Hash[date, service_booking] }
@@ -145,7 +153,6 @@ class Web::V1::TestRidesController < ApplicationController
             ] 
             
           }
-          user = User.where(role: "guest").count
           @count = {all_booking: @all_bookings, users_count: user }
           render json: @count, :root => "bookings_users"
         end
