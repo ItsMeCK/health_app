@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   # Validations
   validates :authentication_token, :uniqueness => true
+  validates :password, presence: false
+
 
   # Callbacks
   before_save :ensure_authentication_token

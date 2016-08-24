@@ -5,18 +5,27 @@ class Mobile::V1::UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		if @user.save
-			template = NotificationTemplate.where(category: I18n.t('Notification.welcome')).last
-			mobile = params[:user][:mobile] || 0
-			name = params[:user][:name]
-			Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
-  		HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile)
-			Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
-			UserMailer.welcome_user(@user).deliver
-			render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
+
+		if params[:user][:social_login] == true
+			if @user.save(validate: false)
+				users_creation(params)
+		    end
+		elsif @user.save
+		   users_creation(params)	
 		else
 			render json: { errors: @user.errors}, status: 422
 		end
+	end
+
+	def users_creation(params)
+		template = NotificationTemplate.where(category: I18n.t('Notification.welcome')).last
+		mobile = params[:user][:mobile] || 0
+		name = params[:user][:name]
+		Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
+		HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile)
+		Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
+		UserMailer.welcome_user(@user).deliver
+		render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
 	end
 
 	def show
@@ -86,7 +95,7 @@ class Mobile::V1::UsersController < ApplicationController
 	end
 
 	def user_params
-		params.require(:user).permit(:email, :password, :password_confirmation, :android_token, :ios_token)
+		params.require(:user).permit(:email, :password, :password_confirmation, :android_token, :ios_token, :social_login)
 	end
 
 end
