@@ -6,12 +6,7 @@ class Mobile::V1::SessionsController < ApplicationController
     user_email = params[:session][:email]
     user = user_email.present? && User.find_by(email: user_email)
     if user.present?
-      if user.social_login == 1
-        sign_in user, store: false
-        user.update_device_token(params)
-        user.save
-        render json: user, status: 200, location: [:mobile, user]
-      elsif user.valid_password? user_password
+      if user.valid_password? user_password
         sign_in user, store: false
         user.update_device_token(params)
         user.save
@@ -24,6 +19,7 @@ class Mobile::V1::SessionsController < ApplicationController
     end
 
   end
+
 
   def destroy
     user = User.find_by(authentication_token: params[:auth_token])

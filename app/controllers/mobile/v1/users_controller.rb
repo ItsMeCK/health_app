@@ -8,12 +8,13 @@ class Mobile::V1::UsersController < ApplicationController
 
 		if params[:user][:social_login] == 1
 			if @user.save(validate: false)
-			  render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
-			  users_creation(params)
+				render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
+				users_creation(params)
+				users_social_login(params)
 			end
 		elsif @user.save
-			  render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
-			  users_creation(params)	
+			render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
+			users_creation(params)	
 		else
 			render json: { errors: @user.errors}, status: 422
 		end
@@ -26,9 +27,26 @@ class Mobile::V1::UsersController < ApplicationController
 		Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
 		HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile)
 		Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
-		UserMailer.welcome_user(@user).deliver
+		#UserMailer.welcome_user(@user).deliver
 		#render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
 	end
+
+	def users_social_login(params)
+		user_email = params[:user][:email]
+		user = user_email.present? && User.find_by(email: user_email)
+		if user.present?
+			if params[:user][:social_login] == 1
+				sign_in user, store: false
+				#user.update_device_token(params)
+				user.save
+			else
+				render json: { errors: "Invalid Registration" }, status: 422
+			end
+		else
+			render json: {message: "Invalid Registration"}, status: 422
+		end
+
+	end 
 
 	def show
 		respond_with User.find(params[:id]), serializer: Mobile::V1::UserSerializer
