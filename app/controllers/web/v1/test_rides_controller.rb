@@ -123,11 +123,11 @@ class Web::V1::TestRidesController < ApplicationController
             service_bookings = ServiceBooking.where('extract(year  from service_date) = ?', params[:year]).where('extract(month  from service_date) = ?', params[:month])
             test_ride_bookings = TestRide.where('extract(year  from ride_date) = ?', params[:year]).where('extract(month  from ride_date) = ?', params[:month])
             insurance_bookings = InsuranceRenewal.where('extract(year  from purchase_date) = ?', params[:year]).where('extract(month  from purchase_date) = ?', params[:month])
-            user = User.where('extract(year  from created_at) = ?', params[:year]).where('extract(month  from created_at) = ?', params[:month])
+            user = User.where('extract(year  from created_at) = ?', params[:year]).where('extract(month  from created_at) = ?', params[:month]).count
           else
-            service_bookings = ServiceBooking.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
-            test_ride_bookings = TestRide.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
-            insurance_bookings = InsuranceRenewal.where("created_at > ? AND created_at < ?", params[:start_date].to_date, params[:end_date].to_date)
+            service_bookings = ServiceBooking.where("service_date > ? AND service_date < ?", params[:start_date].to_date, params[:end_date].to_date)
+            test_ride_bookings = TestRide.where("ride_date > ? AND ride_date < ?", params[:start_date].to_date, params[:end_date].to_date)
+            insurance_bookings = InsuranceRenewal.where("purchase_date > ? AND purchase_date < ?", params[:start_date].to_date, params[:end_date].to_date)
             user = User.where("created_at > ? AND created_at < ? AND role = ? ", params[:start_date].to_date, params[:end_date].to_date, "guest").count
           end
           service = service_bookings.collect { |service_booking| date = service_booking.service_date.strftime("%d/%m/%Y") 
