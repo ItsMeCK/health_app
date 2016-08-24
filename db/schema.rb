@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823115322) do
+ActiveRecord::Schema.define(version: 20160824083627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20160823115322) do
     t.string   "engine"
     t.integer  "bike_price"
     t.integer  "bike_cc"
+    t.string   "brand"
   end
 
   create_table "booking_time_controls", force: :cascade do |t|
@@ -159,6 +160,7 @@ ActiveRecord::Schema.define(version: 20160823115322) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.text     "dealer_type_id"
+    t.string   "mobile"
   end
 
   create_table "default_bike_images", force: :cascade do |t|
@@ -199,8 +201,9 @@ ActiveRecord::Schema.define(version: 20160823115322) do
     t.string   "email"
     t.string   "category"
     t.text     "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "dealer_location"
   end
 
   create_table "events", force: :cascade do |t|

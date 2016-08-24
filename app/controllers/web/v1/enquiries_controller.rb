@@ -54,6 +54,6 @@ class Web::V1::EnquiriesController < ApplicationController
     end
 
     def enquiry_params
-      params.require(:enquiry).permit(:name, :phone, :email, :category, :message)
+      params.require(:enquiry).permit(:name, :dealer_location, :phone, :email, :category, :message)
     end
 end

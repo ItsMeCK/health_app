@@ -18,6 +18,6 @@ class Mobile::V1::EnquiriesController < ApplicationController
   private
 
     def enquiry_params
-      params.require(:enquiry).permit(:name, :phone, :email, :category, :message)
+      params.require(:enquiry).permit(:name, :phone, :email, :dealer_location, :category, :message)
     end
 end
