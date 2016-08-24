@@ -6,7 +6,7 @@ class Mobile::V1::SessionsController < ApplicationController
     user_email = params[:session][:email]
     user = user_email.present? && User.find_by(email: user_email)
     if user.present?
-      if user.social_login == true
+      if user.social_login == 1
         sign_in user, store: false
         user.update_device_token(params)
         user.save

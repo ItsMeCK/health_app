@@ -3,11 +3,11 @@ class Mobile::V1::DealersController < ApplicationController
 
   # GET /web/v1/dealers
   # GET /web/v1/dealers.json
-  # def index
-  #   @dealers = Dealer.all
+  def index
+    @dealers = Dealer.all
 
-  #   render json: @dealers
-  # end
+    render json: @dealers
+  end
 
   # GET /web/v1/dealers/1
   # GET /web/v1/dealers/1.json

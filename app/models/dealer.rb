@@ -8,17 +8,21 @@ class Dealer < ActiveRecord::Base
 	#after_create :create_joint_table
 
 	
-	def dealer_tyep_name	
-		if self.dealer_type_id.class == Array
-		  @dealer_type_ids = self.dealer_type_id
-	     else
-	     	@dealer_type_ids = [self.dealer_type_id]
-	     end
-		@dealer = []
-		@dealer_type_ids.each do |id|
-		 @dealer << DealerType.find(id).try(:dealer_type) if id 
-	    end
-	    @dealer
+	def dealer_tyep_name
+		if DealerType.exists?(self.dealer_type_id)	
+			if self.dealer_type_id.class == Array
+			  @dealer_type_ids = self.dealer_type_id
+		     else
+		     	@dealer_type_ids = [self.dealer_type_id]
+		     end
+			@dealer = []
+			@dealer_type_ids.each do |id|
+			 @dealer << DealerType.find(id).try(:dealer_type) if id 
+		    end
+		    @dealer
+		else
+			"null"
+		end
 	end
 
 	def as_json(options={})
