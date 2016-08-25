@@ -9,7 +9,7 @@ class Dealer < ActiveRecord::Base
 
 	
 	def dealer_tyep_name
-		if DealerType.exists?(self.dealer_type_id)	
+		if DealerType.exists?([self.dealer_type_id].join(','))	
 			if self.dealer_type_id.class == Array
 			  @dealer_type_ids = self.dealer_type_id
 		     else
