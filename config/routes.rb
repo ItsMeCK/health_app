@@ -53,6 +53,8 @@ Rails.application.routes.draw do
       post '/get_all_bookings' => 'test_rides#all_bookings'
       post '/bookings_with_day' => 'test_rides#bookings_with_day'
       post '/bookings_with_count' => 'test_rides#bookings_with_count'
+      post '/get_bookings_by_period' => 'dashboards#bookings_by_period'
+
       resources :service_bookings
       post '/delete_service_bookings' => 'service_bookings#delete_service_bookings'
       resources :my_bikes
