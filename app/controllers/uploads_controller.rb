@@ -36,6 +36,11 @@ class UploadsController < ActionController::Base
     redirect_to :back
   end
 
+  def import_service_schedules
+    ServiceSchedule.import(params[:file])
+    redirect_to :back
+  end
+
   def upload_bikes
   end
 
@@ -55,6 +60,9 @@ class UploadsController < ActionController::Base
   end
 
   def upload_colors   
+  end
+
+  def upload_service_schedules   
   end
 
  

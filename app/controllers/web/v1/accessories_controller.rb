@@ -10,6 +10,10 @@ class Web::V1::AccessoriesController < ApplicationController
     render json: @accessories
   end
 
+  def method_name
+    
+  end
+
   # GET /web/v1/accessories/1
   # GET /web/v1/accessories/1.json
   def show
@@ -80,6 +84,6 @@ def set_accessory
 end
 
 def accessory_params
-  params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
+  params.require(:accessory).permit(:title, :brand, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
 end
 end

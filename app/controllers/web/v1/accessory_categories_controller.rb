@@ -74,6 +74,6 @@ def set_accessory_category
 end
 
 def accessory_category_params
-  params.require(:accessory_category).permit(:title, :description, :image)
+  params.require(:accessory_category).permit(:title, :brand, :description, :image)
 end
 end

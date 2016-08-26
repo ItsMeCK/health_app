@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post :import_specifications
       post :import_key_features 
       post :import_colors
+      post :import_service_schedules
     }
   end
   get '/upload_bikes' => 'uploads#upload_bikes'
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   get '/upload_prices' => 'uploads#upload_prices'
   get '/upload_key_features' => 'uploads#upload_key_features'
   get '/upload_colors' => 'uploads#upload_colors'
+  get '/upload_service_schedules' => 'uploads#upload_service_schedules'
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here
@@ -182,6 +184,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     resources :finance_documents, :only => [:show]
     resources :tenures, :only => [:index, :show]
     resources :accessory_categories, only: [:index, :show]
+    post '/accessories_with_brand' => 'accessory_categories#accessories_with_brand'
     resources :set_booking_numbers, only: [:index, :show]
     post '/booking_numbers_with_category' => 'set_booking_numbers#find_by_category'
     post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'

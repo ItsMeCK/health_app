@@ -26,6 +26,12 @@ class Mobile::V1::AccessoryCategoriesController < ApplicationController
     render json: @accessory_enquiry
   end
 
+  #getting accessories with brand
+  def accessories_with_brand
+     @accessories = Accessory.where(brand: params[:brand])
+     render json: @accessories
+  end
+
   # POST /web/v1/accessory_categories
  
 
