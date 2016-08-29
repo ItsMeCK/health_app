@@ -22,12 +22,7 @@ class Web::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.new(test_ride_params)
     if @test_ride.save
       render json: @test_ride, status: 200
-
-      # Create Notifications
-      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_booking')).last
-      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)
-      UserMailer.test_ride_booking(@test_ride, "Test drive mail-dealer").deliver
-      UserMailer.testride_request_confirm(@test_ride, "Test drive mail-user").deliver
+      @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_booking'), I18n.t('Email.test_ride_booking_dealer'), I18n.t('Email.test_ride_booking_user'))  
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -39,11 +34,7 @@ class Web::V1::TestRidesController < ApplicationController
     @test_ride = TestRide.find(params[:id])
     if @test_ride.update(test_ride_params)
       render json: @test_ride, status: :ok, serializer: Web::V1::TestRideSerializer
-
-      template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_updated')).last
-      Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
-      UserMailer.test_ride_booking(@test_ride, "Test drive update mail-dealer").deliver
-      UserMailer.testride_request_confirm(@test_ride, "Test drive update mail-user").deliver
+      @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_updated'), I18n.t('Email.test_ride_booking_update_dealer'), I18n.t('Email.test_ride_booking_update_user'))
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -52,11 +43,8 @@ class Web::V1::TestRidesController < ApplicationController
   # DELETE /web/v1/test_rides/1
   # DELETE /web/v1/test_rides/1.json
   def destroy
-    template = NotificationTemplate.where(category: I18n.t('Notification.test_ride_destroyed')).last
-    Notification.create(recipient: @test_ride.user, actor: current_user, action: 'Bookings', notifiable: @test_ride, notification_template: template)      
-    UserMailer.test_ride_booking(@test_ride, "Test drive delete mail-dealer").deliver
-    UserMailer.testride_request_confirm(@test_ride, "Test drive delete mail-user").deliver
-    @test_ride.destroy
+    @test_ride.update_attribute(:status, 'Canceled')
+    @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_destroyed'), I18n.t('Email.test_ride_booking_delete_dealer'), I18n.t('Email.test_ride_booking_delete_user'))
     head :no_content
   rescue StandardError => e
     head :please_try_again!

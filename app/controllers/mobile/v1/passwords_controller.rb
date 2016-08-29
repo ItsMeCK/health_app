@@ -7,7 +7,7 @@ class Mobile::V1::PasswordsController < ApplicationController
     if @user
        head :status => 200
     else
-      render :status => 422, :json => { :errors => @user.errors.full_messages }
+      render status: 422, json: { errors:  I18n.t('Validations.reset_password.invalid_email')}
     end
   end
 

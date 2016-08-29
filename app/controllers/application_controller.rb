@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
 	# include ::ActionController::Serialization
 	# include ActiveModel::Serialization
 	# after_action :set_access_control_headers
+	before_filter :authenticate_user!
+	rescue_from StandardError, with: :standard_error
 	before_filter :set_host
 
 	def set_host
@@ -23,5 +25,8 @@ class ApplicationController < ActionController::API
  #   headers['Access-Control-Allow-Origin'] = "*"
  #   headers['Access-Control-Request-Method'] = %w{GET POST OPTIONS}.join(",")
  # end
-
+	def standard_error(exception)
+		logger.info "=============Error:: #{exception.inspect}========================="
+		render json: {errors: I18n.t('Errors.500_error')}, status: 500
+	end
 end
