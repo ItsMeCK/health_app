@@ -4,7 +4,7 @@ class Web::V1::DealerContactNumbersController < ApplicationController
   # GET /web/v1/dealer_contact_numbers
   # GET /web/v1/dealer_contact_numbers.json
   def index
-    @dealer_contact_numbers = DealerContactNumber.all
+    @dealer_contact_numbers = DealerContactNumber.all.order("display_order")
 
     render json: @dealer_contact_numbers
   end

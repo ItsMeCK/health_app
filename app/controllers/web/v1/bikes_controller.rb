@@ -5,8 +5,13 @@ class Web::V1::BikesController < ApplicationController
   # GET /web/v1/bikes
   # GET /web/v1/bikes.json
   def index
-    @bikes = Bike.all.order("updated_at DESC").order("created_at DESC")
+    @bikes = Bike.all.order("display_order")
     render json: @bikes.includes(:specifications)  #each_serializer: Web::V1::BikeSerializer
+  end
+
+  def get_all_bikes
+     @bikes = Bike.all.order("display_order")  #.includes(:specifications)
+      render json: @bikes, each_serializer: Web::V1::BikeSerializer   
   end
 
   # GET /web/v1/bikes/1
@@ -33,7 +38,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.find(params[:id])
 
     if @bike.update(bike_params)
-      render json: @bike, status: :ok, serializer: Web::V1::BikeSerializer
+      render json: @bike, status: :ok  #serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
     end

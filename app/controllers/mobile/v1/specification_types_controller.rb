@@ -4,7 +4,7 @@ class Mobile::V1::SpecificationTypesController < ApplicationController
   # GET /mobile/v1/specification_types
   # GET /mobile/v1/specification_types.json
   def index
-    @specification_types = SpecificationType.all
+    @specification_types = SpecificationType.all.order("display_order")
     render json: @specification_types, each_serializer: Mobile::V1::SpecificationTypeSerializer
   end
 

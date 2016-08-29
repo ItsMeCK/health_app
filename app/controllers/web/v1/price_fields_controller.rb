@@ -4,7 +4,7 @@ class Web::V1::PriceFieldsController < ApplicationController
   # GET /web/v1/price_fields
   # GET /web/v1/price_fields.json
   def index
-    @price_fields = PriceField.all.order("updated_at DESC").order("created_at DESC")
+    @price_fields = PriceField.all.order("display_order")
 
     render json: @price_fields
   end

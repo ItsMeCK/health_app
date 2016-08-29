@@ -1,5 +1,5 @@
 class Mobile::V1::BikeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :bike_image, :pricing, :brand
+  attributes :id, :name, :bike_image, :display_order, :pricing, :brand
  
   def bike_image
      object.default_bike_image.try(:image_url)
