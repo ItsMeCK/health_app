@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     resources :bike_types
     post '/delete_bike_types' => 'bike_types#delete_bike_types'
     resources :bikes
+    get '/get_all_bikes' => 'bikes#get_all_bikes'
     post '/delete_all_bikes' => 'bikes#delete_bikes'
     resources :specifications
     post '/delete_specifications' => 'specifications#delete_specifications'
