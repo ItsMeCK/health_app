@@ -219,6 +219,8 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       post '/clear_notification_count' => 'users#clear_notification_count'
       post '/notification_by_category' => 'users#notification_by_category'
       resources :notifications
+      get '/mark_as_read/:id' => 'notifications#mark_as_read'
+
     end
   end
 
