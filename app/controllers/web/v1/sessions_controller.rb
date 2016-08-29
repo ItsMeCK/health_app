@@ -1,5 +1,5 @@
 class Web::V1::SessionsController < ApplicationController
-
+  skip_before_filter :authenticate_user!, except: [:destroy]
 	def create
     user_password = params[:session][:password]
     user_email = params[:session][:email]    

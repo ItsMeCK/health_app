@@ -1,5 +1,5 @@
 class Mobile::V1::SessionsController < ApplicationController
-  before_filter :authenticate_user!, only: [:destroy]
+  skip_before_filter :authenticate_user!, except: [:destroy]
 
 	def create
     user_password = params[:session][:password]
