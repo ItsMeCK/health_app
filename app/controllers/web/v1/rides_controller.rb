@@ -22,11 +22,12 @@ class Web::V1::RidesController < ApplicationController
     @ride.assembly_time = params[:ride][:assembly_time]
     @ride.destination_time = params[:ride][:destination_time]
     @ride.check_points = params[:ride][:check_points]
-    @ride.delay.call_notification(I18n.t('Notification.ride_created'), I18n.t('Email.ride_created'))
-    render json: @ride, status: :created
-   else
-    render json: @ride.errors, status: :unprocessable_entity
-  end
+    if @ride.save
+      @ride.delay.call_notification(I18n.t('Notification.ride_created'), I18n.t('Email.ride_created'))
+      render json: @ride, status: :created
+    else
+      render json: @ride.errors, status: :unprocessable_entity
+    end
 end
 
   # PATCH/PUT /web/v1/rides/1
