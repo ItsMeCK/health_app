@@ -1,6 +1,6 @@
 class Web::V1::ServiceBookingSerializer < ActiveModel::Serializer
   
-  attributes :id, :service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :service_status
+  attributes :id, :service_type, :user_id, :my_bike_id, :registration_number, :kms, :service_date, :service_time, :service_station, :comments, :request_pick_up, :status
 
   def attributes
   	data = super

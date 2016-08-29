@@ -15,7 +15,7 @@ class Mobile::V1::SessionsController < ApplicationController
         render json: { errors: "Invalid email or password" }, status: 422
       end
     else
-      render json: {message: "Invalid Registration"}, status: 422
+      render json: {errors: "Invalid Registration"}, status: 422
     end
 
   end

@@ -10,6 +10,20 @@ class Ride < ActiveRecord::Base
 	after_create :create_user_ride
 	before_destroy :destroy_user_ride
 
+	def call_notification(notification_template, email_template)
+    users = User.all
+    users.each do |user|
+      @ride.ride_notification(user, notification_template, email_template)
+    end
+   end
+
+  def ride_notification(user, notification_template, email_template)
+		template = NotificationTemplate.where(category: notification_template).last
+    Notification.create(recipient: user, actor: current_user, action: 'Events', notifiable: self, notification_template: template)
+    UserMailer.notification_mail_for_ride(user, self, email_template).deliver
+	end	
+ 
+
 	private
 
 	def create_user_ride
