@@ -1,5 +1,5 @@
 class Mobile::V1::PasswordsController < ApplicationController
-  
+  skip_before_filter :authenticate_user!
   def create
 		@user = User.find_by_email(params[:email])
     @user.reset_password_token =  @user.send_reset_password_instructions
