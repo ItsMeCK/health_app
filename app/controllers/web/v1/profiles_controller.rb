@@ -7,13 +7,13 @@ class Web::V1::ProfilesController < ApplicationController
   def index
     @profiles = Profile.all.order("updated_at DESC").order("created_at DESC")
 
-    render json: @profiles
+    render json: @profiles, serializer: Web::V1::ProfileSerializer
   end
 
   # GET /profiles/1
   # GET /profiles/1.json
   def show
-    render json: @profile
+    render json: @profile, serializer: Web::V1::ProfileSerializer
   end
 
   # POST /profiles
