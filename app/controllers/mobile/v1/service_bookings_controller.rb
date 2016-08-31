@@ -22,7 +22,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     if @service_booking.save
       render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
       # Notification
-      @service_booking.sevice_booking_notification(I18n.t('Notification.service_booking'), I18n.t('Email.service_booking_dealer'), I18n.t('Email.service_booking_user'))
+      @service_booking.delay.sevice_booking_notification(I18n.t('Notification.service_booking'), I18n.t('Email.service_booking_dealer'), I18n.t('Email.service_booking_user'))
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Mobile::V1::ServiceBookingsController < ApplicationController
     @service_booking = ServiceBooking.find(params[:id])
     if @service_booking.update(service_booking_params)
       render json: @service_booking, status: :ok, serializer: Mobile::V1::ServiceBookingSerializer
-      @service_booking.sevice_booking_notification(I18n.t('Notification.service_booking_updated'), I18n.t('Email.service_booking_updated_dealer'), I18n.t('Email.service_booking_updated_user'))
+      @service_booking.delay.sevice_booking_notification(I18n.t('Notification.service_booking_updated'), I18n.t('Email.service_booking_updated_dealer'), I18n.t('Email.service_booking_updated_user'))
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 	# include ActiveModel::Serialization
 	# after_action :set_access_control_headers
 	before_filter :authenticate_user!
-	rescue_from StandardError, with: :standard_error
+	#rescue_from StandardError, with: :standard_error
 	before_filter :set_host
 
 	def set_host
