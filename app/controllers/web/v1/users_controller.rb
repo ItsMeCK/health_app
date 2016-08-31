@@ -12,6 +12,10 @@ class Web::V1::UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
+			mobile = params[:user][:mobile] || 0
+			name = params[:user][:name] || "N/A"
+			Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
+			HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile) if @user.role == "guest"
 			Notification.create(recipient: @user, actor: current_user, action: I18n.t('Notification.welcome'), notifiable: @user)			
 			render json: @user, status: 201, location: [:web, @user], serializer: Web::V1::UserSerializer
 		else
