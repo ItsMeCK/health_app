@@ -1,4 +1,5 @@
 class Mobile::V1::BannersController < ApplicationController
+  skip_before_filter :authenticate_user!
   before_action :set_banner, only: [:show, :update, :destroy]
 
   # GET /web/v1/banners
