@@ -1,6 +1,7 @@
 class Mobile::V1::AccessoryCategoriesController < ApplicationController
   before_action :set_accessory_category, only: [:show]
-  before_filter :authenticate_user!, only: [:get_accessories]
+  skip_before_filter :authenticate_user!
+
 
   # GET /web/v1/accessory_categories
   # GET /web/v1/accessory_categories.json

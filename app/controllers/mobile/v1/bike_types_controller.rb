@@ -1,5 +1,5 @@
 class Mobile::V1::BikeTypesController < ApplicationController
-  before_filter :authenticate_user!
+  skip_before_filter :authenticate_user!
   before_action :set_bike_type, only: [:show]
 
   # GET /mobile/v1/bike_types

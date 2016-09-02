@@ -1,4 +1,5 @@
 class Mobile::V1::FeedbacksController < ApplicationController
+  skip_before_filter :authenticate_user!
 
   # POST /web/v1/feedbacks
   # POST /web/v1/feedbacks.json
