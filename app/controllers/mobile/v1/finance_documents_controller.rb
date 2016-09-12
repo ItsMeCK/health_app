@@ -15,6 +15,15 @@ class Mobile::V1::FinanceDocumentsController < ApplicationController
     render json: @finance_document
   end
 
+  def get_document
+    render json: FinanceDocument.where('category = ? and family = ? ', params[:category], params[:family]).first
+  end  
+
+  def email_document
+    UserMailer.send_finance_document(params[:email], params[:family]).deliver
+    render json: {message: "Document Sent!"}
+  end  
+
   # POST /web/v1/finance_documents
   # POST /web/v1/finance_documents.json
   

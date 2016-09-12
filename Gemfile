@@ -22,6 +22,8 @@ gem 'carrierwave-base64'
 #cron scheduling
 gem 'whenever'
 gem 'capistrano-rpush'
+#ical calender
+gem 'icalendar'
 group :development do
 	gem 'spring'
 	gem 'pry-rails'

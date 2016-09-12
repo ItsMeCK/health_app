@@ -13,23 +13,23 @@ class Ride < ActiveRecord::Base
 	def call_notification(notification_template, email_template)
     users = User.all
     users.each do |user|
-      @ride.ride_notification(user, notification_template, email_template)
+      self.ride_notification(user, notification_template, email_template)
     end
    end
 
-  def ride_notification(user, notification_template, email_template)
+	def ride_notification(user, notification_template, email_template)
+		user_ride = user.user_rides.where(ride_id: self.id)
 		template = NotificationTemplate.where(category: notification_template).last
-    Notification.create(recipient: user, actor: current_user, action: 'Events', notifiable: self, notification_template: template)
+    Notification.create(recipient: user, actor: user, action: 'Events', notifiable: self, notification_template: template)
     UserMailer.notification_mail_for_ride(user, self, email_template).deliver
 	end	
- 
 
 	private
 
 	def create_user_ride
 		@users = User.all
 		@users.each do |user|
-			self.user_rides.create(ride_id: self.id, user_id: user.id, perticipate_ride: "Not Replied", user_ride_date: self.ride_date)
+			self.user_rides.create(ride_id: self.id, user_id: user.id, perticipate_ride: "Not Replied")
 		end
 	end
 

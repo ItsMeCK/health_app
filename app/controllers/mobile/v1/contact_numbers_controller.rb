@@ -1,5 +1,6 @@
 class Mobile::V1::ContactNumbersController < ApplicationController
   before_action :set_contact_number, only: [:show]
+  skip_before_filter :authenticate_user!
 
   # GET /web/v1/contact_numbers
   # GET /web/v1/contact_numbers.json

@@ -1,10 +1,9 @@
 class UserMailer < ApplicationMailer
 	layout false
-	default from: "admin@myridz.com"
+	default from: "app@coromandel-harley.in"
 
 	@@dealer = Dealer.all
 	@@setmail = SetMail.all
-
 
 	def password_reset(user)
 		@user = user
@@ -56,6 +55,21 @@ class UserMailer < ApplicationMailer
 		@testdrive_confirm_user = @coramandal_template.content % { TestDriveBooking_Customer_Name:testride.try(:name), TestDriveBooking_Car_Model:@vehicle_model, TestDriveBooking_Date:testride.ride_date.strftime("%d/%m/%Y"), TestDriveBooking_Time:testride.ride_time.strftime("%I:%M%p"), TestDriveBooking_Showroom_Address:@showroom.try(:address),  TestDriveBooking_Showroom_Name:@showroom.dealer_name, TestDriveBooking_Customer_Number:testride.try(:mobile), TestDriveBooking_Customer_Email:testride.try(:email), TestDriveBooking_Customer_Address:testride.try(:address), TestDriveBooking_PickUp_Request:@pickup_req, TestDriveBook_PickUp_Address:@pickup_req, TestDriveBooking_Day:testride.ride_date.strftime("%d").to_i.ordinalize, TestDriveBooking_Month:testride.ride_date.strftime("%B"), TestDriveBooking_Year:testride.ride_date.strftime("%Y"), TestDriveBooking_Weekday:testride.ride_date.strftime("%A") }
 		@subject = @coramandal_template.title % { TestDriveBooking_Customer_Name:testride.try(:name), TestDriveBooking_Car_Model:@vehicle_model, TestDriveBooking_Date:testride.ride_date.strftime("%d/%m/%Y"), TestDriveBooking_Time:testride.ride_time.strftime("%I:%M%p"), TestDriveBooking_Showroom_Address:@showroom.try(:address),  TestDriveBooking_Showroom_Name:@showroom.dealer_name, TestDriveBooking_Customer_Number:testride.try(:mobile), TestDriveBooking_Customer_Email:testride.try(:email), TestDriveBooking_Customer_Address:testride.try(:address), TestDriveBooking_PickUp_Request:@pickup_req, TestDriveBook_PickUp_Address:@pickup_req, TestDriveBooking_Day:testride.ride_date.strftime("%d").to_i.ordinalize, TestDriveBooking_Month:testride.ride_date.strftime("%B"), TestDriveBooking_Year:testride.ride_date.strftime("%Y"), TestDriveBooking_Weekday:testride.ride_date.strftime("%A") }
 
+		cal = Icalendar::Calendar.new
+		cal.event do |e|
+ 		 	e.dtstart = Icalendar::Values::DateTime.new testride.ride_time
+			e.dtend   = Icalendar::Values::DateTime.new testride.ride_time + 1.hour
+  		e.summary     = "Coramandal Harley David Son"
+  		e.description = "Test drive booking request with Coromandel Harley Davidson"
+  		e.ip_class    = "PRIVATE"
+  		e.alarm do |a|
+  			a.action        = "AUDIO"
+  			a.trigger       = "-PT60M"
+  			a.append_attach "Test drive booking request with Coromandel Harley Davidson"
+			end
+		end
+		attachments['event.ics'] = cal.to_ical
+
 		mail :to => testride.email, :subject => @subject
 	end
 
@@ -96,6 +110,22 @@ def service_request_confirm(service, booking_type)
     @service_confirm_user = @n_template.content % { ServiceBooking_Customer_Name:service.my_bike.user.profile.full_name, ServiceBooking_Customer_Email:service.my_bike.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_Customer_Address: "sdfsdfdsfs dsfsd", ServiceBooking_Customer_Number: "56456456", ServiceBooking_Date:service.service_date.strftime("%d/%m/%Y"), ServiceBooking_Time:service.service_time.strftime("%I:%M%p"), ServiceBooking_Car_RegistrationNumber:service.try(:registration_number), ServiceBooking_PickUp_Request:@pickup_req, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name), ServiceBooking_ServiceCenter_Number:@service_center.try(:mobile),  ServiceBooking_PickUp_Address:@pickup_req,  ServiceBooking_Car_KmsRun:service.try(:kms), ServiceBooking_ServiceCenter_Address:@service_center.try(:address), ServiceBooking_Service_Type:service.try(:service_type), vehicle_kms:service.try(:kms), ServiceBooking_Customer_Comments:service.try(:comments), ServiceBooking_Day:service.service_date.strftime("%d").to_i.ordinalize, ServiceBooking_Month:service.service_date.strftime("%B"), ServiceBooking_Year:service.service_date.strftime("%Y"), ServiceBooking_Weekday:service.service_date.strftime("%A") }  
 
     @subject = @n_template.title % { ServiceBooking_Customer_Name:service.try(:name), ServiceBooking_Customer_Email:service.my_bike.user.email, ServiceBooking_Car_Model:@vehicle_model, ServiceBooking_ServiceCenter_Name:@service_center.try(:dealer_name) } 
+    
+		cal = Icalendar::Calendar.new
+		cal.event do |e|
+ 		 	e.dtstart = Icalendar::Values::DateTime.new service.service_time
+			e.dtend   = Icalendar::Values::DateTime.new service.service_time + 1.hour
+  		e.summary     = "Coramandal Harley David Son"
+  		e.description = "Service booking request with Coromandel Harley Davidson"
+  		e.ip_class    = "PRIVATE"
+  		e.alarm do |a|
+  			a.action        = "AUDIO"
+  			a.trigger       = "-PT60M"
+  			a.append_attach "Service booking request with Coromandel Harley Davidson"
+			end
+		end
+		attachments['event.ics'] = cal.to_ical
+			
     mail :to => service.my_bike.user.email, :subject => @subject
 end
 
@@ -146,12 +176,20 @@ def send_notification_mail(user, notification_type)
 	mail :to => user.email, :subject => @notification_template.try(:title), :body =>"this is the body"
 end
 
-def notification_mail_for_ride(user)
-	mail :to => user.email, :subject => "New Ride Invitation", :body =>"this is the new ride invitation you should be perticipated on this one please accept invitation"
+def notification_mail_for_ride(user, ride, email_template)
+	template = EmailNotificationTemplate.find_by_category(email_template)
+	@ride_content = template.content % {Ride_Customer_Name: user.try(:profile).try(:full_name), Ride_Final_Destination: ride.destination_location, Ride_date: ride.ride_date}
+	ride_title = template.title % {Ride_date: ride.ride_date}
+
+	mail :to => user.email, :subject => ride_title
 end
 
-def notification_mail_for_event(user)
-	mail :to => user.email, :subject => "New Event Invitation", :body =>"this is the new event invitation you should be perticipated on this one please accept invitation"
+def notification_mail_for_event(user, event, email_template)
+	template = EmailNotificationTemplate.find_by_category(email_template)
+	@event_content = template.content % {Event_Customer_Name: user.try(:profile).try(:full_name), Event_Final_Destination: event.location, Event_date: event.event_date}
+	event_title = template.title % {Event_date: event.event_date}
+
+	mail :to => user.email, :subject => event_title
 end
 
 def feedback(feedback)
@@ -168,9 +206,9 @@ def contact_us(enquiry)
 	@showroom = @@dealer.find_by_dealer_name(I18n.t('Dealer.name'))
 
 	@n_template = EmailNotificationTemplate.find_by_category("Contact us mail-dealer")
-	@enq_content = @n_template.content % {ContactUs_Customer_Name: enquiry.name, ContactUs_Customer_Number: enquiry.phone, ContactUs_Customer_Email: enquiry.email, ContactUs_Dealerership_Name: @showroom.name, ContactUs_AreaOfEnquiry: enquiry.category, ContactUs_Comment: enquiry.message}
+	@enq_content = @n_template.content % {ContactUs_Customer_Name: enquiry.name, ContactUs_Customer_Number: enquiry.phone, ContactUs_Customer_Email: enquiry.email, ContactUs_Dealerership_Name: @showroom.try(:name), ContactUs_AreaOfEnquiry: enquiry.category, ContactUs_Comment: enquiry.message}
 	enq_title = @n_template.title % {ContactUs_AreaOfEnquiry: enquiry.category}
-	mail :to => @mail_list.email, :subject => enq_title, :body => enq_content
+	mail :to => @mail_list.email, :subject => enq_title
 end	
 
 def welcome_user(user)
@@ -179,5 +217,12 @@ def welcome_user(user)
 	title = @n_template.title
 	mail :to => user.email, :subject => title
 end
+
+def send_finance_document(email, family)
+	doc = FinanceDocument.where('category = ? and family = ? ', 'Email Template', family).first
+	subject = "#{family.capitalize} Document For Coromandel Harley-Davidson"
+	@document = doc.document_list
+	mail :to => email, :subject => subject
+end	
 
 end

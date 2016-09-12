@@ -1,5 +1,5 @@
 class Mobile::V1::TestRidesController < ApplicationController
-  #before_action :authenticate_user!
+  skip_before_filter :authenticate_user!
   before_action :set_test_ride, only: [:show, :update, :destroy]
 
   # GET /web/v1/test_rides/1

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912061141) do
+ActiveRecord::Schema.define(version: 20160912095350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(version: 20160912061141) do
     t.text     "document_list"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "family"
   end
 
   create_table "galleries", force: :cascade do |t|
@@ -399,11 +400,12 @@ ActiveRecord::Schema.define(version: 20160912061141) do
     t.string   "location"
     t.string   "profession"
     t.text     "bio"
-    t.boolean  "hog_privacy",   default: false
+    t.boolean  "hog_privacy",               default: false
     t.string   "profile_image"
     t.integer  "user_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.date     "marriage_anniversary_date", default: '1900-01-01'
   end
 
   create_table "rides", force: :cascade do |t|
@@ -601,7 +603,6 @@ ActiveRecord::Schema.define(version: 20160912061141) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "perticipate_event"
-    t.date     "user_event_date"
   end
 
   create_table "user_rides", force: :cascade do |t|
@@ -610,7 +611,6 @@ ActiveRecord::Schema.define(version: 20160912061141) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "perticipate_ride"
-    t.date     "user_ride_date"
   end
 
   create_table "users", force: :cascade do |t|

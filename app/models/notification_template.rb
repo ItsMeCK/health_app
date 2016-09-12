@@ -2,14 +2,16 @@ class NotificationTemplate < ActiveRecord::Base
 	has_many :notifications
 	@@dealer = Dealer.all
 
+	#image upload
+	mount_base64_uploader :image, ImageUploader, file_name: 'notification'
+
 	def fill_up_service_booking_template(user, booking)
 		a = 5
 		self.content % { ServiceBooking_Day:booking.service_date, ServiceBooking_Weekday:a, ServiceBooking_Year:a, ServiceBooking_Month:a, ServiceBooking_Customer_Name:booking.my_bike.user.profile.full_name, vehicle:booking.my_bike.bike, ServiceBooking_Car_RegistrationNumber:booking.my_bike.registration_number, ServiceBooking_Date:booking.service_date, ServiceBooking_Time:booking.service_time, ServiceBooking_ServiceCenter_Name:booking.service_station, servicecenter_number:a, ServiceBooking_ServiceCenter_Number:a  }
 	end
 
-
 	#admin service booking mail
-	def fill_keywords(notifiable)
+	def fill_keywords(notifiable, user = nil)
 		case self.category
 		when I18n.t('Notification.service_booking')
 			service_booking(notifiable)
@@ -27,6 +29,12 @@ class NotificationTemplate < ActiveRecord::Base
 			welcome_notification(notifiable)
 		when I18n.t('Notification.feedback')
 			feedback_notification(notifiable)	
+		when I18n.t('Notification.ride_created'), I18n.t('Notification.ride_updated'), I18n.t('Notification.ride_deleted'), I18n.t('Notification.ride_user_response')
+			ride_notification(notifiable, user)	
+		when I18n.t('Notification.event_created'), I18n.t('Notification.event_updated'), I18n.t('Notification.event_deleted'), I18n.t('Notification.event_user_response')
+			event_notification(notifiable, user)
+		else
+			[content, title]
 		end	
 	end	
 
@@ -113,5 +121,19 @@ class NotificationTemplate < ActiveRecord::Base
 		feedback_title = self.title || 'N/A'
 		[feedback_content, feedback_title]
 	end
+
+	def ride_notification(ride, user)
+		user_ride = user.user_rides.where(ride_id: ride.id).first
+		ride_content = self.content % {Ride_Customer_Name: user.try(:profile).try(:full_name), Ride_Final_Destination: ride.destination_location, Ride_date: ride.ride_date, Ride_Object_ID: user_ride.id}
+		ride_title = self.title % {Ride_date: ride.ride_date}
+		[ride_content, ride_title]
+	end	
+
+	def event_notification(event, user)
+		user_event = user.user_events.where(event_id: event.id).first
+		event_content = self.content % {Event_Customer_Name: user.try(:profile).try(:full_name), Event_Final_Destination: event.location, Event_date: event.event_date, Event_Object_ID: user_event.id}
+		event_title = self.title % {Event_date: event.event_date}
+		[event_content, event_title]
+	end		
 
 end

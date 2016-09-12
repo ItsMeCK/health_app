@@ -1,5 +1,6 @@
-class Mobile::V1::ServiceBookingsController < ApplicationController
+ class Mobile::V1::ServiceBookingsController < ApplicationController
   before_action :set_service_booking, only: [:show, :update, :destroy]
+   skip_before_filter :authenticate_user!
 
   # GET /web/v1/service_bookings
   # GET /web/v1/service_bookings.json

@@ -147,7 +147,7 @@ Rails.application.routes.draw do
       #bike gallery
       resources :galleries
       post '/delete_galleries' => 'galleries#delete_galleries'
-
+      post '/get_document' => 'finance_documents#get_document'
     end
   end
 
@@ -220,6 +220,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       post '/notification_by_category' => 'users#notification_by_category'
       resources :notifications
       get '/mark_as_read/:id' => 'notifications#mark_as_read'
+      post '/email_document' => 'finance_documents#email_document'
 
     end
   end

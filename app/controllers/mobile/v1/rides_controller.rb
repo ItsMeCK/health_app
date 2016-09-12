@@ -1,5 +1,10 @@
 class Mobile::V1::RidesController < ApplicationController
 
+	def show
+		render json: Ride.find(params[:id])
+	end
+
+
 	def user_responce_with_ride
 		@user_ride = UserRide.find(params[:id])
 		if params[:status] == "Yes"
