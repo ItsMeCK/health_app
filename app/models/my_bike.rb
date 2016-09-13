@@ -27,8 +27,12 @@ class MyBike < ActiveRecord::Base
 		self.user.try(:email)
 	end
 
+	def my_bike_brand
+		Bike.find_by_id(self.bike_id).try(:brand) || "N/A"
+	end	
+
 	def as_json(options={})
-		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email})
+		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email, bike_brand: my_bike_brand})
 	end
 	
 	private
