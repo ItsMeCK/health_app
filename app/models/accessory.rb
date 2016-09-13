@@ -1,4 +1,5 @@
 class Accessory < ActiveRecord::Base
+	audited
 	has_many :wishlists, :through => :accessory_wishlist
 	belongs_to :accessory_category
 

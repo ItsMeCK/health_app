@@ -1,4 +1,5 @@
 class DefaultBikeImage < ActiveRecord::Base
+	audited
 	belongs_to :bike
 	has_many :my_bikes
 

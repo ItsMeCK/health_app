@@ -21,6 +21,7 @@ class Web::V1::PriceFieldsController < ApplicationController
     @price_field = PriceField.new(price_field_params)
 
     if @price_field.save
+      audit(@price_field, current_user)
       render json: @price_field, status: :created
     else
       render json: @price_field.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::PriceFieldsController < ApplicationController
     @price_field = PriceField.find(params[:id])
 
     if @price_field.update(price_field_params)
+      audit(@price_field, current_user)
       head :no_content
     else
       render json: @price_field.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::PriceFieldsController < ApplicationController
   # DELETE /web/v1/price_fields/1
   # DELETE /web/v1/price_fields/1.json
   def destroy
+    audit(@price_field, current_user)
     @price_field.destroy
 
     head :no_content

@@ -21,6 +21,7 @@ class Web::V1::TenuresController < ApplicationController
     @tenure = Tenure.new(tenure_params)
 
     if @tenure.save
+      audit(@tenure, current_user)
       render json: @tenure, status: :created
     else
       render json: @tenure.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::TenuresController < ApplicationController
     @tenure = Tenure.find(params[:id])
 
     if @tenure.update(tenure_params)
+      audit(@tenure, current_user)
       head :no_content
     else
       render json: @tenure.errors, status: :unprocessable_entity
@@ -42,7 +44,9 @@ class Web::V1::TenuresController < ApplicationController
   # DELETE /web/v1/tenures/1
   # DELETE /web/v1/tenures/1.json
   def destroy
+    audit(@tenure, current_user)
     @tenure.destroy
+    
 
     head :no_content
   end

@@ -21,6 +21,7 @@ class Web::V1::ContactTypesController < ApplicationController
     @contact_type = ContactType.new(contact_type_params)
 
     if @contact_type.save
+      audit(@contact_type, current_user)
       render json: @contact_type, status: :created
     else
       render json: @contact_type.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::ContactTypesController < ApplicationController
     @contact_type = ContactType.find(params[:id])
 
     if @contact_type.update(contact_type_params)
+      audit(@contact_type, current_user)
       head :no_content
     else
       render json: @contact_type.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::ContactTypesController < ApplicationController
   # DELETE /web/v1/contact_types/1
   # DELETE /web/v1/contact_types/1.json
   def destroy
+    audit(@contact_type, current_user)
     @contact_type.destroy
 
     head :no_content

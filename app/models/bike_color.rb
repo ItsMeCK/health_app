@@ -1,4 +1,5 @@
 class BikeColor < ActiveRecord::Base
+	audited
 	belongs_to :bike
 
 	#mount_base64_uploader :image, ImageUploader, file_name: 'bike_color'

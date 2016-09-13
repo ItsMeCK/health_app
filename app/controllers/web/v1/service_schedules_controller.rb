@@ -21,6 +21,7 @@ class Web::V1::ServiceSchedulesController < ApplicationController
     @service_schedule = ServiceSchedule.new(service_schedule_params)
 
     if @service_schedule.save
+      audit(@service_schedule, current_user)
       render json: @service_schedule, status: :created
     else
       render json: @service_schedule.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::ServiceSchedulesController < ApplicationController
     @service_schedule = ServiceSchedule.find(params[:id])
 
     if @service_schedule.update(service_schedule_params)
+      audit(@service_schedule, current_user)
       head :no_content
     else
       render json: @service_schedule.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::ServiceSchedulesController < ApplicationController
   # DELETE /web/v1/service_schedules/1
   # DELETE /web/v1/service_schedules/1.json
   def destroy
+    audit(@service_schedule, current_user)
     @service_schedule.destroy
 
     head :no_content

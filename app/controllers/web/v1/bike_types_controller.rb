@@ -22,6 +22,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.new(bike_type_params)
 
     if @bike_type.save
+      audit(@bike_type, current_user)
       render json: @bike_type, status: :created
     else
       render json: @bike_type.errors, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class Web::V1::BikeTypesController < ApplicationController
     @bike_type = BikeType.find(params[:id])
 
     if @bike_type.update(bike_type_params)
+      audit(@bike_type, current_user)
       render json: @bike_type, status: :ok
     else
       render json: @bike_type.errors, status: :unprocessable_entity
@@ -43,6 +45,7 @@ class Web::V1::BikeTypesController < ApplicationController
   # DELETE /web/v1/bike_types/1
   # DELETE /web/v1/bike_types/1.json
   def destroy
+    audit(@bike_type, current_user)
     @bike_type.destroy
 
     head :no_content

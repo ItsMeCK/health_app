@@ -22,6 +22,7 @@ class Web::V1::DealersController < ApplicationController
     @dealer.dealer_type_id = params[:dealer][:dealer_type_id]
     
     if @dealer.save
+       audit(@dealer, current_user)
       render json: @dealer, status: :created
     else
       render json: @dealer.errors, status: :unprocessable_entity
@@ -37,6 +38,7 @@ class Web::V1::DealersController < ApplicationController
     # end
 
     if @dealer.update(dealer_params)
+       audit(@dealer, current_user)
       head :no_content
     else
       render json: @dealer.errors, status: :unprocessable_entity
@@ -60,6 +62,7 @@ class Web::V1::DealersController < ApplicationController
   # DELETE /web/v1/dealers/1
   # DELETE /web/v1/dealers/1.json
   def destroy
+     audit(@dealer, current_user)
     @dealer.destroy
 
     head :no_content

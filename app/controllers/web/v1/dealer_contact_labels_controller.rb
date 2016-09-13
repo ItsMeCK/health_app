@@ -21,6 +21,7 @@ class Web::V1::DealerContactLabelsController < ApplicationController
     @dealer_contact_label = DealerContactLabel.new(dealer_contact_label_params)
 
     if @dealer_contact_label.save
+      audit(@dealer_contact_label, current_user)
       render json: @dealer_contact_label, status: :created
     else
       render json: @dealer_contact_label.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::DealerContactLabelsController < ApplicationController
     @dealer_contact_label = DealerContactLabel.find(params[:id])
 
     if @dealer_contact_label.update(dealer_contact_label_params)
+      audit(@dealer_contact_label, current_user)
       head :no_content
     else
       render json: @dealer_contact_label.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::DealerContactLabelsController < ApplicationController
   # DELETE /web/v1/dealer_contact_labels/1
   # DELETE /web/v1/dealer_contact_labels/1.json
   def destroy
+    audit(@dealer_contact_label, current_user)
     @dealer_contact_label.destroy
 
     head :no_content

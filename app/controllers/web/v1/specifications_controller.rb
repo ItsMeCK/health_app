@@ -22,6 +22,7 @@
     @specification = Specification.new(specification_params)
 
     if @specification.save
+      audit(@specification, current_user)
       render json: @specification, status: :created, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
@@ -32,6 +33,7 @@
   # PATCH/PUT /web/v1/specifications/1.json
   def update
     if @specification.update(specification_params)
+      audit(@specification, current_user)
       render json: @specification, status: :ok, serializer: Web::V1::SpecificationSerializer
     else
       render json: @specification.errors, status: :unprocessable_entity
@@ -41,6 +43,7 @@
   # DELETE /web/v1/specifications/1
   # DELETE /web/v1/specifications/1.json
   def destroy
+    audit(@specification, current_user)
     @specification.destroy
 
     head :no_content

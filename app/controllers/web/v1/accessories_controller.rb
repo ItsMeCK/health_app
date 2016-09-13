@@ -10,10 +10,6 @@ class Web::V1::AccessoriesController < ApplicationController
     render json: @accessories
   end
 
-  def method_name
-    
-  end
-
   # GET /web/v1/accessories/1
   # GET /web/v1/accessories/1.json
   def show
@@ -26,6 +22,7 @@ class Web::V1::AccessoriesController < ApplicationController
     @accessory = Accessory.new(accessory_params)
 
     if @accessory.save
+      audit(@accessory, current_user)
       render json: @accessory, status: :created
     else
       render json: @accessory.errors, status: :unprocessable_entity
@@ -38,6 +35,7 @@ class Web::V1::AccessoriesController < ApplicationController
     @accessory = Accessory.find(params[:id])
 
     if @accessory.update(accessory_params)
+      audit(@accessory, current_user)
       head :no_content
     else
       render json: @accessory.errors, status: :unprocessable_entity
@@ -60,7 +58,9 @@ class Web::V1::AccessoriesController < ApplicationController
   # DELETE /web/v1/accessories/1
   # DELETE /web/v1/accessories/1.json
   def destroy
+    audit(@accessory, current_user)
     @accessory.destroy
+    
 
     head :no_content
   end
@@ -84,6 +84,6 @@ def set_accessory
 end
 
 def accessory_params
-  params.require(:accessory).permit(:title, :brand, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
+  params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
 end
 end

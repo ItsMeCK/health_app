@@ -1,4 +1,5 @@
 class Bike < ActiveRecord::Base
+	audited
 	belongs_to :bike_type
 	has_one :default_bike_image
 	has_many :specifications

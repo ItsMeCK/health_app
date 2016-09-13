@@ -22,6 +22,7 @@ class Web::V1::KeyFeaturesController < ApplicationController
     @key_feature = KeyFeature.new(key_feature_params)
 
     if @key_feature.save
+      audit(@key_feature, current_user)
       render json: @key_feature, status: :created
     else
       render json: @key_feature.errors, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class Web::V1::KeyFeaturesController < ApplicationController
     @key_feature = KeyFeature.find(params[:id])
 
     if @key_feature.update(key_feature_params)
+      audit(@key_feature, current_user)
       head :no_content
     else
       render json: @key_feature.errors, status: :unprocessable_entity
@@ -43,6 +45,7 @@ class Web::V1::KeyFeaturesController < ApplicationController
   # DELETE /web/v1/key_features/1
   # DELETE /web/v1/key_features/1.json
   def destroy
+    audit(@key_feature, current_user)
     @key_feature.destroy
 
     head :no_content

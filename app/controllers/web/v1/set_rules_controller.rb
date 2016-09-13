@@ -22,6 +22,7 @@ class Web::V1::SetRulesController < ApplicationController
     @set_rule.days = params[:set_rule][:days]
 
     if @set_rule.save
+      audit(@set_rule, current_user)
       render json: @set_rule, status: :created
     else
       render json: @set_rule.errors, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class Web::V1::SetRulesController < ApplicationController
     @set_rule = SetRule.find(params[:id])
 
     if @set_rule.update(set_rule_params)
+      audit(@set_rule, current_user)
       head :no_content
     else
       render json: @set_rule.errors, status: :unprocessable_entity
@@ -43,6 +45,7 @@ class Web::V1::SetRulesController < ApplicationController
   # DELETE /web/v1/set_rules/1
   # DELETE /web/v1/set_rules/1.json
   def destroy
+    audit(@set_rule, current_user)
     @set_rule.destroy
 
     head :no_content

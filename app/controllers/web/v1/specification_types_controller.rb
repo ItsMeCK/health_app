@@ -21,6 +21,7 @@ class Web::V1::SpecificationTypesController < ApplicationController
     @specification_type = SpecificationType.new(specification_type_params)
 
     if @specification_type.save
+      audit(@specification_type, current_user)
       render json: @specification_type, status: :created, serializer: Web::V1::SpecificationTypeSerializer
     else
       render json: @specification_type.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::SpecificationTypesController < ApplicationController
     @specification_type = SpecificationType.find(params[:id])
 
     if @specification_type.update(specification_type_params)
+      audit(@specification_type, current_user)
       render json: @specification_type, status: :created, serializer: Web::V1::SpecificationTypeSerializer
     else
       render json: @specification_type.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::SpecificationTypesController < ApplicationController
   # DELETE /web/v1/specification_types/1
   # DELETE /web/v1/specification_types/1.json
   def destroy
+    audit(@specification_type, current_user)
     @specification_type.destroy
 
     head :no_content

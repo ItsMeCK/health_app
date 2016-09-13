@@ -21,6 +21,7 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
     @accessory_category = AccessoryCategory.new(accessory_category_params)
 
     if @accessory_category.save
+      audit(@accessory_category, current_user)
       render json: @accessory_category, status: :created
     else
       render json: @accessory_category.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
     @accessory_category = AccessoryCategory.find(params[:id])
 
     if @accessory_category.update(accessory_category_params)
+      audit(@accessory_category, current_user)
       head :no_content
     else
       render json: @accessory_category.errors, status: :unprocessable_entity
@@ -55,7 +57,9 @@ class Web::V1::AccessoryCategoriesController < ApplicationController
   # DELETE /web/v1/accessory_categories/1
   # DELETE /web/v1/accessory_categories/1.json
   def destroy
+    audit(@accessory_category, current_user)
     @accessory_category.destroy
+   
 
     head :no_content
   end
@@ -74,6 +78,6 @@ def set_accessory_category
 end
 
 def accessory_category_params
-  params.require(:accessory_category).permit(:title, :brand, :description, :image)
+  params.require(:accessory_category).permit(:title, :description, :image)
 end
 end
