@@ -1,5 +1,6 @@
 class Mobile::V1::DealersController < ApplicationController
   before_action :set_dealer, only: [:show]
+  skip_before_filter :authenticate_user!
 
   # GET /web/v1/dealers
   # GET /web/v1/dealers.json

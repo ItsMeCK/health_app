@@ -1,5 +1,7 @@
 class Web::V1::DealersController < ApplicationController
   before_action :set_dealer, only: [:show, :update, :destroy]
+  #skip_before_filter :authenticate_user!
+
 
   # GET /web/v1/dealers
   # GET /web/v1/dealers.json

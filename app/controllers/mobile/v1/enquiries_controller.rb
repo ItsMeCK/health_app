@@ -1,4 +1,5 @@
 class Mobile::V1::EnquiriesController < ApplicationController
+  skip_before_filter :authenticate_user!
 
   # POST /web/v1/enquiries
   # POST /web/v1/enquiries.json
