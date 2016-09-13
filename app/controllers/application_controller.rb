@@ -19,6 +19,12 @@ class ApplicationController < ActionController::API
 		User.where(authentication_token: params["auth_token"]).first
 	end
 
+	def audit(object, user)
+    audit = object.audits.last
+    audit.user_id = user.id
+    audit.save	
+	end
+
 # private
 
  # def set_access_control_headers

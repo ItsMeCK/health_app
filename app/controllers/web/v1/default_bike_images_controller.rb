@@ -21,6 +21,7 @@ class Web::V1::DefaultBikeImagesController < ApplicationController
     @default_bike_image = DefaultBikeImage.new(default_bike_image_params)
 
     if @default_bike_image.save
+      audit(@default_bike_image, current_user)
       render json: @default_bike_image, status: :created
     else
       render json: @default_bike_image.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::DefaultBikeImagesController < ApplicationController
     @default_bike_image = DefaultBikeImage.find(params[:id])
 
     if @default_bike_image.update(default_bike_image_params)
+      audit(@default_bike_image, current_user)
       head :no_content
     else
       render json: @default_bike_image.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::DefaultBikeImagesController < ApplicationController
   # DELETE /web/v1/default_bike_images/1
   # DELETE /web/v1/default_bike_images/1.json
   def destroy
+    audit(@default_bike_image, current_user)
     @default_bike_image.destroy
 
     head :no_content

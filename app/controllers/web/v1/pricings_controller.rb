@@ -21,6 +21,7 @@ class Web::V1::PricingsController < ApplicationController
     @pricing = Pricing.new(pricing_params)
 
     if @pricing.save
+      audit(@pricing, current_user)
       render json: @pricing, status: :created
     else
       render json: @pricing.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::PricingsController < ApplicationController
     @pricing = Pricing.find(params[:id])
 
     if @pricing.update(pricing_params)
+      audit(@pricing, current_user)
       head :no_content
     else
       render json: @pricing.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::PricingsController < ApplicationController
   # DELETE /web/v1/pricings/1
   # DELETE /web/v1/pricings/1.json
   def destroy
+    audit(@pricing, current_user)
     @pricing.destroy
 
     head :no_content

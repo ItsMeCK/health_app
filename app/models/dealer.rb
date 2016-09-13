@@ -1,4 +1,5 @@
 class Dealer < ActiveRecord::Base
+	audited
 	serialize :dealer_type_id
 	has_and_belongs_to_many :dealer_types
 	has_many :dealer_contact_numbers

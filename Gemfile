@@ -22,6 +22,9 @@ gem 'carrierwave-base64'
 #cron scheduling
 gem 'whenever'
 gem 'capistrano-rpush'
+#for auditing purpose
+gem "audited", "~> 4.0"
+gem 'audited-activerecord', '~> 4.2'
 #ical calender
 gem 'icalendar'
 group :development do

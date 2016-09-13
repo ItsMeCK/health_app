@@ -1,4 +1,5 @@
 class TestRide < ActiveRecord::Base
+	audited
 	belongs_to :user
 
 	def test_ride_booking_notification(n_template, dealer_mail_template, customer_mail_template)

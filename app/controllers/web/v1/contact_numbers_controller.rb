@@ -21,6 +21,7 @@ class Web::V1::ContactNumbersController < ApplicationController
     @contact_number = ContactNumber.new(contact_number_params)
 
     if @contact_number.save
+      audit(@contact_number, current_user)
       render json: @contact_number, status: :created
     else
       render json: @contact_number.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::ContactNumbersController < ApplicationController
     @contact_number = ContactNumber.find(params[:id])
 
     if @contact_number.update(contact_number_params)
+      audit(@contact_number, current_user)
       head :no_content
     else
       render json: @contact_number.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::ContactNumbersController < ApplicationController
   # DELETE /web/v1/contact_numbers/1
   # DELETE /web/v1/contact_numbers/1.json
   def destroy
+    audit(@contact_number, current_user)
     @contact_number.destroy
 
     head :no_content

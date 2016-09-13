@@ -1,4 +1,5 @@
 class ServiceSchedule < ActiveRecord::Base
+	audited
 	belongs_to :bike
 
 	def bike_name

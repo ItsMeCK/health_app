@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  audited
   # Features
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
   

@@ -26,6 +26,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.new(bike_params)
 
     if @bike.save
+      audit(@bike, current_user)
       render json: @bike, status: :created #serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
@@ -38,6 +39,7 @@ class Web::V1::BikesController < ApplicationController
     @bike = Bike.find(params[:id])
 
     if @bike.update(bike_params)
+      audit(@bike, current_user)
       render json: @bike, status: :ok  #serializer: Web::V1::BikeSerializer
     else
       render json: @bike.errors, status: :unprocessable_entity
@@ -47,6 +49,7 @@ class Web::V1::BikesController < ApplicationController
   # DELETE /web/v1/bikes/1
   # DELETE /web/v1/bikes/1.json
   def destroy
+    audit(@bike, current_user)
     @bike.destroy
 
     head :no_content

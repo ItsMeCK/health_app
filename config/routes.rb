@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     resources :sessions, :only => [:create, :destroy]
     resource :api_token
     resources :profiles
+    #audits
+    get '/audit_lgs' => 'audit#audit_logs'
     post '/delete_profiles' => 'profiles#delete_profiles'
     post '/profile_image_update' => 'profiles#profile_image_update'
     resources :hog_registrations

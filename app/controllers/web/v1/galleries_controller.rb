@@ -22,6 +22,7 @@ class Web::V1::GalleriesController < ApplicationController
     @gallery.image = params[:gallery][:image]
 
     if @gallery.save
+      audit(@gallery, current_user)
       render json: @gallery, status: :created, serializer: Web::V1::GallerySerializer
     else
       render json: @gallery.errors, status: :unprocessable_entity
@@ -34,6 +35,7 @@ class Web::V1::GalleriesController < ApplicationController
     @gallery = Gallery.find(params[:id])
 
     if @gallery.update(gallery_params)
+      audit(@gallery, current_user)
       @gallery.update(image: params[:gallery][:image])
       #render json: @gallery
       head :no_content
@@ -45,6 +47,7 @@ class Web::V1::GalleriesController < ApplicationController
   # DELETE /web/v1/galleries/1
   # DELETE /web/v1/galleries/1.json
   def destroy
+    audit(@gallery, current_user)
     @gallery.destroy
 
     head :no_content

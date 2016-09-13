@@ -21,6 +21,7 @@ class Web::V1::BikeColorsController < ApplicationController
     @bike_color = BikeColor.new(bike_color_params)
 
     if @bike_color.save
+      audit(@bike_color, current_user)
       render json: @bike_color, status: :created
     else
       render json: @bike_color.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::BikeColorsController < ApplicationController
     @bike_color = BikeColor.find(params[:id])
 
     if @bike_color.update(bike_color_params)
+      audit(@bike_color, current_user)
       head :no_content
     else
       render json: @bike_color.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::BikeColorsController < ApplicationController
   # DELETE /web/v1/bike_colors/1
   # DELETE /web/v1/bike_colors/1.json
   def destroy
+    audit(@bike_color, current_user)
     @bike_color.destroy
 
     head :no_content

@@ -21,6 +21,7 @@ class Web::V1::BannersController < ApplicationController
     @banner = Banner.new(banner_params)
 
     if @banner.save
+      audit(@banner, current_user)
      if set_host == "localhost:3000"
         @banner.update(image_host_url: "http://" + set_host + @banner.image.url)
       else
@@ -39,6 +40,7 @@ class Web::V1::BannersController < ApplicationController
     @banner = Banner.find(params[:id])
 
     if @banner.update(banner_params)
+      audit(@banner, current_user)
       render json: @banner
       #head :no_content
     else
@@ -67,7 +69,9 @@ class Web::V1::BannersController < ApplicationController
   # DELETE /web/v1/banners/1
   # DELETE /web/v1/banners/1.json
   def destroy
+    audit(@banner, current_user)
     @banner.destroy
+    
 
     head :no_content
   end

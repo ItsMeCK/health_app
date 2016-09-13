@@ -1,4 +1,5 @@
 class InsuranceRenewal < ActiveRecord::Base
+	audited
 
 	def send_insurance_notification
 			template = NotificationTemplate.where(category: I18n.t('Notification.insurance_renewal')).last

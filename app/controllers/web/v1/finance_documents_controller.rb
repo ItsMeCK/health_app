@@ -21,6 +21,7 @@ class Web::V1::FinanceDocumentsController < ApplicationController
     @finance_document = FinanceDocument.new(finance_document_params)
 
     if @finance_document.save
+      audit(@finance_document, current_user)
       render json: @finance_document, status: :created
     else
       render json: @finance_document.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::FinanceDocumentsController < ApplicationController
     @finance_document = FinanceDocument.find(params[:id])
 
     if @finance_document.update(finance_document_params)
+      audit(@finance_document, current_user)
       head :no_content
     else
       render json: @finance_document.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::FinanceDocumentsController < ApplicationController
   # DELETE /web/v1/finance_documents/1
   # DELETE /web/v1/finance_documents/1.json
   def destroy
+    audit(@finance_document, current_user)
     @finance_document.destroy
 
     head :no_content
