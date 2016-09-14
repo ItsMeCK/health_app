@@ -102,7 +102,8 @@ class Mobile::V1::UsersController < ApplicationController
 
 		def notification_count
 			@count = current_user.notification_count
-			@count.reload
+			logger.info "=====================#{@count.inspect}=========="
+			@count.reload if @count
 			render json: @count
 		end
 
