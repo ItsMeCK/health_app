@@ -109,7 +109,7 @@ class Notification < ActiveRecord::Base
 
 	def android_notification
 		n = Rpush::Gcm::Notification.new
-		n.app = Rpush::Gcm::App.find_by_name("coromandal_harley_davidson")
+		n.app = Rpush::Gcm::App.find_by_name("Avinashi-ktm")
 		n.registration_ids = [@user.android_token]
 		content, title  = @notification_template.fill_keywords(self.notifiable)
 		logger.info "=====================#{content.inspect}===========#{title.inspect}"
