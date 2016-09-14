@@ -21,6 +21,7 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
   def create
     @insurance_renewal = InsuranceRenewal.new(insurance_renewal_params)
     if @insurance_renewal.save
+      audit(@insurance_renewal, current_user)
       @insurance_renewal.delay.send_insurance_notification
       render json: @insurance_renewal, status: :created
     else
@@ -34,6 +35,7 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
     @insurance_renewal = InsuranceRenewal.find(params[:id])
 
     if @insurance_renewal.update(insurance_renewal_params)
+      audit(@insurance_renewal, current_user)
       @insurance_renewal.delay.send_insurance_notification
       render json: @insurance_renewal, status: :updated
     else
@@ -44,6 +46,7 @@ class Web::V1::InsuranceRenewalsController < ApplicationController
   # DELETE /web/v1/insurance_renewals/1
   # DELETE /web/v1/insurance_renewals/1.json
   def destroy
+    audit(@insurance_renewal, current_user)
     @insurance_renewal.destroy
 
     head :no_content

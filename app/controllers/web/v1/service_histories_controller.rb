@@ -21,6 +21,7 @@ class Web::V1::ServiceHistoriesController < ApplicationController
     @service_history = ServiceHistory.new(service_history_params)
 
     if @service_history.save
+      audit(@service_history, current_user)
       render json: @service_history, status: :created
     else
       render json: @service_history.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::ServiceHistoriesController < ApplicationController
     @service_history = ServiceHistory.find(params[:id])
 
     if @service_history.update(service_history_params)
+      audit(@service_history, current_user)
       head :no_content
     else
       render json: @service_history.errors, status: :unprocessable_entity
@@ -56,6 +58,7 @@ class Web::V1::ServiceHistoriesController < ApplicationController
   # DELETE /web/v1/service_histories/1
   # DELETE /web/v1/service_histories/1.json
   def destroy
+    audit(@service_history, current_user)
     @service_history.destroy
 
     head :no_content

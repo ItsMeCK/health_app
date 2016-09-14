@@ -1,4 +1,5 @@
 class DealerContactNumber < ActiveRecord::Base
+	audited
 	belongs_to :dealer
 	belongs_to :dealer_contact_label
 

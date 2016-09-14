@@ -1,4 +1,5 @@
 class ServiceBooking < ActiveRecord::Base
+	audited
 	belongs_to :my_bike
 
 	def my_bike_name

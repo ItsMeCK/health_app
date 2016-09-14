@@ -12,6 +12,7 @@ class Web::V1::UsersController < ApplicationController
 	def create
 		@user = User.new(user_params)
 		if @user.save
+			audit(@user, current_user)
 			mobile = params[:user][:mobile] || 0
 			name = params[:user][:name] || "N/A"
 			Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
@@ -30,6 +31,7 @@ class Web::V1::UsersController < ApplicationController
 	def update
 		@user = User.find(params[:id])
 		if @user.update(user_params)
+			audit(@user, current_user)
 			render json: @user, status: 200, location: [:web, @user], serializer: Web::V1::UserSerializer
 		else
 			render json: { errors: @user.errors }, status: 422
@@ -37,7 +39,9 @@ class Web::V1::UsersController < ApplicationController
 	end
 
 	def destroy
+		audit(@user, current_user)
 		@user = User.find(params[:id]).destroy
+		
 		message = "Your account has been successfully deleted"
 		render json: { message: message}, status: 204
 	end

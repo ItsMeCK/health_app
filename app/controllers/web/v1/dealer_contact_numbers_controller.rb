@@ -21,6 +21,7 @@ class Web::V1::DealerContactNumbersController < ApplicationController
     @dealer_contact_number = DealerContactNumber.new(dealer_contact_number_params)
 
     if @dealer_contact_number.save
+      audit(@dealer_contact_number, current_user)
       render json: @dealer_contact_number, status: :created
     else
       render json: @dealer_contact_number.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::DealerContactNumbersController < ApplicationController
     @dealer_contact_number = DealerContactNumber.find(params[:id])
 
     if @dealer_contact_number.update(dealer_contact_number_params)
+      audit(@dealer_contact_number, current_user)
       head :no_content
     else
       render json: @dealer_contact_number.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::DealerContactNumbersController < ApplicationController
   # DELETE /web/v1/dealer_contact_numbers/1
   # DELETE /web/v1/dealer_contact_numbers/1.json
   def destroy
+    audit(@dealer_contact_number, current_user)
     @dealer_contact_number.destroy
 
     head :no_content

@@ -1,4 +1,5 @@
 class Specification < ActiveRecord::Base
+	audited
 	belongs_to :specification_type
 	belongs_to :bike
 

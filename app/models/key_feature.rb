@@ -1,4 +1,5 @@
 class KeyFeature < ActiveRecord::Base
+	audited
 	belongs_to :bike
 	belongs_to :key_feature_type
 	#mount_base64_uploader :image, ImageUploader, file_name: 'key_feature'

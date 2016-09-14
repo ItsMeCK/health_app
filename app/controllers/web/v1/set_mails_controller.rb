@@ -21,6 +21,7 @@ class Web::V1::SetMailsController < ApplicationController
     @set_mail = SetMail.new(set_mail_params)
 
     if @set_mail.save
+       audit(@set_mail, current_user)
       render json: @set_mail, status: :created
     else
       render json: @set_mail.errors, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class Web::V1::SetMailsController < ApplicationController
     @set_mail = SetMail.find(params[:id])
 
     if @set_mail.update(set_mail_params)
+       audit(@set_mail, current_user)
       head :no_content
     else
       render json: @set_mail.errors, status: :unprocessable_entity
@@ -42,6 +44,7 @@ class Web::V1::SetMailsController < ApplicationController
   # DELETE /web/v1/set_mails/1
   # DELETE /web/v1/set_mails/1.json
   def destroy
+    audit(@set_mail, current_user)
     @set_mail.destroy
 
     head :no_content

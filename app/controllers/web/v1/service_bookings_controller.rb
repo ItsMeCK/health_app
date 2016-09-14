@@ -21,6 +21,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
   def create
     @service_booking = ServiceBooking.new(service_booking_params)
     if @service_booking.save 
+      audit(@service_booking, current_user)
       @service_booking.delay.sevice_booking_notification(I18n.t('Notification.service_booking'), I18n.t('Email.service_booking_dealer'), I18n.t('Email.service_booking_user'))
       render json: @service_booking, status: :created, serializer: Web::V1::ServiceBookingSerializer
     else
@@ -32,6 +33,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # PATCH/PUT /web/v1/service_bookings/1.json
   def update
     if @service_booking.update(service_booking_params)
+      audit(@service_booking, current_user)
      @service_booking.sevice_booking_notification(I18n.t('Notification.service_booking_updated'), I18n.t('Email.service_booking_updated_dealer'), I18n.t('Email.service_booking_updated_user'))    
      render json: @service_booking, status: :ok, serializer: Web::V1::ServiceBookingSerializer
     else
@@ -43,6 +45,7 @@ class Web::V1::ServiceBookingsController < ApplicationController
   # DELETE /web/v1/service_bookings/1.json
   def destroy
     @service_booking.update_attribute(:status, 'Canceled')
+    audit(@service_booking, current_user)
     @service_booking.sevice_booking_notification(I18n.t('Notification.service_booking_destroyed'), I18n.t('Email.service_booking_delete_dealer'), I18n.t('Email.service_booking_delete_user'))
     head :no_content
   rescue StandardError => e
