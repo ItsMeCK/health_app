@@ -113,8 +113,12 @@ class Mobile::V1::UsersController < ApplicationController
 		end	
 
 		def clear_notification_count
-			@count = current_user.notification_count.reset_count_for_category(params[:category])
-			message = "Your notification has been successfully cleared"
+             if current_user.notification_count.present?
+			   @count = current_user.notification_count.reset_count_for_category(params[:category])
+			   message = "Your notification has been successfully cleared"
+			else
+				message = "Your didnot have any notifications"
+			end
 			render json: { message: message}, status: 204
 		end	
 
