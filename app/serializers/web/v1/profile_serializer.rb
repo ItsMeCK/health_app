@@ -4,6 +4,8 @@ class Web::V1::ProfileSerializer < ActiveModel::Serializer
   def attributes
   	data = super
   	data[:role] = object.user.role
+  	data[:android_token] = object.user.try(:android_token)
+  	data[:ios_token] = object.user.try(:ios_token)
   	data
   end
 end
