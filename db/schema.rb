@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913054502) do
+ActiveRecord::Schema.define(version: 20160915073935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -335,12 +335,13 @@ ActiveRecord::Schema.define(version: 20160913054502) do
     t.integer  "user_id"
     t.string   "bike_image"
     t.integer  "kms"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "default_bike_image_id"
     t.string   "my_bike_image_url"
     t.integer  "bike_id"
     t.string   "image_host_url"
+    t.string   "status",                default: "Active"
   end
 
   create_table "my_docs", force: :cascade do |t|
