@@ -34,9 +34,9 @@ class Mobile::V1::UsersController < ApplicationController
 		name = params[:user][:name]
 		Profile.create( user_id: @user.id, email: @user.email, full_name: name, mobile: mobile)
 		HogRegistration.create( user_id: @user.id, email: @user.email, full_name:name, mobile: mobile)
-		Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
 		NotificationCount.create(user_id: @user.id)
-		#UserMailer.welcome_user(@user).deliver
+		Notification.create(recipient: @user, actor: current_user, action: 'Offer', notifiable: @user, notification_template: template)
+		UserMailer.welcome_user(@user).deliver
 		#render json: @user, status: 201, location: [:mobile, @user], serializer: Mobile::V1::UserSerializer
 	end
 
