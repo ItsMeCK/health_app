@@ -33,7 +33,7 @@ class MyBike < ActiveRecord::Base
 	end	
 
  	def as_json(options={})
-		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email, bike_brand: my_bike_brand}
+		super.as_json(options).merge({:service_histories => service_history, :user_mail => user_email, bike_brand: my_bike_brand})
 	end
 	
 	private
