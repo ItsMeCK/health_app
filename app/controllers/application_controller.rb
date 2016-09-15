@@ -32,7 +32,7 @@ class ApplicationController < ActionController::API
  #   headers['Access-Control-Request-Method'] = %w{GET POST OPTIONS}.join(",")
  # end
 	def standard_error(exception)
-		logger.info "=============Error:: #{exception.inspect}========================="
+		logger.info "=============Error:: #{exception.backtrace.join("\n")}========================="
 		render json: {errors: I18n.t('Errors.500_error')}, status: 500
 	end
 end
