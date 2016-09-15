@@ -15,7 +15,7 @@ class Mobile::V1::TestRidesController < ApplicationController
     if @test_ride.save
       render json: @test_ride, status: :created
       # Create Notifications
-      @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_booking'), I18n.t('Email.test_ride_booking_dealer'), I18n.t('Email.test_ride_booking_user'))
+      @test_ride.delay.test_ride_booking_notification(I18n.t('Notification.test_ride_booking'), I18n.t('Email.test_ride_booking_dealer'), I18n.t('Email.test_ride_booking_user'))
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class Mobile::V1::TestRidesController < ApplicationController
       render json: @test_ride, status: :ok
 
       # Send Notification & Email
-      @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_updated'), I18n.t('Email.test_ride_booking_update_dealer'), I18n.t('Email.test_ride_booking_update_user'))
+      @test_ride.delay.test_ride_booking_notification(I18n.t('Notification.test_ride_updated'), I18n.t('Email.test_ride_booking_update_dealer'), I18n.t('Email.test_ride_booking_update_user'))
     else
       render json: @test_ride.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class Mobile::V1::TestRidesController < ApplicationController
   def destroy
     @test_ride.update_attribute(:status, 'Canceled')
     head :no_content
-    @test_ride.test_ride_booking_notification(I18n.t('Notification.test_ride_destroyed'), I18n.t('Email.test_ride_booking_delete_dealer'), I18n.t('Email.test_ride_booking_delete_user'))
+    @test_ride.delay.test_ride_booking_notification(I18n.t('Notification.test_ride_destroyed'), I18n.t('Email.test_ride_booking_delete_dealer'), I18n.t('Email.test_ride_booking_delete_user'))
   end
 
   private

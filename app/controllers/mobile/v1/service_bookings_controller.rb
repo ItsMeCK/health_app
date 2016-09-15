@@ -23,7 +23,7 @@
     if @service_booking.save
       render json: @service_booking, status: :created, serializer: Mobile::V1::ServiceBookingSerializer
       # Notification
-      @service_booking.sevice_booking_notification(I18n.t('Notification.service_booking'), I18n.t('Email.service_booking_dealer'), I18n.t('Email.service_booking_user'))
+      @service_booking.delay.sevice_booking_notification(I18n.t('Notification.service_booking'), I18n.t('Email.service_booking_dealer'), I18n.t('Email.service_booking_user'))
     else
       render json: @service_booking.errors, status: :unprocessable_entity
     end
