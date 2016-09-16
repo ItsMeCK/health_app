@@ -182,6 +182,8 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     resources :enquiries, only: [:create]
     post '/find_book_time_controls' => 'booking_time_controls#find_book_time_controls'
     resources :my_docs
+    #validate my docs
+    post '/validate_my_docs' => 'my_docs#validate_document_name'
     post '/update_my_docs_image' => 'my_docs#update_my_docs_image'
     resources :dealer_types, :only => [:show]
     get '/get_dealers_with_contact_numbers' => 'dealers#dealer_contact_numbers'
