@@ -1,6 +1,8 @@
 class ServiceSchedule < ActiveRecord::Base
 	audited
 	belongs_to :bike
+	#validation
+	validates_uniqueness_of :service_number, :scope => [:bike_id]
 
 	def bike_name
 		Bike.find(self.bike_id).name

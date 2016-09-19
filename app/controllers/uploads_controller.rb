@@ -1,15 +1,16 @@
 class UploadsController < ActionController::Base
   
+layout 'application'
 
     def import
       Bike.import(params[:file])
-      flash[:success] = "Bikes Uploaded Successfully"
+       flash[:success] = "Bikes Uploaded Successfully"
       redirect_to :back
     end
 
   def import_specifications
     Specification.import(params[:file])
-    flash[:success] = "Specifications Uploaded Successfully"
+     flash[:success] = "Specifications Uploaded Successfully"
     redirect_to :back
   end
 
@@ -21,19 +22,19 @@ class UploadsController < ActionController::Base
 
   def import_service_history
     ServiceHistory.import(params[:file])
-    flash[:success] = "Service History Uploaded Successfully"
+     flash[:success] = "Service History Uploaded Successfully"
     redirect_to :back
   end
 
   def import_prices
     Pricing.import(params[:file])
-    flash[:success] = "Prices Uploaded Successfully"
+     flash[:success] = "Prices Uploaded Successfully"
     redirect_to :back
   end
 
   def import_key_features
     KeyFeature.import(params[:file])
-    flash[:success] = "Key Features Uploaded Successfully"
+     flash[:success] = "Key Features Uploaded Successfully"
     redirect_to :back
   end
 
