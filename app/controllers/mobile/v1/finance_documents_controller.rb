@@ -1,6 +1,6 @@
 class Mobile::V1::FinanceDocumentsController < ApplicationController
   before_action :set_finance_document, only: [:show]
-
+  skip_before_filter :authenticate_user!
   # GET /web/v1/finance_documents
   # GET /web/v1/finance_documents.json
   # def index
