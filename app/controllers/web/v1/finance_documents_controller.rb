@@ -53,7 +53,7 @@ class Web::V1::FinanceDocumentsController < ApplicationController
   def delete_finance_documents
     @finance_documents = params[:finance_document_ids]
     @finance_documents.each do |finance_document|
-      FinanceDocument.find(finance_document).delete
+    FinanceDocument.find(finance_document).delete
     end
   end
 
@@ -64,6 +64,6 @@ class Web::V1::FinanceDocumentsController < ApplicationController
   end
 
   def finance_document_params
-    params.require(:finance_document).permit(:category, :document_list)
+    params.require(:finance_document).permit(:category, :document_list, :family)
   end
 end
