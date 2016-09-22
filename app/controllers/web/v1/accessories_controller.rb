@@ -1,6 +1,8 @@
 class Web::V1::AccessoriesController < ApplicationController
   before_action :set_accessory, only: [:show, :update, :destroy]
 
+
+
   # GET /web/v1/accessories
   # GET /web/v1/accessories.json
   def index
