@@ -1,9 +1,7 @@
 class Mobile::V1::EventsController < ApplicationController
-
-	
-	def show
-		render json: Event.find(params[:id])
-	end
+def show
+    render json: Event.find(params[:id])
+  end
 
 	def user_responce_with_event
 		@user_ride = UserEvent.find(params[:id])
