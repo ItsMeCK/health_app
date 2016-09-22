@@ -5,9 +5,15 @@ class Web::V1::AccessoriesController < ApplicationController
   # GET /web/v1/accessories.json
   def index
     limit, offset = Calculator.limit_and_offset(params)
-    @accessories = Accessory.all.limit(limit).offset(offset).order("updated_at DESC").order("created_at DESC")   
-
-    render json: @accessories
+    accs = []
+    Tag.all.each do |tag|
+      a = {}
+      a["tag_name"] = tag.name 
+      a["accessories"] = tag.accessories || []
+      a["image"] = tag.image || ""
+      accs << a 
+    end  
+    render json: accs
   end
 
   # GET /web/v1/accessories/1

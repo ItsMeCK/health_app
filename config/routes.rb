@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 	
 
+  
   devise_for :users
   # API Definition
   #API for password reset common for both web and mob
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
   namespace :web, defaults: { format: :json }, path: '/web/' do
     scope module: :v1 do
     # We are going to list our resources here
+    resources :accessory_tags
+    resources :tags
     resources :users, :only => [:create, :show, :update, :destroy, :index]
     post '/delete_users' => 'users#delete_users'
     post '/get_my_bikes' => 'users#get_my_bikes'
@@ -231,6 +234,9 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
 
       resources :user_events
       resources :user_rides
+      resources :accessory_tags
+      resources :tags
+      resources :accessories
 
     end
   end
