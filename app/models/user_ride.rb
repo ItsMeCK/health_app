@@ -7,7 +7,7 @@ class UserRide < ActiveRecord::Base
 	end
 
 	def ride_date
-		self.ride.try(:ride_date)
+		self.ride.ride_date.strftime("%d-%m-%Y") if self.ride.ride_date
 	end
 
 	def ride_distance
