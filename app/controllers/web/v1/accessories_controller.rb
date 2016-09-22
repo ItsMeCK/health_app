@@ -84,6 +84,6 @@ def set_accessory
 end
 
 def accessory_params
-  params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price)
+  params.require(:accessory).permit(:title, :description, :tag, :image, :accessory_category_id, :part_number, :size, :price,:brand)
 end
 end
