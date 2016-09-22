@@ -204,6 +204,8 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
     post '/my_bike_service_histories' => 'service_histories#get_my_bike_service_histories'
     post '/service_history_image_update' => 'service_histories#service_history_image_update'
       #getting ride and events based on month and year
+
+
       post '/get_ride_and_events' => 'user_rides#get_ride_and_events'
       post '/get_ride_status' => 'service_histories#get_ride_status'
       post '/get_event_status' => 'service_histories#get_event_status'
@@ -226,6 +228,9 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       get '/mark_as_read/:id' => 'notifications#mark_as_read'
       post '/email_document' => 'finance_documents#email_document'
       post '/get_document' => 'finance_documents#get_document'
+
+      resources :user_events
+      resources :user_rides
 
     end
   end

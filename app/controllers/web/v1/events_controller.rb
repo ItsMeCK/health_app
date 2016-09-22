@@ -21,14 +21,12 @@ class Web::V1::EventsController < ApplicationController
     @event = Event.new(event_params)
     users = User.all
     if @event.save
-      users.each do |user|
-       UserMailer.delay.notification_mail_for_event(user)
-     end
-     render json: @event, status: :created
-   else
-    render json: @event.errors, status: :unprocessable_entity
+      @event.delay.call_notification(I18n.t('Notification.event_created'), I18n.t('Email.event_created'))
+      render json: @event, status: :created
+    else
+      render json: @event.errors, status: :unprocessable_entity
+    end
   end
-end
 
   # PATCH/PUT /web/v1/events/1
   # PATCH/PUT /web/v1/events/1.json
@@ -36,6 +34,7 @@ end
     @event = Event.find(params[:id])
 
     if @event.update(event_params)
+      @event.delay.call_notification(I18n.t('Notification.event_updated'), I18n.t('Email.event_updated'))
       head :no_content
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -45,8 +44,8 @@ end
   # DELETE /web/v1/events/1
   # DELETE /web/v1/events/1.json
   def destroy
+    @event.delay.call_notification(I18n.t('Notification.event_deleted'), I18n.t('Email.event_deleted'))
     @event.destroy
-
     head :no_content
   end
 
