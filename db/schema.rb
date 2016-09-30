@@ -219,13 +219,6 @@ ActiveRecord::Schema.define(version: 20160922094506) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "documents", force: :cascade do |t|
-    t.string   "name"
-    t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "email_notification_templates", force: :cascade do |t|
     t.text     "content"
     t.string   "title"
