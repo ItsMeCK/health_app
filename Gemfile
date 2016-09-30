@@ -27,6 +27,8 @@ gem "audited", "~> 4.0"
 gem 'audited-activerecord', '~> 4.2'
 #ical calender
 gem 'icalendar'
+gem "activeadmin", github: "activeadmin"
+gem "sass-rails"
 group :development do
 	gem 'spring'
 	gem 'pry-rails'

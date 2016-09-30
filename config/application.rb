@@ -9,6 +9,11 @@ Bundler.require(*Rails.groups)
 
 module CoromandelHarleyDavidson
   class Application < Rails::Application
+    # to support the flash mechanism in ActionController.
+
+config.assets.initialize_on_precompile = false
+
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

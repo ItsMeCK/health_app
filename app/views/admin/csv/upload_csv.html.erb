@@ -1,0 +1,13 @@
+<%= form_for :dump, :class => "formtastic send_mail", :url=>{:action=>"import_csv"}, :html => { :multipart => true } do |f| %>
+
+
+  <div class="inputs">
+    <%= f.label "Upload" %><br />
+    <%= f.file_field :file, :required => true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
