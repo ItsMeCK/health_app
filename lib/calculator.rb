@@ -13,4 +13,8 @@ def self.limit_and_offset(params)
   return limit, offset
 end	
 
+def self.get_time_format(time)
+	return time.strftime("%H:%M %p") if time
+end	
+
 end

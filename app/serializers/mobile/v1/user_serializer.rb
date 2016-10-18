@@ -1,5 +1,5 @@
 class Mobile::V1::UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :authentication_token, :role
+  attributes :id, :email, :authentication_token, :role, :sign_in_count
 
   has_one :profile
 

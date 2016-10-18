@@ -10,7 +10,7 @@ class Mobile::V1::SessionsController < ApplicationController
         sign_in user, store: false
         user.update_device_token(params)
         user.save
-        render json: user, status: 200, location: [:mobile, user]
+        render json: user, status: 200, location: [:mobile, user], serializer: Mobile::V1::UserSerializer
       else
         render json: { errors: "Invalid email or password" }, status: 422
       end

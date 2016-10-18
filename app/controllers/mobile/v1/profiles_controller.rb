@@ -26,7 +26,7 @@ class Mobile::V1::ProfilesController < ApplicationController
   def update
 
     if @profile.update(profile_params)
-      current_user.hog_registration.update(profile_params.except(:marriage_anniversary_date))
+      #current_user.hog_registration.update(profile_params.except(:marriage_anniversary_date))
       render json: @profile, status: :ok
     else
       render json: @profile.errors, status: :unprocessable_entity

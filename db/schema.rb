@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160930090145) do
+ActiveRecord::Schema.define(version: 20161002152954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,19 @@ ActiveRecord::Schema.define(version: 20160930090145) do
   add_index "audits", ["created_at"], name: "index_audits_on_created_at", using: :btree
   add_index "audits", ["request_uuid"], name: "index_audits_on_request_uuid", using: :btree
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
+
+  create_table "ayurveda_dincharyas", force: :cascade do |t|
+    t.time     "sleep_time"
+    t.time     "wake_up_time"
+    t.time     "break_fast_time"
+    t.time     "lunch"
+    t.time     "snacks_time"
+    t.time     "sports"
+    t.time     "hobbies"
+    t.time     "dinner"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "banners", force: :cascade do |t|
     t.string   "image"
@@ -363,6 +376,19 @@ ActiveRecord::Schema.define(version: 20160930090145) do
     t.datetime "updated_at",                         null: false
   end
 
+  create_table "modern_dincharyas", force: :cascade do |t|
+    t.time     "sleep_time"
+    t.time     "wake_up_time"
+    t.time     "break_fast_time"
+    t.time     "lunch"
+    t.time     "snacks_time"
+    t.time     "sports"
+    t.time     "hobbies"
+    t.time     "dinner"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "my_bikes", force: :cascade do |t|
     t.string   "bike"
     t.date     "purchase_date"
@@ -402,13 +428,13 @@ ActiveRecord::Schema.define(version: 20160930090145) do
 
   create_table "notification_counts", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "bookings",    default: 0
-    t.integer  "offer",       default: 0
-    t.integer  "events",      default: 0
-    t.integer  "accessories", default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "count",       default: 0
+    t.integer  "test_drive_count", default: 0
+    t.integer  "offer_count"
+    t.integer  "insurance_count",  default: 0
+    t.integer  "service_count",    default: 0
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "count",            default: 0
   end
 
   create_table "notification_templates", force: :cascade do |t|
@@ -470,6 +496,7 @@ ActiveRecord::Schema.define(version: 20160930090145) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.date     "marriage_anniversary_date", default: '1900-01-01'
+    t.integer  "age"
   end
 
   create_table "rides", force: :cascade do |t|
@@ -586,7 +613,7 @@ ActiveRecord::Schema.define(version: 20160930090145) do
   create_table "service_schedules", force: :cascade do |t|
     t.string   "service_number"
     t.integer  "bike_id"
-    t.integer  "months"
+    t.string   "months"
     t.integer  "total_kms"
     t.string   "service_type"
     t.integer  "range"
@@ -668,12 +695,35 @@ ActiveRecord::Schema.define(version: 20160930090145) do
     t.string   "status",              default: "Active"
   end
 
+  create_table "user_dincharyas", force: :cascade do |t|
+    t.time     "sleep_time"
+    t.time     "wake_up_time"
+    t.time     "break_fast_time"
+    t.time     "lunch"
+    t.time     "snacks_time"
+    t.time     "sports"
+    t.time     "hobbies"
+    t.time     "dinner"
+    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "user_events", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "event_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "perticipate_event"
+  end
+
+  create_table "user_manual_reminders", force: :cascade do |t|
+    t.time     "rem_time"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "user_rides", force: :cascade do |t|
@@ -690,7 +740,7 @@ ActiveRecord::Schema.define(version: 20160930090145) do
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                   default: 0,       null: false
+    t.integer  "sign_in_count",                   default: 1,       null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
