@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   
   resources :user_manual_reminders, except: [:new, :edit]
-  resources :user_dincharyas, except: [:new, :edit]
+  
   resources :modern_dincharyas, except: [:new, :edit]
   resources :ayurveda_dincharyas, except: [:new, :edit]
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -244,6 +244,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       resources :tags
       resources :accessories
       resources :ayurveda_dincharyas
+      resources :user_dincharyas
       get '/get_dincharyas' => 'users#get_dincharyas'
       post '/populate_dincharya' => 'user_dincharyas#populate_dincharya'
     end

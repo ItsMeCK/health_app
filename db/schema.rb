@@ -117,16 +117,11 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   add_index "audits", ["user_id", "user_type"], name: "user_index", using: :btree
 
   create_table "ayurveda_dincharyas", force: :cascade do |t|
-    t.time     "sleep_time"
-    t.time     "wake_up_time"
-    t.time     "break_fast_time"
-    t.time     "lunch"
-    t.time     "snacks_time"
-    t.time     "sports"
-    t.time     "hobbies"
-    t.time     "dinner"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "title"
+    t.time     "reminder_time"
+    t.text     "description"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "banners", force: :cascade do |t|
@@ -377,16 +372,11 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   end
 
   create_table "modern_dincharyas", force: :cascade do |t|
-    t.time     "sleep_time"
-    t.time     "wake_up_time"
-    t.time     "break_fast_time"
-    t.time     "lunch"
-    t.time     "snacks_time"
-    t.time     "sports"
-    t.time     "hobbies"
-    t.time     "dinner"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "title"
+    t.time     "reminder_time"
+    t.text     "description"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "my_bikes", force: :cascade do |t|
@@ -639,7 +629,7 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   end
 
   create_table "set_rules", force: :cascade do |t|
-    t.text     "days"
+    t.integer  "days"
     t.string   "category"
     t.boolean  "active",     default: true
     t.datetime "created_at",                null: false
@@ -696,17 +686,12 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   end
 
   create_table "user_dincharyas", force: :cascade do |t|
-    t.time     "sleep_time"
-    t.time     "wake_up_time"
-    t.time     "break_fast_time"
-    t.time     "lunch"
-    t.time     "snacks_time"
-    t.time     "sports"
-    t.time     "hobbies"
-    t.time     "dinner"
+    t.string   "title"
+    t.time     "reminder_time"
+    t.text     "description"
     t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "user_events", force: :cascade do |t|
@@ -718,12 +703,12 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   end
 
   create_table "user_manual_reminders", force: :cascade do |t|
-    t.time     "rem_time"
     t.string   "title"
+    t.time     "reminder_time"
     t.text     "description"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "user_rides", force: :cascade do |t|

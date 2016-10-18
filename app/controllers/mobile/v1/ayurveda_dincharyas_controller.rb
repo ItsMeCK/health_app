@@ -30,7 +30,7 @@ class Mobile::V1::AyurvedaDincharyasController < InheritedResources::Base
   private
 
     def ayurveda_dincharya_params
-      params.require(:ayurveda_dincharya).permit(:sleep_time, :wake_up_time, :break_fast_time, :lunch, :snacks_time, :sports, :hobbies, :dinner)
+      params.require(:ayurveda_dincharya).permit(:title, :reminder_time, :description)
     end
 end
 

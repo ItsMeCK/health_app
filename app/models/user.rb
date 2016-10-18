@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :authentication_token, :uniqueness => true
   validates :password, presence: false
-  has_one :user_dincharya
+  has_many :user_dincharyas
 
 
   # Callbacks

@@ -127,69 +127,20 @@ class Mobile::V1::UsersController < ApplicationController
 		end
 
 		def get_dincharyas
-			ayurveda = AyurvedaDincharya.first
-			res_sleep = { "field": "Sleep Time", "value": Calculator.get_time_format(ayurveda.sleep_time)}
+			ayurveda_res = []
+			AyurvedaDincharya.all.order("reminder_time ASC").order("created_at ASC").each do |din|
+			  ayurveda_res << { "field": din.title, "value": Calculator.get_time_format(din.reminder_time)}	  
+			end
 			
-			res_wake_up = { "field": "Wake-Up Time", "value": Calculator.get_time_format(ayurveda.wake_up_time)}
-			
-			res_break_fast_time = { "field": "Break-Fast Time", "value": Calculator.get_time_format(ayurveda.break_fast_time)}
+			modern_res = []
+			ModernDincharya.all.order("reminder_time ASC").order("created_at ASC").each do |din|
+			  modern_res << { "field": din.title, "value": Calculator.get_time_format(din.reminder_time)}	  
+			end
 
-			res_lunch = { "field": "Lunch Time", "value": Calculator.get_time_format(ayurveda.lunch)}
-
-			res_snacks_time = { "field": "Snacks Time", "value": Calculator.get_time_format(ayurveda.snacks_time)}
-
-			res_sports = { "field": "Sports Time", "value": Calculator.get_time_format(ayurveda.sports)}
-		
-			res_hobbies = { "field": "Hobbies Time", "value": Calculator.get_time_format(ayurveda.hobbies)}
-			
-			res_dinner = { "field": "Dinner Time", "value": Calculator.get_time_format(ayurveda.dinner)}
-			
-			ayurveda_res = [res_sleep, res_wake_up, res_break_fast_time, res_lunch, res_snacks_time, res_sports, res_hobbies, res_dinner]
-
-
-
-
-			modern = ModernDincharya.first
-
-			res_sleep = { "field": "Sleep Time", "value": Calculator.get_time_format(modern.sleep_time)}
-			
-			res_wake_up = { "field": "Wake-Up Time", "value": Calculator.get_time_format(modern.wake_up_time)}
-			
-			res_break_fast_time = { "field": "Break-Fast Time", "value": Calculator.get_time_format(modern.break_fast_time)}
-
-			res_lunch = { "field": "Lunch Time", "value": Calculator.get_time_format(modern.lunch)}
-
-			res_snacks_time = { "field": "Snacks Time", "value": Calculator.get_time_format(modern.snacks_time)}
-
-			res_sports = { "field": "Sports Time", "value": Calculator.get_time_format(modern.sports)}
-		
-			res_hobbies = { "field": "Hobbies Time", "value": Calculator.get_time_format(modern.hobbies)}
-			
-			res_dinner = { "field": "Dinner Time", "value": Calculator.get_time_format(modern.dinner)}
-			
-			modern_res = [res_sleep, res_wake_up, res_break_fast_time, res_lunch, res_snacks_time, res_sports, res_hobbies, res_dinner]
-
-
-			dincharya = current_user.user_dincharya
-
-			res_sleep = { "field": "Sleep Time", "value": Calculator.get_time_format(dincharya.sleep_time)}
-			
-			res_wake_up = { "field": "Wake-Up Time", "value": Calculator.get_time_format(dincharya.wake_up_time)}
-			
-			res_break_fast_time = { "field": "Break-Fast Time", "value": Calculator.get_time_format(dincharya.break_fast_time)}
-
-			res_lunch = { "field": "Lunch Time", "value": Calculator.get_time_format(dincharya.lunch)}
-
-			res_snacks_time = { "field": "Snacks Time", "value": Calculator.get_time_format(dincharya.snacks_time)}
-
-			res_sports = { "field": "Sports Time", "value": Calculator.get_time_format(dincharya.sports)}
-		
-			res_hobbies = { "field": "Hobbies Time", "value": Calculator.get_time_format(dincharya.hobbies)}
-			
-			res_dinner = { "field": "Dinner Time", "value": Calculator.get_time_format(dincharya.dinner)}
-			
-			dincharya_res = [res_sleep, res_wake_up, res_break_fast_time, res_lunch, res_snacks_time, res_sports, res_hobbies, res_dinner]
-
+			dincharya_res = []
+			current_user.user_dincharyas.order("reminder_time ASC").order("created_at ASC").each do |din|
+			  dincharya_res << { "field": din.title, "value": Calculator.get_time_format(din.reminder_time)}	  
+			end
 
 			res = {"ayurveda": ayurveda_res, "modern": modern_res, "user": dincharya_res}
 			render json: res
