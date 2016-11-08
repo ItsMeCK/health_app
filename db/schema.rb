@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002152954) do
+ActiveRecord::Schema.define(version: 20161108061755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,16 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "image"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -418,13 +428,13 @@ ActiveRecord::Schema.define(version: 20161002152954) do
 
   create_table "notification_counts", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "test_drive_count", default: 0
-    t.integer  "offer_count"
-    t.integer  "insurance_count",  default: 0
-    t.integer  "service_count",    default: 0
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.integer  "count",            default: 0
+    t.integer  "bookings",    default: 0
+    t.integer  "offer",       default: 0
+    t.integer  "events",      default: 0
+    t.integer  "accessories", default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "count",       default: 0
   end
 
   create_table "notification_templates", force: :cascade do |t|
@@ -603,7 +613,7 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   create_table "service_schedules", force: :cascade do |t|
     t.string   "service_number"
     t.integer  "bike_id"
-    t.string   "months"
+    t.integer  "months"
     t.integer  "total_kms"
     t.string   "service_type"
     t.integer  "range"
@@ -629,7 +639,7 @@ ActiveRecord::Schema.define(version: 20161002152954) do
   end
 
   create_table "set_rules", force: :cascade do |t|
-    t.integer  "days"
+    t.text     "days"
     t.string   "category"
     t.boolean  "active",     default: true
     t.datetime "created_at",                null: false

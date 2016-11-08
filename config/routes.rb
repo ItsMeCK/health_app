@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 	
 
   
+  resources :activities, except: [:new, :edit]
   resources :user_manual_reminders, except: [:new, :edit]
   
   resources :modern_dincharyas, except: [:new, :edit]
@@ -245,6 +246,7 @@ namespace :mobile, defaults: { format: :json }, path: '/mobile/' do
       resources :accessories
       resources :ayurveda_dincharyas
       resources :user_dincharyas
+      resources :activities
       get '/get_dincharyas' => 'users#get_dincharyas'
       post '/populate_dincharya' => 'user_dincharyas#populate_dincharya'
     end
