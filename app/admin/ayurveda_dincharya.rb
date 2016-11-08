@@ -17,5 +17,15 @@ permit_params :title, :reminder_time, :description, :profession
 #   permitted
 # end
 
+form do |f|
+	f.inputs "Ayurveda Dincharya" do 
+	  f.input :title
+	  f.input :reminder_time
+	  f.input :description
+	  f.input :profession, collection: ["Student", "Employee", "House Wife", "Senior Citizen"]
+	end
+	f.actions
+end 
+
 
 end
