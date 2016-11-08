@@ -7,7 +7,7 @@ menu :parent => "Dincharya"
   action_item only: :show  do
 	link_to "New ModernDincharya", action: :new # so link will only be available on show action
   end
-permit_params :title, :reminder_time, :description
+permit_params :title, :reminder_time, :description, :profession
 
 #
 # or

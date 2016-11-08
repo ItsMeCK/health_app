@@ -16,7 +16,7 @@ permit_params :imageable_id, :imageable_type, :image, :name, :description
 form do |f|
 	f.inputs "Activity" do 
 	  f.input :imageable, collection: ModernDincharya.all 
-	  f.input :imageable, collection: UserDincharya.all
+	  f.input :imageable, collection: AyurvedaDincharya.all
 	  f.input :imageable_type, :required => true, :as => :radio, collection: ["ModernDincharya", "UserDincharya"]
 	  f.input :name
 	  f.input :description
